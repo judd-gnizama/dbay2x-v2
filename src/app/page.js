@@ -1,11 +1,16 @@
+'use client'
 import GroupComp from "@/components/GroupComp";
 import MemberComp from "@/components/MemberComp";
 import SettleComp from "@/components/SettleComp";
 import TransactionComp from "@/components/TransactionComp";
+import UserComp from "@/components/UserComp";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [ members, setMembers ] = useState([]);
+  const [ reimbursements, setReimbursements ] = useState([]);
 
-  const users = [
+  const test_users = [
     {
       id: 1,
       name: 'Judd',
@@ -35,7 +40,7 @@ export default function Home() {
       total_net: 0,
     },
   ]
-  const groups = [
+  const test_groups = [
     {
       id: 1,
       name: 'Bohol Vacation',
@@ -211,8 +216,149 @@ export default function Home() {
         }
       ]
     },
+    {
+      id: 3,
+      name: 'awewfawefawfe',
+      members: [
+        {
+          id: 1,
+          paid: 0,
+          share: 0,
+          net: 0,
+        },
+        {
+          id: 2,
+          paid: 0,
+          share: 0,
+          net: 0,
+        },
+        {
+          id: 3,
+          paid: 0,
+          share: 0,
+          net: 0,
+        },
+        {
+          id: 4,
+          paid: 0,
+          share: 0,
+          net: 0,
+        },
+      ],
+      transactions: [
+        {
+          id: 1,
+          date: "03-10-2024",
+          description: "Transportation",
+          type: 1, // type: 1 - expense, type: 2 - transfer
+          payer: 1, // user_id
+          amount: 5000,
+          recipient: 0, // user_id, 0 - if type 1
+          split_members: [
+            {
+              id: 2, //user_id
+              share: 1, //float - percentage of payment to pay
+            },
+            {
+              id: 3, //user_id
+              share: 1, //float - percentage of payment to pay
+            },
+            {
+              id: 4, //user_id
+              share: 1, //float - percentage of payment to pay
+            },
+          ]
+        },
+        {
+          id: 2,
+          date: "03-10-2024",
+          description: "Transportation",
+          type: 1, // type: 1 - expense, type: 2 - transfer
+          payer: 1, // user_id
+          amount: 6000,
+          recipient: 0, // user_id, 0 - if type 1
+          split_members: [
+            {
+              id: 1, //user_id
+              share: 1, //float - percentage of payment to pay
+            },
+            {
+              id: 2, //user_id
+              share: 1, //float - percentage of payment to pay
+            },
+            {
+              id: 3, //user_id
+              share: 1, //float - percentage of payment to pay
+            },
+            {
+              id: 4, //user_id
+              share: 1, //float - percentage of payment to pay
+            },
+          ]
+        },
+        {
+          id: 3,
+          date: "03-10-2024",
+          description: "Transportation",
+          type: 1, // type: 1 - expense, type: 2 - transfer
+          payer: 3, // user_id
+          amount: 30089,
+          recipient: 0, // user_id, 0 - if type 1
+          split_members: [
+            {
+              id: 1, //user_id
+              share: 1, //float - percentage of payment to pay
+            },
+            {
+              id: 2, //user_id
+              share: 1, //float - percentage of payment to pay
+            },
+            {
+              id: 3, //user_id
+              share: 1, //float - percentage of payment to pay
+            },
+            {
+              id: 4, //user_id
+              share: 1, //float - percentage of payment to pay
+            },
+          ]
+        },
+      ],
+      reimbursements: [
+        {
+          id: 1,
+          from: 4,
+          to: 3, 
+          amount: 1250,
+        },
+        {
+          id: 2,
+          from: 1,
+          to: 3, 
+          amount: 500,
+        },
+        {
+          id: 3,
+          from: 2,
+          to: 3, 
+          amount: 250,
+        }
+      ]
+    },
   ]
-   
+  const processGroup = (group) => {
+
+    const { members, transactions, id, name } = group[0];
+    const involvedMembersList = computeMembersList(transactions);
+    const mergedMembersList = mergeMembersList(members, involvedMembersList);
+    const reimbursements = computeReimbursements(mergedMembersList);
+
+    group.members = appendMembersNet(mergedMembersList);
+    group.reimbursements = reimbursements;
+
+    return group;
+  }
+  
   const computeMembersList = (transactions) => {
 
     if (!transactions || !transactions.length) return []; //Early return empty
@@ -244,7 +390,8 @@ export default function Home() {
           // find if split_member is already present
           let memberIndex = deltaMemberList.findIndex((item)=>item.id === split_member.id)
           if(memberIndex !== -1) {
-            deltaMemberList[memberIndex].share = split_member.share / total_shares * amount
+            deltaMemberList[memberIndex].share += split_member.share / total_shares * amount
+
           } else {
             deltaMemberList.push({
               id: split_member.id,
@@ -310,12 +457,29 @@ export default function Home() {
 
   }
 
+  const mergeMembersList = (oldMembersList, computedMembersList) => {
+    computedMembersList.forEach((newMember) => {
+      const memberIndex = oldMembersList.findIndex(item => item.id === newMember.id)
+      if (memberIndex !== -1) {
+        oldMembersList[memberIndex] = newMember;
+      }
+    })
+      
+    return oldMembersList;
+  }
+
+  useEffect(() => {
+
+  }, [])
+
   return (
-    <div className=" bg-background">
-      <GroupComp/>
-      <MemberComp/>
-      <TransactionComp/>
-      <SettleComp/>
+    <div className="flex justify-center">
+      <div className="max-w-6xl border border-red-500 w-full">
+
+        <MemberComp/>
+        <TransactionComp/>
+        <SettleComp/>
+      </div>
     </div>
   )
 }
