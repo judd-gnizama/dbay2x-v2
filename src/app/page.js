@@ -96,10 +96,19 @@ export default function Home() {
       ],
       reimbursements: [
         // algorithm
-        // 1. Get who has highest net, 2. Get who has lowest net, 3. 1 --> 2, 4. repeat process.
+        // 1. Get who has highest net, 2. Get who has lowest net, 3. 1 --> 2, 4. update net, 5. repeat process. 5. stop when all net are zero. 
         {
-
-        }
+          id: 1,
+          from: 3, 
+          to: 1,
+          amount: 1800,
+        },
+        {
+          id: 2,
+          from: 2, 
+          to: 1,
+          amount: 1500,
+        },
       ]
     },
     {
@@ -178,6 +187,26 @@ export default function Home() {
             },
           
           ]
+        }
+      ],
+      reimbursements: [
+        {
+          id: 1,
+          from: 4,
+          to: 3, 
+          amount: 1250,
+        },
+        {
+          id: 2,
+          from: 1,
+          to: 3, 
+          amount: 500,
+        },
+        {
+          id: 3,
+          from: 2,
+          to: 3, 
+          amount: 250,
         }
       ]
     },
