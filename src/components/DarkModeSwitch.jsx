@@ -18,7 +18,7 @@ export default function DarkModeSwitch() {
           <span className="material-symbols-outlined">dark_mode</span>
           : <span className="material-symbols-outlined">light_mode</span>}
         </button>
-        : <div className="flex justify-center items-center border p-2 rounded-full"><span class="material-symbols-outlined">pending</span></div>
+        : <div className="flex justify-center items-center border p-2 rounded-full"><span className="material-symbols-outlined">pending</span></div>
       }
     </div>
   )
