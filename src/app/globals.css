@@ -2,23 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    --text: #060404;
-    --background: #fdfcfc;
-    --primary: #a38375;
-    --secondary: #c6caaf;
-    --accent: #9fb48e;
-  }
-  .dark {
-    --text: #fbf9f9;
-    --background: #030202;
-    --primary: #8a6a5c;
-    --secondary: #4c5035;
-    --accent: #5d714b;
-  }
-}
-
 
 main {
   display: grid;
