@@ -1,7 +1,7 @@
-export default function Header() {
+export default function TransactionComp() {
   return (
     <div>
-      Header      
+      TransactionComp      
     </div>
   )
 }

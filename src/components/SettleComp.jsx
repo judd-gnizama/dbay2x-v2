@@ -1,7 +1,7 @@
-export default function Header() {
+export default function SettleComp() {
   return (
     <div>
-      Header      
+      SettleComp      
     </div>
   )
 }

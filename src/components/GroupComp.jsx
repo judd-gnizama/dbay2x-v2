@@ -1,7 +1,8 @@
-export default function Header() {
+
+export default function GroupComp() {
   return (
     <div>
-      Header      
+      GroupComp  
     </div>
   )
 }

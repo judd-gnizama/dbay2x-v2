@@ -1,7 +1,7 @@
-export default function Header() {
+export default function MemberComp() {
   return (
     <div>
-      Header      
+      MemberComp      
     </div>
   )
 }

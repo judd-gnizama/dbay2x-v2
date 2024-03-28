@@ -4,8 +4,8 @@ import DarkModeSwitch from "./DarkModeSwitch";
 
 export default function Header() {
   return (
-    <div className="flex justify-center items-center">
-      <div className="flex p-4 items-center justify-between gap-4 w-full max-w-6xl">
+    <div className="flex justify-center items-center text-gray-800">
+      <div className="flex p-4 items-center justify-between gap-4 w-full max-w-6xl bg-teal-100">
         <Brand/>
         <nav className="flex justify-center items-center gap-4">
           <Link href='#'>Home</Link>
