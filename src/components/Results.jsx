@@ -1,15 +1,18 @@
+import UserResult from "./UserResult"
 
-export default function Results({ type, search }) {
-
-
-  
-
-
-
+export default function Results({ type, search, results }) {
 
   return (
-    <div className="py-2">
-      Showing results for {search}
+    <div className="grid gap-4">
+      {search && <span>Showing results for {search}</span>}
+      {results && results.length > 0 ? 
+        <ul className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {results.map(result => {
+            // return <li key={result.id}>{result.name}</li>
+            return <UserResult key={result.id} result={result}/>
+          })}
+        </ul>
+      : <span>No results found.</span>}
     </div>
   )
 }
