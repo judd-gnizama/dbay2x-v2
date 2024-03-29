@@ -369,6 +369,116 @@ export default function SearchBox({ type }) {
         }
       ]
     },
+    
+    {
+      id: 4,
+      name: 'awewfawefawfe',
+      members: [
+        {
+          id: 1,
+          paid: 0,
+          share: 0,
+          net: 0,
+        },
+        {
+          id: 2,
+          paid: 0,
+          share: 0,
+          net: 0,
+        },
+        {
+          id: 3,
+          paid: 0,
+          share: 0,
+          net: 0,
+        },
+        {
+          id: 4,
+          paid: 0,
+          share: 0,
+          net: 0,
+        },
+      ],
+      transactions: [
+        {
+          id: 1,
+          date: "03-10-2024",
+          description: "Transportation",
+          type: 1, // type: 1 - expense, type: 2 - transfer
+          payer: 1, // user_id
+          amount: 12000,
+          recipient: 0, // user_id, 0 - if type 1
+          split_members: [
+            {
+              id: 2, //user_id
+              share: 1, //float - percentage of payment to pay
+            },
+            {
+              id: 3, //user_id
+              share: 1, //float - percentage of payment to pay
+            },
+            {
+              id: 4, //user_id
+              share: 1, //float - percentage of payment to pay
+            },
+          ]
+        },
+        {
+          id: 2,
+          date: "03-10-2024",
+          description: "Transportation",
+          type: 1, // type: 1 - expense, type: 2 - transfer
+          payer: 1, // user_id
+          amount: 9990,
+          recipient: 0, // user_id, 0 - if type 1
+          split_members: [
+            {
+              id: 1, //user_id
+              share: 1, //float - percentage of payment to pay
+            },
+            {
+              id: 2, //user_id
+              share: 1, //float - percentage of payment to pay
+            },
+            {
+              id: 3, //user_id
+              share: 1, //float - percentage of payment to pay
+            },
+            {
+              id: 4, //user_id
+              share: 1, //float - percentage of payment to pay
+            },
+          ]
+        },
+        {
+          id: 3,
+          date: "03-10-2024",
+          description: "Transportation",
+          type: 1, // type: 1 - expense, type: 2 - transfer
+          payer: 3, // user_id
+          amount: 1249,
+          recipient: 0, // user_id, 0 - if type 1
+          split_members: [
+            {
+              id: 1, //user_id
+              share: 1, //float - percentage of payment to pay
+            },
+            {
+              id: 2, //user_id
+              share: 1, //float - percentage of payment to pay
+            },
+            {
+              id: 3, //user_id
+              share: 1, //float - percentage of payment to pay
+            },
+            {
+              id: 4, //user_id
+              share: 1, //float - percentage of payment to pay
+            },
+          ]
+        },
+      ],
+    },
   ]
   const handleSubmit = (e) => {
     e.preventDefault();

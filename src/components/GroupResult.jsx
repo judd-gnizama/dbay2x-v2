@@ -3,6 +3,7 @@ import Link from "next/link"
 export default function GroupResult({ result, mode }) {
 
   const { id, name, members, transactions, reimbursements } = result
+  const isSettled = reimbursements && reimbursements.length !== 0;
 
   const computeTotalSpent = (transactions) => {
     const expenseTransactions = transactions.filter((transaction) => transaction.type === 1)
@@ -18,7 +19,9 @@ export default function GroupResult({ result, mode }) {
         <p className="text-lg font-bold">{name}</p>
         <p>{`Members:  ${members.length}`}</p>
         <p>{`Total Spent: ${computeTotalSpent(transactions)}`}</p>
-        <p>{`Settled: ${reimbursements.length !== 0}`}</p>
+        <p className="font-bold"
+        style={{color: isSettled ? 'green' : 'red'}}
+        >{isSettled ? 'All Settled' : 'Needs Settling'}</p>
       </article>
     </Link>
   )
