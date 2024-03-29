@@ -1,3 +1,4 @@
+import GroupResult from "./GroupResult"
 import UserResult from "./UserResult"
 
 export default function Results({ type, search, results }) {
@@ -8,8 +9,8 @@ export default function Results({ type, search, results }) {
       {results && results.length > 0 ? 
         <ul className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {results.map(result => {
-            // return <li key={result.id}>{result.name}</li>
-            return <UserResult key={result.id} result={result}/>
+            if (type === 'user') return <UserResult key={result.id} result={result}/>
+            if (type === 'group') return <GroupResult key={result.id} result={result}/>
           })}
         </ul>
       : <span>No results found.</span>}
