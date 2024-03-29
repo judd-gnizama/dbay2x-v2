@@ -16,6 +16,11 @@ main > :nth-child(2) {
 main > :nth-child(3) {
   grid-row: 3;
 }
+@media (max-width:400px) {
+  main {
+    padding: 0 0.5rem;
+  }
+}
 
 body * {
   font-family: 'Poppins', 'sans-serif';
