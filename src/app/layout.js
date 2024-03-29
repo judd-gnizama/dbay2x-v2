@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Providers from "./Providers";
 import Navbar from "@/components/Navbar";
+import LocalStorageManager from "@/components/LocalStorageManager";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,6 +31,7 @@ export default function RootLayout({ children }) {
             <Navbar/>
             {children}
             <Footer/>
+            <LocalStorageManager/>
           </main>
         </Providers>
       </body>
