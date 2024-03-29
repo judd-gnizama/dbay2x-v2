@@ -1,4 +1,3 @@
-import GroupResult from "./GroupResult"
 import TransactionResult from "./TransactionResult"
 import UserResult from "./UserResult"
 
@@ -11,7 +10,7 @@ export default function Results({ type, search, results }) {
         <ul className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {results.map(result => {
             if (type === 'user') return <UserResult key={result.id} result={result}/>
-            if (type === 'group') return <GroupResult key={result.id} result={result}/>
+            // if (type === 'group') return <GroupResult key={result.id} result={result}/>
             if (type === 'transaction') return <TransactionResult key={result.id} result={result}/>
           })}
         </ul>

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import Results from "./Results";
 
-export default function SearchBox({ type, filterList }) {
+export default function SearchBox({ type }) {
 
   const [ search, setSearch ] = useState("");
   const [ data, setData ] = useState([]);
@@ -12,34 +12,24 @@ export default function SearchBox({ type, filterList }) {
 
   const handleSearch = (searchTerm, type) => {
     let searchResults = []
-    if (!data) searchResults = [];
-    if (type === 'user') {
-      if(searchTerm) {
-        searchResults = data.users.filter((user) => user.name.toLowerCase().includes(searchTerm.toLowerCase()))
+    if (Object.keys(data).length !== 0) {
+      if (type === 'user') {
+        if(searchTerm) {
+          searchResults = data.users.filter((user) => user.name.toLowerCase().includes(searchTerm.toLowerCase()))
+        } else {
+          searchResults = data.users
+        }
+      } else if (type === 'transaction') {
+        if (searchTerm) {
+          searchResults = data.group.transactions.filter((transaction)=> transaction.description.toLowerCase().includes(searchTerm.toLowerCase()))
+        } else {
+          searchResults = data.group.transactions
+        }
       } else {
-        searchResults = data.users
+        searchResults = [];
       }
-    } else if (type === 'group') {
-      if (searchTerm) {
-        searchResults = data.groups.filter((group)=> group.name.toLowerCase().includes(searchTerm.toLowerCase()))
-      } else {
-        searchResults = data.groups
-      }
-    } else if (type === 'transaction' && filterList.groupId) {
-      if (searchTerm) {
-        var tempResults = data.groups.filter((group)=>group.id === filterList.groupId)[0]
-        
-        console.log(tempResults)
-        searchResults = tempResults.transactions.filter((transaction) => transaction.description.toLowerCase().includes(searchTerm.toLowerCase()))
-        console.log(searchResults)
-      } else if(data.groups){
-        let tempResults = data.groups.filter((group)=> group.id === filterList.groupId);
-        searchResults = tempResults.transactions
-      }
-    }else {
-      searchResults = [];
+      setResults(searchResults);
     }
-    setResults(searchResults);
   }
 
   useEffect(() => {
