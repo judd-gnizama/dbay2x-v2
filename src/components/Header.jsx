@@ -9,8 +9,8 @@ export default function Header() {
     <div className="flex justify-center items-center text-gray-800">
       <div className="flex p-4 items-center justify-end gap-4 w-full max-w-6xl">
         <nav className="flex justify-center items-center gap-4">
-          <Link href='#'>Home</Link>
-          <Link href='#'>About</Link>
+          <Link href='/'>Home</Link>
+          <Link href='/about'>About</Link>
           <DarkModeSwitch/>
         </nav>
       </div>

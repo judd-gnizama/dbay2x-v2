@@ -12,7 +12,7 @@ export default function GroupResult({ result, mode }) {
   }
 
   return (
-    <Link href={'#'} className="flex justify-start items-center border border-slate-200 rounded-2xl p-4 gap-4">
+    <Link href={`/groups/${id}`} className="flex justify-start items-center border border-slate-200 rounded-2xl p-4 gap-4">
       <span className="material-symbols-outlined"
       style={{fontSize: '8rem'}}>group</span>
       <article>

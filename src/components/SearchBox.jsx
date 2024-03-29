@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import Results from "./Results";
 
-export default function SearchBox({ type }) {
+export default function SearchBox({ type, filterList }) {
 
   const [ search, setSearch ] = useState("");
   const [ data, setData ] = useState([]);
@@ -25,7 +25,18 @@ export default function SearchBox({ type }) {
       } else {
         searchResults = data.groups
       }
-    } else {
+    } else if (type === 'transaction' && filterList.groupId) {
+      if (searchTerm) {
+        var tempResults = data.groups.filter((group)=>group.id === filterList.groupId)[0]
+        
+        console.log(tempResults)
+        searchResults = tempResults.transactions.filter((transaction) => transaction.description.toLowerCase().includes(searchTerm.toLowerCase()))
+        console.log(searchResults)
+      } else if(data.groups){
+        let tempResults = data.groups.filter((group)=> group.id === filterList.groupId);
+        searchResults = tempResults.transactions
+      }
+    }else {
       searchResults = [];
     }
     setResults(searchResults);
