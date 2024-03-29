@@ -1,9 +1,4 @@
 'use client'
-import GroupComp from "@/components/GroupComp";
-import MemberComp from "@/components/MemberComp";
-import SettleComp from "@/components/SettleComp";
-import TransactionComp from "@/components/TransactionComp";
-import UserComp from "@/components/UserComp";
 import { useEffect, useState } from "react";
 
 export default function Home() {
@@ -475,11 +470,7 @@ export default function Home() {
   return (
     <div className="flex justify-center">
       <div className="p-4 max-w-6xl w-full">
-        <UserComp/>
-        <GroupComp/>
-        <MemberComp/>
-        <TransactionComp/>
-        <SettleComp/>
+        
       </div>
     </div>
   )
