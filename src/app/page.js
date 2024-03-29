@@ -474,8 +474,9 @@ export default function Home() {
 
   return (
     <div className="flex justify-center">
-      <div className="max-w-6xl border border-red-500 w-full">
-
+      <div className="p-4 max-w-6xl w-full">
+        <UserComp/>
+        <GroupComp/>
         <MemberComp/>
         <TransactionComp/>
         <SettleComp/>
