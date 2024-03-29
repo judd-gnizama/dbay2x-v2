@@ -543,8 +543,8 @@ export default function LocalStorageManager() {
   }
 
   return (
-    <div className="flex gap-4 p-4">
-      <button onClick={()=> handleLoad()} className="bg-teal-100 p-2">Load Data</button>
+    <div className="flex gap-4 p-4 justify-center">
+      <button onClick={()=> handleLoad()} className="bg-teal-100 p-2">Load Dummy Data</button>
       <button onClick={()=> handleClear()} className="bg-teal-100 p-2">Clear Data</button>
     </div>
   )

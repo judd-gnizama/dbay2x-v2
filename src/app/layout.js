@@ -30,8 +30,8 @@ export default function RootLayout({ children }) {
             <Header/>
             <Navbar/>
             {children}
-            <Footer/>
             <LocalStorageManager/>
+            <Footer/>
           </main>
         </Providers>
       </body>
