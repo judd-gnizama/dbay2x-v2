@@ -6,59 +6,66 @@ import Results from "./Results";
 export default function SearchBox({ type }) {
 
   const [ search, setSearch ] = useState("");
-  const [ isMounted, setIsMounted ] = useState(false);
   const [ data, setData ] = useState([]);
   const [ results, setResults ] = useState([]);
 
 
   const handleSearch = (searchTerm, type) => {
-    if (!data) setResults([]);
-    if (!searchTerm) setResults([]);
+    let searchResults = []
+    if (!data) searchResults = [];
     if (type === 'user') {
-      setResults(data.users.filter((user) => user.name === searchTerm))
+      if(searchTerm) {
+        searchResults = data.users.filter((user) => user.name.toLowerCase().includes(searchTerm.toLowerCase()))
+      } else {
+        searchResults = data.users
+      }
     } else if (type === 'group') {
-      setResults(data.groups.filter((group)=> group.name === searchTerm))
+      if (searchTerm) {
+        searchResults = data.groups.filter((group)=> group.name.toLowerCase().includes(searchTerm.toLowerCase()))
+      } else {
+        searchResults = data.groups
+      }
     } else {
-      setResults([]);
+      searchResults = [];
     }
+    setResults(searchResults);
   }
 
   useEffect(() => {
-    setIsMounted(true);
     const storedData = localStorage.getItem('myDataKey');
     if (storedData) {
       setData(JSON.parse(storedData));
     }
-    return () => setIsMounted(false);
   }, [])
+
+  useEffect(() => {
+    if (data){
+      handleSearch(search, type)
+    }
+  }, [data, search, type])
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleSearch(search, type)
   }
 
   return (
     <div className="flex flex-col gap-4">
-      {
-        isMounted && <>
-          <form onSubmit={handleSubmit}>
-            <div className="relative flex items-center">
-              <input value={search} onChange={(e) => setSearch(e.target.value)} className="bg-slate-200 p-2 px-4 rounded-full w-full" type="text" placeholder={`Search ${type}`} 
-              />
-              <span 
-              className="material-symbols-outlined text-slate-600 absolute right-2 rounded-full cursor-pointer hover:bg-slate-300"
-              style={{visibility: search==="" ? "hidden" : "visible"}}
-              onClick={() => setSearch("")}
-              >close</span>
-            </div>
-          </form>
-          <div className="">
-            {results && 
-              <Results type={type} search={search} results={results}/>
-            }
+        <form onSubmit={handleSubmit}>
+          <div className="relative flex items-center">
+            <input value={search} onChange={(e) => setSearch(e.target.value)} className="bg-slate-200 p-2 px-4 rounded-full w-full" type="text" placeholder={`Search ${type}`} 
+            />
+            <span 
+            className="material-symbols-outlined text-slate-600 absolute right-2 rounded-full cursor-pointer hover:bg-slate-300"
+            style={{visibility: search==="" ? "hidden" : "visible"}}
+            onClick={() => setSearch("")}
+            >close</span>
           </div>
-        </>
-      }
+        </form>
+        <div className="">
+          {results && 
+            <Results type={type} search={search} results={results}/>
+          }
+        </div>
     </div>
   )
 }

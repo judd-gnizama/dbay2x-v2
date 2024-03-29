@@ -13,7 +13,7 @@ export default function Results({ type, search, results }) {
             if (type === 'group') return <GroupResult key={result.id} result={result}/>
           })}
         </ul>
-      : <span>No results found.</span>}
+      : <span className="text-center text-xl font-bold">No results found.</span>}
     </div>
   )
 }
