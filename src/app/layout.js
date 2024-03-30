@@ -30,10 +30,12 @@ export default function RootLayout({ children }) {
               <Header/>
               <div className="submain">
                 <Sidebar/>
-                {children}
+                <div className="subsubmain">
+                  {children}
+                  <LocalStorageManager/>
+                  <Footer/>
+                </div>
               </div>
-              <LocalStorageManager/>
-              <Footer/>
             </main>
         </Providers>
       </body>

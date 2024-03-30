@@ -7,7 +7,7 @@ export default function TransactionResult({ result, mode }) {
   return (
     <Link href={`/transactions/${id}`} className="flex justify-start items-center border border-slate-200 rounded-2xl p-4 gap-4 hover:bg-teal-200 hover:shadow-md">
       <span className="material-symbols-outlined"
-      style={{fontSize: '8rem'}}>receipt_long</span>
+      style={{fontSize: '6rem'}}>receipt_long</span>
       <article>
         <p className="text-lg font-bold">{date}</p>
         <p className="">{description}</p>

@@ -13,7 +13,7 @@ body * {
 
 main {
   display: grid;
-  grid-template-rows: auto 1fr auto auto;
+  grid-template-rows: auto 1fr;
   padding: 2rem;
   height: 100dvh;
   gap: 1rem;
@@ -21,18 +21,17 @@ main {
   max-width: 72rem;
 }
 
-main > :nth-child(2) {
-  grid-row: 2;
-}
-main > :nth-child(3) {
-  grid-row: 3;
-}
-
-main > .submain {
+.submain {
   display: grid;
   gap: 1rem;
   grid-template-columns: auto 1fr;  
   max-width: 72rem;
+}
+
+.subsubmain {
+  display: grid;
+  grid-template-rows: 1fr auto auto;
+  gap: 1rem;
 }
 
 
