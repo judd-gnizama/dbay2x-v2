@@ -570,11 +570,11 @@ export default function LocalStorageManager() {
   }
 
   return (
-    <div className="flex flex-col gap-4 p-4">
-      <button onClick={()=> handleLoad()} className="bg-slate-300 p-2">Load Dummy Data</button>
-      <button onClick={()=> handleClear()} className="bg-slate-300 p-2">Clear Data</button>
+    <div className="flex flex-col gap-4">
+      <button onClick={()=> handleLoad()} className="bg-slate-300 hover:opacity-80 p-2">Load Dummy Data</button>
+      <button onClick={()=> handleClear()} className="bg-slate-300 hover:opacity-80 p-2">Clear Data</button>
       {/* <button onClick={()=> handleRequest()} className="bg-teal-100 p-2">Request Data</button> */}
-      <button onClick={()=> handleShow()} className="bg-slate-300 p-2">Console Stored Data</button>
+      <button onClick={()=> handleShow()} className="bg-slate-300 hover:opacity-80 p-2">Console Stored Data</button>
       
     </div>
   )
