@@ -11,7 +11,7 @@ export default function UsersPage() {
       style={{gridTemplateRows: "auto 1fr"}}
       >
         <div className="flex items-center justify-between gap-4">
-          <h1 className="text-3xl font-bold">Users</h1>
+          <h1 className=" text-2xl font-bold">Users</h1>
           <AddItem type={type}/>
         </div>
         <SearchBox type={type}/>

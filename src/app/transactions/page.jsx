@@ -11,7 +11,7 @@ export default function TransactionsPage() {
       style={{gridTemplateRows: "auto 1fr"}}
       >
         <div className="flex items-center justify-between gap-4">
-          <h1 className="text-3xl font-bold">Transactions</h1>
+          <h1 className="text-2xl font-bold">Transactions</h1>
           <AddItem type={type}/>
         </div>
         <SearchBox type={type}/>

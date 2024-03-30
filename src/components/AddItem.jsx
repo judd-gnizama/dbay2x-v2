@@ -14,7 +14,7 @@ export default function AddItem({ type }) {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center p-4 px-6 border-2 border-dashed border-slate-300 cursor-pointer hover:bg-teal-300">
+    <div className="flex flex-col justify-center items-center max-sm:p-2 max-sm:px-4 sm:p-4 sm:px-6 border-2 border-dashed border-slate-300 cursor-pointer hover:bg-teal-300">
       <span className="material-symbols-outlined">{iconTypes[type]}</span>
       <p>Add</p>
     </div>
