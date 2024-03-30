@@ -53,8 +53,8 @@ export default function Sidebar() {
         <div className="flex flex-col gap-2 pl-2 w-48" >
           <h2 className="font-bold">Available Groups</h2>
           <div className="grid gap-2 max-h-64 overflow-y-scroll">
-            {groups && groups.map(group => 
-              <Link href="/" 
+            {groups && groups.map((group, index) => 
+              <Link key={index} href="/" 
               className="whitespace-nowrap overflow-hidden text-nowrap text-ellipsis hover:font-bold hover:text-teal-400"
               >{group}</Link>
             )}            
