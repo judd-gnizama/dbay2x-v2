@@ -546,22 +546,22 @@ export default function LocalStorageManager() {
 
   const handleRequest = async () => {
     
-    const res = await fetch("/api/users",
-    {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'API_KEY': 'hello',
-      },
-      // body: JSON.stringify({
-      //   name: 'judd', id: '23'
-      // })
-    }
-    )
-    console.log(res, 'res - client side');
-    const data = await res.json();
-    const results = data;
-    console.log(results, 'data client side')
+    // const res = await fetch("/api/users",
+    // {
+    //   method: 'GET',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     'API_KEY': 'hello',
+    //   },
+    //   // body: JSON.stringify({
+    //   //   name: 'judd', id: '23'
+    //   // })
+    // }
+    // )
+    // console.log(res, 'res - client side');
+    // const data = await res.json();
+    // const results = data;
+    // console.log(results, 'data client side')
 
   }
 
@@ -573,7 +573,7 @@ export default function LocalStorageManager() {
     <div className="flex flex-wrap gap-4 p-4 justify-center">
       <button onClick={()=> handleLoad()} className="bg-teal-100 p-2">Load Dummy Data</button>
       <button onClick={()=> handleClear()} className="bg-teal-100 p-2">Clear Data</button>
-      <button onClick={()=> handleRequest()} className="bg-teal-100 p-2">Request Data</button>
+      {/* <button onClick={()=> handleRequest()} className="bg-teal-100 p-2">Request Data</button> */}
       <button onClick={()=> handleShow()} className="bg-teal-100 p-2">Console Stored Data</button>
       
     </div>
