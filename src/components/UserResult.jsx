@@ -6,12 +6,12 @@ export default function UserResult({ result, mode }) {
   return (
     <Link href={`/users/${id}`} className="flex justify-start items-center border border-slate-200 rounded-2xl p-4 gap-4 hover:bg-teal-200 hover:shadow-md">
       <span className="material-symbols-outlined"
-      style={{fontSize: '8rem'}}>account_circle</span>
+      style={{fontSize: '6rem'}}>account_circle</span>
       <article>
         <p className="text-lg font-bold">{name}</p>
         <p>{`Paid For:  ${total_paid}`}</p>
         <p>{`Share: ${total_share}`}</p>
-        <p>{`Receivables: ${total_net}`}</p>
+        <p>{`Net: ${total_net}`}</p>
       </article>
     </Link>
   )

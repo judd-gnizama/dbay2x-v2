@@ -3,8 +3,8 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Providers from "./Providers";
-import Navbar from "@/components/Navbar";
 import LocalStorageManager from "@/components/LocalStorageManager";
+import Sidebar from "@/components/Sidebar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,13 +26,15 @@ export default function RootLayout({ children }) {
       </head>
       <body className={inter.className}>
         <Providers>
-          <main>
-            <Header/>
-            <Navbar/>
-            {children}
-            <LocalStorageManager/>
-            <Footer/>
-          </main>
+            <main>
+              <Header/>
+              <div className="submain">
+                <Sidebar/>
+                {children}
+              </div>
+              <LocalStorageManager/>
+              <Footer/>
+            </main>
         </Providers>
       </body>
     </html>

@@ -2,12 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-
 main {
   display: grid;
-  grid-template-rows: auto auto 1fr auto auto;
-  height: 100vh;
-  padding: 0 2rem;
+  grid-template-rows: auto 1fr auto auto;
+  padding: 2rem;
+  height: 100dvh;
+  gap: 1rem;
+  margin: auto;
+  max-width: 72rem;
 }
 
 main > :nth-child(2) {
@@ -16,6 +18,15 @@ main > :nth-child(2) {
 main > :nth-child(3) {
   grid-row: 3;
 }
+
+main > .submain {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: auto 1fr;  
+  max-width: 72rem;
+}
+
+
 @media (max-width:400px) {
   main {
     padding: 0 0.5rem;

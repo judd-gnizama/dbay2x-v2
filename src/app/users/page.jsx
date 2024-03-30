@@ -6,8 +6,8 @@ export default function UsersPage() {
   const type = 'user'
 
   return (
-    <div className="flex justify-center">
-      <div className="grid gap-4 w-full max-w-6xl p-4"
+    <div className="flex justify-center w-full">
+      <div className="grid gap-4 w-full"
       style={{gridTemplateRows: "auto 1fr"}}
       >
         <div className="flex items-center justify-between gap-4">
