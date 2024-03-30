@@ -1,8 +1,11 @@
 'use client'
 
 import { useEffect, useState } from "react"
+import GetLocalStored from "@/app/GetLocalStored"
 
 export default function LocalStorageManager() {
+
+  const DATA_KEY = 'myDataKey'
 
   const test_users =  [
     {
@@ -477,8 +480,7 @@ export default function LocalStorageManager() {
         },
       ],
     },
-  ]
-  
+  ]  
   const test_group =  {
       transactions: [
         {
@@ -535,11 +537,11 @@ export default function LocalStorageManager() {
     }
 
   const handleLoad = () => {
-    localStorage.setItem('myDataKey', JSON.stringify({users: test_users, group: test_group}));
+    localStorage.setItem(DATA_KEY, JSON.stringify({users: test_users, group: test_group}));
   }
 
   const handleClear = () => {
-    localStorage.removeItem('myDataKey');
+    localStorage.removeItem(DATA_KEY);
   }
 
   const handleRequest = async () => {
@@ -563,11 +565,16 @@ export default function LocalStorageManager() {
 
   }
 
+  const handleShow = () => {
+    console.log(GetLocalStored({key:DATA_KEY}))
+  }
+
   return (
-    <div className="flex gap-4 p-4 justify-center">
+    <div className="flex flex-wrap gap-4 p-4 justify-center">
       <button onClick={()=> handleLoad()} className="bg-teal-100 p-2">Load Dummy Data</button>
       <button onClick={()=> handleClear()} className="bg-teal-100 p-2">Clear Data</button>
       <button onClick={()=> handleRequest()} className="bg-teal-100 p-2">Request Data</button>
+      <button onClick={()=> handleShow()} className="bg-teal-100 p-2">Console Stored Data</button>
       
     </div>
   )
