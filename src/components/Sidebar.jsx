@@ -37,7 +37,7 @@ export default function Sidebar() {
   ]
 
   return (
-    <div className=" p-4">
+    <div className="bg-slate-200 p-4">
       <div className="flex flex-col justify-start gap-4">
         
         <span className="material-symbols-outlined p-2 w-fit cursor-pointer hover:bg-slate-300 rounded-full" style={{fontSize: '2rem'}}
@@ -50,7 +50,7 @@ export default function Sidebar() {
         </div>
 
         {showSidebar && 
-        <div className="flex flex-col gap-2 pl-2 w-48" >
+        <div className="flex flex-col gap-2 pl-2 w-48 max-sm:w-32" >
           <h2 className="font-bold">Available Groups</h2>
           <div className="grid gap-2 max-h-64 overflow-y-scroll">
             {groups && groups.map((group, index) => 
