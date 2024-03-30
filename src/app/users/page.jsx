@@ -11,7 +11,7 @@ export default function UsersPage() {
       <div className="grid gap-4 w-full"
       style={{gridTemplateRows: "auto 1fr"}}
       >
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex items-center justify-between gap-4 ">
           <div>
             <GroupName/>
             <h1 className=" text-xl">Users</h1>
