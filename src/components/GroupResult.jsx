@@ -12,17 +12,18 @@ export default function GroupResult({ result, mode }) {
   }
 
   return (
-    <Link href={`/groups/${id}`} className="flex justify-start items-center border border-slate-200 rounded-2xl p-4 gap-4">
-      <span className="material-symbols-outlined"
-      style={{fontSize: '8rem'}}>group</span>
-      <article>
-        <p className="text-lg font-bold">{name}</p>
-        <p>{`Members:  ${members.length}`}</p>
-        <p>{`Total Spent: ${computeTotalSpent(transactions)}`}</p>
-        <p className="font-bold"
-        style={{color: isSettled ? 'green' : 'red'}}
-        >{isSettled ? 'All Settled' : 'Needs Settling'}</p>
-      </article>
-    </Link>
+    <div></div>
+    // <Link href={`/groups/${id}`} className="flex justify-start items-center border border-slate-200 rounded-2xl p-4 gap-4">
+    //   <span className="material-symbols-outlined"
+    //   style={{fontSize: '8rem'}}>group</span>
+    //   <article>
+    //     <p className="text-lg font-bold">{name}</p>
+    //     <p>{`Members:  ${members.length}`}</p>
+    //     <p>{`Total Spent: ${computeTotalSpent(transactions)}`}</p>
+    //     <p className="font-bold"
+    //     style={{color: isSettled ? 'green' : 'red'}}
+    //     >{isSettled ? 'All Settled' : 'Needs Settling'}</p>
+    //   </article>
+    // </Link>
   )
 }
