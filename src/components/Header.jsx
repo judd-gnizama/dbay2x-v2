@@ -21,13 +21,13 @@ export default function Header() {
         </nav>
         <nav className="flex justify-center items-center gap-4 sm:hidden">
           <Link className='hover:text-teal-400 flex justify-center items-center' href={'/users'}>
-          <span class="material-symbols-outlined">person</span>
+          <span className="material-symbols-outlined">person</span>
           </Link>
           <Link className='hover:text-teal-400 flex justify-center items-center' href={'/transactions'}>
-          <span class="material-symbols-outlined">receipt_long</span>
+          <span className="material-symbols-outlined">receipt_long</span>
           </Link>
           <Link className='hover:text-teal-400 flex justify-center items-center' href={'/settlements'}>
-          <span class="material-symbols-outlined">handshake</span>
+          <span className="material-symbols-outlined">handshake</span>
           </Link>
           {/* <Link href='/'>Home</Link>
           <Link href='/about'>About</Link> */}

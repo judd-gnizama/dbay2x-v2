@@ -1,4 +1,5 @@
 import AddItem from "@/components/AddItem";
+import GroupName from "@/components/GroupName";
 import SearchBox from "@/components/SearchBox";
 
 export default function UsersPage() {
@@ -11,8 +12,10 @@ export default function UsersPage() {
       style={{gridTemplateRows: "auto 1fr"}}
       >
         <div className="flex items-center justify-between gap-4">
-          <h1 className=" text-2xl font-bold">Users</h1>
-          <AddItem type={type}/>
+          <div>
+            <GroupName/>
+            <h1 className=" text-xl">Users</h1>
+          </div>
         </div>
         <SearchBox type={type}/>
       </div>

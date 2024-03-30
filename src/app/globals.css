@@ -30,7 +30,7 @@ main {
 
 .subsubmain {
   display: grid;
-  grid-template-rows: 1fr auto auto;
+  grid-template-rows: 1fr auto;
   gap: 1rem;
 }
 

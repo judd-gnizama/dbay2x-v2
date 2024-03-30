@@ -32,7 +32,6 @@ export default function RootLayout({ children }) {
                 <Sidebar/>
                 <div className="subsubmain">
                   {children}
-                  <LocalStorageManager/>
                   <Footer/>
                 </div>
               </div>

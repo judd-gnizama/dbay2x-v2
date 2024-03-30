@@ -1,6 +1,7 @@
 'use client'
 import Link from "next/link";
 import { useState } from "react"
+import LocalStorageManager from "./LocalStorageManager";
 
 export default function Sidebar() {
 
@@ -37,7 +38,7 @@ export default function Sidebar() {
   ]
 
   return (
-    <div className="bg-slate-200 p-4">
+    <div className="bg-slate-200 dark:bg-gray-600 p-4">
       <div className="flex flex-col justify-start gap-4">
         
         <span className="material-symbols-outlined p-2 w-fit cursor-pointer hover:bg-slate-300 rounded-full" style={{fontSize: '2rem'}}
@@ -59,6 +60,9 @@ export default function Sidebar() {
               >{group}</Link>
             )}            
           </div>
+          
+          <LocalStorageManager/>
+
         </div>}
       </div>
       

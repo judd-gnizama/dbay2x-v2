@@ -7,16 +7,17 @@ export default function AddItem({ type }) {
   //   {type: 'transaction', icon: 'add_notes'},
   // ]
 
-  const iconTypes = {
-    user: 'person_add',
-    group: 'group_add',
-    transaction: 'add_notes',
+  const types = {
+    user: 'User',
+    group: 'Group',
+    transaction: 'Transaction',
   }
 
   return (
-    <div className="flex flex-col justify-center items-center max-sm:p-2 max-sm:px-4 sm:p-4 sm:px-6 border-2 border-dashed border-slate-300 cursor-pointer hover:bg-teal-300">
-      <span className="material-symbols-outlined">{iconTypes[type]}</span>
-      <p>Add</p>
+    <div className="flex justify-center items-center gap-4 p-4 border-4 border-dashed border-slate-300 cursor-pointer hover:bg-teal-200">
+      <span className="material-symbols-outlined"
+      style={{fontSize: '3rem'}}>add</span>
+      <p className="text-lg font-bold">Add {types[type]} </p>
     </div>
   )
 }
