@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+}
+
+
+body * {
+  font-family: 'Poppins', 'sans-serif';
+}
+
+
 main {
   display: grid;
   grid-template-rows: auto 1fr auto auto;
@@ -28,9 +37,6 @@ main > .submain {
 
 
 @media (max-width:400px) {
-  main {
-    padding: 0 0.5rem;
-  }
 
   html {
     font-size: 10px;
@@ -43,11 +49,6 @@ main > .submain {
   }
 }
 
-
-
-body * {
-  font-family: 'Poppins', 'sans-serif';
-}
 
 @layer utilities {
   .text-balance {
