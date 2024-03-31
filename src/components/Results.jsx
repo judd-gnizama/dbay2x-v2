@@ -12,7 +12,6 @@ export default function Results({ type, search, results }) {
           <AddItem type={type}/>
           {results.map(result => {
             if (type === 'user') return <UserResult key={result.id} result={result}/>
-            // if (type === 'group') return <GroupResult key={result.id} result={result}/>
             if (type === 'transaction') return <TransactionResult key={result.id} result={result}/>
           })}
         </ul>

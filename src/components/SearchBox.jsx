@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import Results from "./Results";
-import { getGroupById } from "@/functions/LocalStorageFunc";
+import { getCurrentGroup, getGroupById } from "@/functions/LocalStorageFunc";
 
 export default function SearchBox({ type }) {
 
@@ -22,9 +22,9 @@ export default function SearchBox({ type }) {
         }
       } else if (type === 'transaction') {
         if (searchTerm) {
-          searchResults = data.group.transactions.filter((transaction)=> transaction.description.toLowerCase().includes(searchTerm.toLowerCase()))
+          searchResults = data.transactions.filter((transaction)=> transaction.description.toLowerCase().includes(searchTerm.toLowerCase()))
         } else {
-          searchResults = data.group.transactions
+          searchResults = data.transactions
         }
       } else {
         searchResults = [];
@@ -34,13 +34,14 @@ export default function SearchBox({ type }) {
   }
 
   useEffect(() => {
-    setData(getGroupById({groupId: 1}))
+    const currentGroup = getCurrentGroup()
+    setData(currentGroup);
   }, [])
 
   useEffect(() => {
-    // if (data){
-    //   handleSearch(search, type)
-    // }
+    if (data){
+      handleSearch(search, type)
+    }
   }, [data, search, type])
 
   const handleSubmit = (e) => {

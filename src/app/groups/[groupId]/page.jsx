@@ -15,7 +15,7 @@ export default function GroupPage({ params }) {
     style={{gridTemplateRows: "auto 1fr"}}>
       <GroupName groupName={groupName ? groupName : 'Undefined Group'}/>
       <section className="border-2 border-gray-300 rounded-md p-4 relative bg-inherit">
-        <h2 className="text-lg font-bold bg-white text-gray-400 absolute top-0 left-2 px-1"
+        <h2 className="text-lg font-bold bg-white dark:bg-black text-gray-400 absolute top-0 left-2 px-1"
         style={{translate: '0 -50%'}}
         >Users</h2>
         <SearchBox type='user'/>
