@@ -2,13 +2,13 @@
 
 import { getCurrentGroup } from "@/functions/LocalStorageFunc"
 
-export default function GroupName() {
+export default function GroupName({groupName}) {
   
-  const currentGroup = getCurrentGroup();
+  // const currentGroup = getCurrentGroup();
 
   return (
     <div className="text-2xl font-bold text-wrap">
-      {currentGroup.name}   
+      {groupName}   
     </div>
   )
 }

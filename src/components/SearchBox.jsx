@@ -41,7 +41,6 @@ export default function SearchBox({ type }) {
     // if (data){
     //   handleSearch(search, type)
     // }
-    console.log(data);
   }, [data, search, type])
 
   const handleSubmit = (e) => {

@@ -11,7 +11,6 @@ export default function Sidebar() {
 
   const handleChangeGroup = (groupId) => {
     setCurrentGroupId({groupId: groupId})
-    console.log(getCurrentGroup());
     setShowSidebar(false);
   }
 
