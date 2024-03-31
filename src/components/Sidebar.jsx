@@ -33,7 +33,7 @@ export default function Sidebar() {
         <div className="flex items-center gap-2 p-2 cursor-pointer hover:bg-slate-300 rounded-full z-10">
           <span className="material-symbols-outlined "
           style={{fontSize: '2rem'}}>group_add</span>
-          <p hidden={!showSidebar}>Create Group</p>
+          <p className="justify-center" hidden={!showSidebar}>Create Group</p>
         </div>
         
 
@@ -50,21 +50,21 @@ export default function Sidebar() {
           </div>
         </div>}
 
-        <div className="flex items-center gap-2 p-2 cursor-pointer hover:bg-slate-300 rounded-full z-10">
+        <Link href="#users" className="flex items-center gap-2 p-2 cursor-pointer hover:bg-slate-300 rounded-full z-10">
           <span className="material-symbols-outlined "
           style={{fontSize: '2rem'}}>person</span>
           <p hidden={!showSidebar}>Users</p>
-        </div>
-        <div className="flex items-center gap-2 p-2 cursor-pointer hover:bg-slate-300 rounded-full z-10">
+        </Link>
+        <Link href="#transactions" className="flex items-center gap-2 p-2 cursor-pointer hover:bg-slate-300 rounded-full z-10">
           <span className="material-symbols-outlined "
           style={{fontSize: '2rem'}}>receipt_long</span>
           <p hidden={!showSidebar}>Transactions</p>
-        </div>
-        <div className="flex items-center gap-2 p-2 cursor-pointer hover:bg-slate-300 rounded-full z-10">
+        </Link>
+        <Link href="#settlements" className="flex items-center gap-2 p-2 cursor-pointer hover:bg-slate-300 rounded-full z-10">
           <span className="material-symbols-outlined "
           style={{fontSize: '2rem'}}>handshake</span>
           <p hidden={!showSidebar}>Settlements</p>
-        </div>
+        </Link>
 
         {showSidebar && <LocalStorageManager/>}
 
