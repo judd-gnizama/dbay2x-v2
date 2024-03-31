@@ -1,15 +1,23 @@
 
 export function ProcessGroupData(group) {
-
-  const { members, transactions, id, name } = group[0];
-  const involvedMembersList = computeMembersList(transactions);
-  const mergedMembersList = mergeMembersList(members, involvedMembersList);
-  const reimbursements = computeReimbursements(mergedMembersList);
-
-  group.members = appendMembersNet(mergedMembersList);
-  group.reimbursements = reimbursements;
-
   
+  const initializeMembers = (membersList) => {
+    if (!membersList || !membersList.length) return []
+
+    const newMembersList = membersList.map(member => ({
+      id: member.id,
+      name: member.name,
+      paid: 0,
+      share: 0,
+      net: 0
+    }))
+    return newMembersList
+  }
+
+  const appendMembersNet = (membersList) => {
+    return membersList.map((member) => ({...member, net: member.share - member.paid}))
+  }
+
   const computeMembersList = (transactions) => {
 
     if (!transactions || !transactions.length) return []; //Early return empty
@@ -70,10 +78,6 @@ export function ProcessGroupData(group) {
     return appendMembersNet(deltaMemberList);
   }
 
-  const appendMembersNet = (membersList) => {
-    return membersList.map((member) => ({...member, net: member.share - member.paid}))
-  }
-
   const computeReimbursements = (membersList) => {
     if (!membersList || !membersList.length) return [];
 
@@ -82,12 +86,14 @@ export function ProcessGroupData(group) {
     let count = 0;
     while (!done) {
 
+
       if (membersList.findIndex((member) => member.net > 0) === -1 || count === 100) {
         done = true;
         break;
       }
       // sort lowest to highest
       let sortedMembersList = membersList.sort((member1, member2) => member1.net - member2.net);
+      
       
       // append to reimbursements
       const maxIndex = sortedMembersList.length - 1;
@@ -112,13 +118,32 @@ export function ProcessGroupData(group) {
     computedMembersList.forEach((newMember) => {
       const memberIndex = oldMembersList.findIndex(item => item.id === newMember.id)
       if (memberIndex !== -1) {
-        oldMembersList[memberIndex] = newMember;
+        oldMembersList[memberIndex] = {... oldMembersList[memberIndex], paid: newMember.paid, share: newMember.share };
       }
     })
       
     return oldMembersList;
   }
 
-  return group;
+  
+  const { users, transactions, id, name } = group;
+    
+  const initializedUsers = initializeMembers(users);
+  console.log(initializedUsers, 'initialized')
+  const involvedMembersList = computeMembersList(transactions);
+  console.log(involvedMembersList);
+  const mergedMembersList = mergeMembersList(initializedUsers, involvedMembersList);
+  console.log(mergedMembersList)
+  const newMembers = appendMembersNet(mergedMembersList);
+  const reimbursements = computeReimbursements(newMembers);
+  console.log(reimbursements)
+  const updatedGroup = {
+    id: id,
+    name: name,
+    transactions: transactions,
+    users: newMembers,
+    reimbursements: reimbursements,
+  }
+  return updatedGroup
 
 }

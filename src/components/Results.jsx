@@ -1,4 +1,5 @@
 import AddItem from "./AddItem"
+import SettlementResult from "./SettlementResult"
 import TransactionResult from "./TransactionResult"
 import UserResult from "./UserResult"
 
@@ -13,12 +14,13 @@ export default function Results({ type, search, results }) {
           {results.map(result => {
             if (type === 'user') return <UserResult key={result.id} result={result}/>
             if (type === 'transaction') return <TransactionResult key={result.id} result={result}/>
+            if (type === 'settlement') return <SettlementResult key={result.id} result={result}/>
           })}
         </ul>
       : 
       <>
         <span className="text-sm">No {type}s found. </span>
-        <AddItem type={type}/>
+        {type !== 'settlement' && <AddItem type={type}/>}
       </>
       }
     </div>

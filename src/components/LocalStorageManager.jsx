@@ -1,6 +1,7 @@
 'use client'
 
-import { getAllUniqueUsers, getGroupById, getGroups, getRawData, getStatsByUser, getUniqueUsers, getUsersFromAllGroups, getUsersFromGroup } from "@/functions/LocalStorageFunc";
+import { getAllUniqueUsers, getCurrentGroup, getGroupById, getGroups, getRawData, getStatsByUser, getUniqueUsers, getUsersFromAllGroups, getUsersFromGroup } from "@/functions/LocalStorageFunc";
+import { ProcessGroupData } from "@/functions/ProcessGroupData";
 import { useEffect } from "react";
 
 export default function LocalStorageManager() {
@@ -753,11 +754,11 @@ export default function LocalStorageManager() {
                 share: 2, //float - percentage of payment to pay
               },
               {
-                id: 2, //user_id
+                id: 5, //user_id
                 share: 1, //float - percentage of payment to pay
               },
               {
-                id: 3, //user_id
+                id: 6, //user_id
                 share: 2, //float - percentage of payment to pay
               },
             
@@ -767,10 +768,10 @@ export default function LocalStorageManager() {
             id: 87,
             date: "05-12-2025",
             description: "New Game",
-            type: 2, // type: 1 - expense, type: 2 - transfer
+            type: 9, // type: 1 - expense, type: 2 - transfer
             payer: 1, // user_id
             amount: 990,
-            recipient: 2, // user_id, 0 - if type 1
+            recipient: 11, // user_id, 0 - if type 1
             split_members: []
           }
         ],
@@ -814,8 +815,8 @@ export default function LocalStorageManager() {
   }
 
  const handleFunction = () => {
-    const res = getUniqueUsers();
-    console.log(res)
+    const currentGroup = getCurrentGroup();
+    console.log(ProcessGroupData(currentGroup));
   }
 
   return (

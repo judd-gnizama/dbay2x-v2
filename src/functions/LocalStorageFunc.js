@@ -81,6 +81,12 @@ export function getUniqueUsers() {
   return users
 }
 
+export function getSettlementsByGroupId({groupId}) {
+  const group = getGroupById({groupId});
+  return group ? group.transactions : [];
+}
+
+
 // Set Methods
 
 export function setRawData(data) {
