@@ -1,9 +1,6 @@
-import GroupName from "@/components/GroupName";
 import SearchBox from "@/components/SearchBox";
 
-export default function UsersPage() {
-
-  const type = 'user'
+export default function UserSearch({ type }) {
 
   return (
     <div className="flex justify-center w-full">
@@ -12,8 +9,7 @@ export default function UsersPage() {
       >
         <div className="flex items-center justify-between gap-4 ">
           <div>
-            <GroupName/>
-            <h1 className=" text-xl">Users</h1>
+            <h1 className=" text-xl">{type.toUpperCase()}</h1>
           </div>
         </div>
         <SearchBox type={type}/>

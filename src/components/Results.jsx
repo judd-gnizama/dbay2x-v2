@@ -18,7 +18,7 @@ export default function Results({ type, search, results }) {
         </ul>
       : 
       <>
-        <span className="text-center text-xl font-bold">No results found. </span>
+        <span className="text-sm">No {type}s found. </span>
         <AddItem type={type}/>
       </>
       }

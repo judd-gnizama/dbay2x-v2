@@ -48,7 +48,6 @@ export default function Sidebar() {
               >{`- ${group.name}`}</Link>
             )}            
           </div>
-          {/* <LocalStorageManager/> */}
         </div>}
 
         <div className="flex items-center gap-2 p-2 cursor-pointer hover:bg-slate-300 rounded-full z-10">
@@ -67,6 +66,7 @@ export default function Sidebar() {
           <p hidden={!showSidebar}>Settlements</p>
         </div>
 
+        {showSidebar && <LocalStorageManager/>}
 
 
       </div>

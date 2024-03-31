@@ -12,7 +12,7 @@ export default function Header() {
       <Brand/>
       <div className="flex items-center justify-end gap-4 w-full max-w-6xl">
         
-        <nav className="flex justify-center items-center gap-4 max-sm:hidden">
+        <nav className="flex justify-center items-center gap-4">
           {/* <Link className='hover:text-teal-400' href={'/users'}>Users</Link>
           <Link className='hover:text-teal-400' href={'/transactions'}>Transactions</Link>
           <Link className='hover:text-teal-400' href={'/settlements'}>Settlements</Link> */}
