@@ -8,7 +8,7 @@ export default function Header() {
 
   
   return (
-    <div className="flex justify-center gap-4 items-center p-4">
+    <div className="flex justify-center gap-4 items-center">
       <Brand/>
       <div className="flex items-center justify-end gap-4 w-full max-w-6xl">
         
