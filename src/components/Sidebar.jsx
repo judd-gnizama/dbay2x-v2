@@ -38,7 +38,7 @@ export default function Sidebar() {
   ]
 
   return (
-    <div className="bg-slate-200 dark:bg-gray-600 p-4 max-w-7xl z-10 h-full mr-8 transition-all duration-300"
+    <div className="bg-slate-200 dark:bg-gray-600 p-4 max-w-7xl z-10 mr-8 min-h-full"
     style={{position: 'absolute'}}
     >
       <div className="flex flex-col justify-start gap-4">
