@@ -11,15 +11,16 @@ export default function Header() {
     <div className="flex justify-center gap-4 items-center p-4">
       <Brand/>
       <div className="flex items-center justify-end gap-4 w-full max-w-6xl">
+        
         <nav className="flex justify-center items-center gap-4 max-sm:hidden">
-          <Link className='hover:text-teal-400' href={'/users'}>Users</Link>
+          {/* <Link className='hover:text-teal-400' href={'/users'}>Users</Link>
           <Link className='hover:text-teal-400' href={'/transactions'}>Transactions</Link>
-          <Link className='hover:text-teal-400' href={'/settlements'}>Settlements</Link>
-          {/* <Link href='/'>Home</Link>
-          <Link href='/about'>About</Link> */}
+          <Link className='hover:text-teal-400' href={'/settlements'}>Settlements</Link> */}
+          <Link href='/'>Home</Link>
+          <Link href='/about'>About</Link>
           <DarkModeSwitch/>
         </nav>
-        <nav className="flex justify-center items-center gap-4 sm:hidden">
+        {/* <nav className="flex justify-center items-center gap-4 sm:hidden">
           <Link className='hover:text-teal-400 flex justify-center items-center' href={'/users'}>
           <span className="material-symbols-outlined">person</span>
           </Link>
@@ -29,10 +30,10 @@ export default function Header() {
           <Link className='hover:text-teal-400 flex justify-center items-center' href={'/settlements'}>
           <span className="material-symbols-outlined">handshake</span>
           </Link>
-          {/* <Link href='/'>Home</Link>
-          <Link href='/about'>About</Link> */}
+          <Link href='/'>Home</Link>
+          <Link href='/about'>About</Link>
           <DarkModeSwitch/>
-        </nav>
+        </nav> */}
 
         
 

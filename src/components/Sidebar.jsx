@@ -30,27 +30,45 @@ export default function Sidebar() {
         <span className="material-symbols-outlined p-2 w-fit cursor-pointer hover:bg-slate-300 rounded-full" style={{fontSize: '2rem'}}
         onClick={() => showSidebar === false ? setShowSidebar(true) : setShowSidebar(false)}>menu</span>
         
-        <div className="flex items-center w-fit gap-2 p-2 cursor-pointer hover:bg-slate-300 rounded-full z-10">
+        <div className="flex items-center gap-2 p-2 cursor-pointer hover:bg-slate-300 rounded-full z-10">
           <span className="material-symbols-outlined "
           style={{fontSize: '2rem'}}>group_add</span>
           <p hidden={!showSidebar}>Create Group</p>
         </div>
+        
 
         {showSidebar && 
-        <div className="flex flex-col gap-2 pl-2" >
+        <div className="flex flex-col gap-2 pl-4" >
           <h2 className="font-bold">Available Groups</h2>
           <div className="grid gap-2 max-h-64 overflow-y-scroll">
             {groups && groups.map((group, index) => 
               <Link key={index} href={`/groups/${group.id}`} 
               className="whitespace-nowrap overflow-hidden text-nowrap text-ellipsis hover:text-teal-400"
               onClick={() => handleChangeGroup(group.id)}
-              >{`> ${group.name}`}</Link>
+              >{`- ${group.name}`}</Link>
             )}            
           </div>
-          
-          <LocalStorageManager/>
-
+          {/* <LocalStorageManager/> */}
         </div>}
+
+        <div className="flex items-center gap-2 p-2 cursor-pointer hover:bg-slate-300 rounded-full z-10">
+          <span className="material-symbols-outlined "
+          style={{fontSize: '2rem'}}>person</span>
+          <p hidden={!showSidebar}>Users</p>
+        </div>
+        <div className="flex items-center gap-2 p-2 cursor-pointer hover:bg-slate-300 rounded-full z-10">
+          <span className="material-symbols-outlined "
+          style={{fontSize: '2rem'}}>receipt_long</span>
+          <p hidden={!showSidebar}>Transactions</p>
+        </div>
+        <div className="flex items-center gap-2 p-2 cursor-pointer hover:bg-slate-300 rounded-full z-10">
+          <span className="material-symbols-outlined "
+          style={{fontSize: '2rem'}}>handshake</span>
+          <p hidden={!showSidebar}>Settlements</p>
+        </div>
+
+
+
       </div>
       
 
