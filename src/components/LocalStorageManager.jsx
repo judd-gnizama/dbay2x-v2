@@ -1,8 +1,7 @@
 'use client'
 
-import { getAllUniqueUsers, getCurrentGroup, getGroupById, getGroups, getRawData, getStatsByUser, getUniqueUsers, getUsersFromAllGroups, getUsersFromGroup } from "@/functions/LocalStorageFunc";
+import { getCurrentGroup, getRawData, replaceGroup} from "@/functions/LocalStorageFunc";
 import { ProcessGroupData } from "@/functions/ProcessGroupData";
-import { useEffect } from "react";
 
 export default function LocalStorageManager() {
 
@@ -663,18 +662,6 @@ export default function LocalStorageManager() {
       reimbursements: [
         // algorithm
         // 1. Get who has highest net, 2. Get who has lowest net, 3. 1 --> 2, 4. update net, 5. repeat process. 5. stop when all net are zero. 
-        {
-          id: 1,
-          from: 3, 
-          to: 1,
-          amount: 1800,
-        },
-        {
-          id: 2,
-          from: 2, 
-          to: 1,
-          amount: 1500,
-        },
       ]
       },
       {
@@ -778,18 +765,6 @@ export default function LocalStorageManager() {
         reimbursements: [
           // algorithm
           // 1. Get who has highest net, 2. Get who has lowest net, 3. 1 --> 2, 4. update net, 5. repeat process. 5. stop when all net are zero. 
-          {
-            id: 1,
-            from: 3, 
-            to: 1,
-            amount: 1800,
-          },
-          {
-            id: 2,
-            from: 2, 
-            to: 1,
-            amount: 1500,
-          },
         ]
         },
   ]
@@ -817,7 +792,8 @@ export default function LocalStorageManager() {
  const handleFunction = () => {
     const currentGroup = getCurrentGroup();
     const processedGroup = ProcessGroupData(currentGroup)
-    console.log();
+    replaceGroup({newGroup: processedGroup})
+    console.log(getRawData());
   }
 
   return (

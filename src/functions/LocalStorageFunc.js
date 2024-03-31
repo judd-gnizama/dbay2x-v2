@@ -107,6 +107,7 @@ export function setCurrentGroupId({groupId})  {
 }
 
 export function replaceGroups({newGroups}) {
+  console.log(newGroups, 'new groups')
   if(isObjEmpty(newGroups)) return null;
   var oldData = getRawData();
   if (!isObjEmpty(oldData)){
@@ -115,12 +116,12 @@ export function replaceGroups({newGroups}) {
   }
 }
 
-export function replaceGroupById({groupId, newGroup}) {
-  if(!group || isObjEmpty(newGroup)) return;
+export function replaceGroup({newGroup}) {
+  const groupId = newGroup.id;
   const oldGroups = getGroups();
   if (isListEmpty(oldGroups)) return;
   const newGroups = oldGroups.map(group => (group.id === groupId ? newGroup : group))
-  replaceGroups(newGroups);
+  replaceGroups({newGroups: newGroups});
 }
 
 export function appendNewGroup({newGroup}) {
@@ -128,7 +129,7 @@ export function appendNewGroup({newGroup}) {
   const oldGroups = getGroups();
   if (isListEmpty(oldGroups)) return;
   const newGroups = [...oldGroups, newGroup]
-  replaceGroups(newGroups);
+  replaceGroups({newGroups: newGroups});
 }
 
 // Remove Methods
