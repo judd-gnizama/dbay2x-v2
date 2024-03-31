@@ -11,7 +11,7 @@ export function getKey() {
 
 export function getRawData() {
   const storedData = localStorage.getItem(key);
-  return storedData;
+  return JSON.parse(storedData);
 }
 
 export function getCurrentGroupId() {
@@ -20,9 +20,7 @@ export function getCurrentGroupId() {
 }
 
 export function getGroups() {
-  const JSONData = getRawData();
-  const groups = JSON.parse(JSONData).groups;
-  return groups  
+    return getRawData().groups  
 }
 
 export function getGroupById({ groupId }) {
