@@ -6,6 +6,10 @@ const isObjEmpty = (obj) => {
   return Object.keys(obj).length === 0
 }
 
+const isListEmpty = (list) => {
+  return list.length <= 0
+}
+
 
 // Get Methods
 
@@ -94,9 +98,37 @@ export function setRawData(data) {
 }
 
 export function setCurrentGroupId({groupId})  {
+  if (!groupId) return null;
   var data = getRawData();
-  data ?  data.currentGroupId = groupId : {};
-  setRawData(data);
+  if (!isObjEmpty(data)) {
+    data.currentGroupId = groupId
+    setRawData(data);
+  }  
+}
+
+export function replaceGroups({newGroups}) {
+  if(isObjEmpty(newGroups)) return null;
+  var oldData = getRawData();
+  if (!isObjEmpty(oldData)){
+    oldData.groups = newGroups
+    setRawData(oldData);
+  }
+}
+
+export function replaceGroupById({groupId, newGroup}) {
+  if(!group || isObjEmpty(newGroup)) return;
+  const oldGroups = getGroups();
+  if (isListEmpty(oldGroups)) return;
+  const newGroups = oldGroups.map(group => (group.id === groupId ? newGroup : group))
+  replaceGroups(newGroups);
+}
+
+export function appendNewGroup({newGroup}) {
+  if(isObjEmpty(newGroup)) return;
+  const oldGroups = getGroups();
+  if (isListEmpty(oldGroups)) return;
+  const newGroups = [...oldGroups, newGroup]
+  replaceGroups(newGroups);
 }
 
 // Remove Methods

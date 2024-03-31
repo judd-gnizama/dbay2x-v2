@@ -129,14 +129,10 @@ export function ProcessGroupData(group) {
   const { users, transactions, id, name } = group;
     
   const initializedUsers = initializeMembers(users);
-  console.log(initializedUsers, 'initialized')
   const involvedMembersList = computeMembersList(transactions);
-  console.log(involvedMembersList);
   const mergedMembersList = mergeMembersList(initializedUsers, involvedMembersList);
-  console.log(mergedMembersList)
   const newMembers = appendMembersNet(mergedMembersList);
   const reimbursements = computeReimbursements(newMembers);
-  console.log(reimbursements)
   const updatedGroup = {
     id: id,
     name: name,

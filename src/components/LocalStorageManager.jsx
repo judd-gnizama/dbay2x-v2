@@ -816,7 +816,8 @@ export default function LocalStorageManager() {
 
  const handleFunction = () => {
     const currentGroup = getCurrentGroup();
-    console.log(ProcessGroupData(currentGroup));
+    const processedGroup = ProcessGroupData(currentGroup)
+    console.log();
   }
 
   return (
