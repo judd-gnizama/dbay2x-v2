@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import Results from "./Results";
-import { getGroupById } from "@/app/LocalStorageFunc";
+import { getGroupById } from "@/functions/LocalStorageFunc";
 
 export default function SearchBox({ type }) {
 

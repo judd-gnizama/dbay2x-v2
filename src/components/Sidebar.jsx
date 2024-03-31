@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react"
 import LocalStorageManager from "./LocalStorageManager";
-import { getGroups, setCurrentGroupId } from "@/app/LocalStorageFunc";
+import { getCurrentGroup, getGroups, setCurrentGroupId } from "@/functions/LocalStorageFunc";
 
 export default function Sidebar() {
 
@@ -11,13 +11,13 @@ export default function Sidebar() {
 
   const handleChangeGroup = (groupId) => {
     setCurrentGroupId({groupId: groupId})
+    console.log(getCurrentGroup());
     setShowSidebar(false);
   }
 
   useEffect(() => {
     const storedGroups = getGroups();
     if (storedGroups && storedGroups.length > 0) {
-      console.log(storedGroups, 'stored groups')
       setGroups(storedGroups);
     }
   }, [])
@@ -42,7 +42,7 @@ export default function Sidebar() {
           <h2 className="font-bold">Available Groups</h2>
           <div className="grid gap-2 max-h-64 overflow-y-scroll">
             {groups && groups.map((group, index) => 
-              <Link key={index} href="/users" 
+              <Link key={index} href={`/groups/${group.id}`} 
               className="whitespace-nowrap overflow-hidden text-nowrap text-ellipsis hover:text-teal-400"
               onClick={() => handleChangeGroup(group.id)}
               >{`> ${group.name}`}</Link>

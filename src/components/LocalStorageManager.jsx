@@ -1,6 +1,6 @@
 'use client'
 
-import { getAllUniqueUsers, getGroupById, getGroups, getRawData, getStatsByUser, getUniqueUsers, getUsersFromAllGroups, getUsersFromGroup } from "@/app/LocalStorageFunc";
+import { getAllUniqueUsers, getGroupById, getGroups, getRawData, getStatsByUser, getUniqueUsers, getUsersFromAllGroups, getUsersFromGroup } from "@/functions/LocalStorageFunc";
 import { useEffect } from "react";
 
 export default function LocalStorageManager() {

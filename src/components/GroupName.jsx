@@ -1,6 +1,6 @@
 'use client'
 
-import { getCurrentGroup } from "@/app/LocalStorageFunc"
+import { getCurrentGroup } from "@/functions/LocalStorageFunc"
 
 export default function GroupName() {
   

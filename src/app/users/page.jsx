@@ -1,4 +1,3 @@
-import AddItem from "@/components/AddItem";
 import GroupName from "@/components/GroupName";
 import SearchBox from "@/components/SearchBox";
 
