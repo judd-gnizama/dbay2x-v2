@@ -1,41 +1,21 @@
 'use client'
 import Link from "next/link";
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import LocalStorageManager from "./LocalStorageManager";
+import { getGroups } from "@/app/LocalStorageFunc";
 
 export default function Sidebar() {
 
   const [ showSidebar , setShowSidebar] = useState(false);
-  const groups = [
-    'Travel to Bohol',
-    'Christmas Vacation at CDO',
-    'Trip to Taiwan', 
-    'Staycation at IT Park',
-    'Christmas Vaceawfeafeafe ef awef awef wefawef awef awef awef eation at CDO',
-    'Trip to Taiwan', 
-    'Staycation at IT Park',
-    'Christmas Vacation at CDO',
-    'Trip to Taiwan', 
-    'Staycation at IT Park',
-    'Christmas Vacation at CDO',
-    'Trip to Taiwan', 
-    'Staycation at IT Park',
-    'Christmas Vacation at CDO',
-    'Trip to Taiwan', 
-    'Staycation at IT Park',
-    'Christmas Vacation at CDO',
-    'Trip to Taiwan', 
-    'Staycation at IT Park',
-    'Christmas Vacation at CDO',
-    'Trip to Taiwan', 
-    'Staycation at IT Park',
-    'Christmas Vacation at CDO',
-    'Trip to Taiwan', 
-    'Staycation at IT Park',
-    'Christmas Vacation at CDO',
-    'Trip to Taiwan', 
-    'Staycation at IT Park'
-  ]
+  const [ groups, setGroups ] = useState([]);
+
+  useEffect(() => {
+    const storedGroups = getGroups();
+    if (storedGroups && storedGroups.length > 0) {
+      console.log(storedGroups, 'stored groups')
+      setGroups(storedGroups);
+    }
+  }, [])
 
   return (
     <div className="bg-slate-200 dark:bg-gray-600 p-4 max-w-7xl z-10 mr-8 min-h-full"
@@ -59,7 +39,7 @@ export default function Sidebar() {
             {groups && groups.map((group, index) => 
               <Link key={index} href="/" 
               className="whitespace-nowrap overflow-hidden text-nowrap text-ellipsis hover:text-teal-400"
-              >{`> ${group}`}</Link>
+              >{`> ${group.name}`}</Link>
             )}            
           </div>
           

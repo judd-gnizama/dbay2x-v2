@@ -2,6 +2,9 @@
 
 const key = 'myDataKey'
 
+
+// Get Methods
+
 export function getKey() {
   return key
 }
@@ -11,23 +14,25 @@ export function getRawData() {
   return storedData;
 }
 
-export function setRawData(data) {
-  localStorage.setItem(key, JSON.stringify(data));
-}
-
-export function removeRawData() {
-  localStorage.removeItem(key)  
+export function getCurrentGroupId() {
+  const data = getRawData();
+  return data.currentGroupId;
 }
 
 export function getGroups() {
   const JSONData = getRawData();
-  const groups = JSON.parse(JSONData);
+  const groups = JSON.parse(JSONData).groups;
   return groups  
 }
 
 export function getGroupById({ groupId }) {
   const groups = getGroups();
   return groups.filter(group => parseInt(group.id) === parseInt(groupId))[0]
+}
+
+export function getCurrentGroup() {
+  const currentGroupId = getCurrentGroupId();
+  return getGroupById({groupId: currentGroupId});
 }
 
 export function getUsersFromGroup({ groupId }){
@@ -70,4 +75,22 @@ export function getUniqueUsers() {
   let users = []
   userIds.forEach(id => users.push(getOverallStatsByUser({userId: id})))
   return users
+}
+
+// Set Methods
+
+export function setRawData(data) {
+  localStorage.setItem(key, JSON.stringify(data));
+}
+
+export function setCurrentGroupId({groupId})  {
+  var data = getRawData();
+  data.currentGroupId = groupId;
+  setRawData(data);
+}
+
+// Remove Methods
+
+export function removeRawData() {
+  localStorage.removeItem(key)  
 }

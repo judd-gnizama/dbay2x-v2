@@ -65,7 +65,7 @@ export default function LocalStorageManager() {
       total_net: 1000,
     },
   ]
-  
+
   const legacy_test_groups = [
     {
       id: 1,
@@ -482,6 +482,84 @@ export default function LocalStorageManager() {
       ],
     },
   ]  
+  
+  const test_group = {
+    id: 1,
+    name: 'Bohol Vacation',
+    members: [
+      {
+        id: 1,
+        paid: 5100,
+        share: 1800,
+        net: -3300,
+      },
+      {
+        id: 2,
+        paid: -600,
+        share: 900,
+        net: 1500,
+      },
+      {
+        id: 3,
+        paid: 0,
+        share: 1800,
+        net: 1800,
+      },
+    ],
+    transactions: [
+      {
+        id: 1,
+        date: "04-04-2024",
+        description: "Birthday Gift",
+        type: 1, // type: 1 - expense, type: 2 - transfer
+        payer: 1, // user_id
+        amount: 4500,
+        recipient: 0, // user_id, 0 - if type 1
+        split_members: [
+          {
+            id: 1, //user_id
+            share: 2, //float - percentage of payment to pay
+          },
+          {
+            id: 2, //user_id
+            share: 1, //float - percentage of payment to pay
+          },
+          {
+            id: 3, //user_id
+            share: 2, //float - percentage of payment to pay
+          },
+        
+        ]
+      },
+      {
+        id: 2,
+        date: "04-09-2024",
+        description: "New Game",
+        type: 2, // type: 1 - expense, type: 2 - transfer
+        payer: 1, // user_id
+        amount: 600,
+        recipient: 2, // user_id, 0 - if type 1
+        split_members: []
+      }
+    ],
+    reimbursements: [
+      // algorithm
+      // 1. Get who has highest net, 2. Get who has lowest net, 3. 1 --> 2, 4. update net, 5. repeat process. 5. stop when all net are zero. 
+      {
+        id: 1,
+        from: 3, 
+        to: 1,
+        amount: 1800,
+      },
+      {
+        id: 2,
+        from: 2, 
+        to: 1,
+        amount: 1500,
+      },
+    ]
+  }
+
   const test_groups =  [
       {
       name: 'Trip to CDO', 
@@ -715,88 +793,16 @@ export default function LocalStorageManager() {
         },
   ]
 
-  const test_group = {
-    id: 1,
-    name: 'Bohol Vacation',
-    members: [
-      {
-        id: 1,
-        paid: 5100,
-        share: 1800,
-        net: -3300,
-      },
-      {
-        id: 2,
-        paid: -600,
-        share: 900,
-        net: 1500,
-      },
-      {
-        id: 3,
-        paid: 0,
-        share: 1800,
-        net: 1800,
-      },
-    ],
-    transactions: [
-      {
-        id: 1,
-        date: "04-04-2024",
-        description: "Birthday Gift",
-        type: 1, // type: 1 - expense, type: 2 - transfer
-        payer: 1, // user_id
-        amount: 4500,
-        recipient: 0, // user_id, 0 - if type 1
-        split_members: [
-          {
-            id: 1, //user_id
-            share: 2, //float - percentage of payment to pay
-          },
-          {
-            id: 2, //user_id
-            share: 1, //float - percentage of payment to pay
-          },
-          {
-            id: 3, //user_id
-            share: 2, //float - percentage of payment to pay
-          },
-        
-        ]
-      },
-      {
-        id: 2,
-        date: "04-09-2024",
-        description: "New Game",
-        type: 2, // type: 1 - expense, type: 2 - transfer
-        payer: 1, // user_id
-        amount: 600,
-        recipient: 2, // user_id, 0 - if type 1
-        split_members: []
-      }
-    ],
-    reimbursements: [
-      // algorithm
-      // 1. Get who has highest net, 2. Get who has lowest net, 3. 1 --> 2, 4. update net, 5. repeat process. 5. stop when all net are zero. 
-      {
-        id: 1,
-        from: 3, 
-        to: 1,
-        amount: 1800,
-      },
-      {
-        id: 2,
-        from: 2, 
-        to: 1,
-        amount: 1500,
-      },
-    ]
+  const test_db = {
+    currentGroupId: 1,
+    groups: test_groups
   }
 
   const handleLegacyLoad = () => {
     localStorage.setItem(DATA_KEY, JSON.stringify({users: test_users, group: test_group}));
   }
   const handleLoad = () => {
-    localStorage.setItem(DATA_KEY, JSON.stringify(test_groups));
+    localStorage.setItem(DATA_KEY, JSON.stringify(test_db));
   }
 
   const handleClear = () => {

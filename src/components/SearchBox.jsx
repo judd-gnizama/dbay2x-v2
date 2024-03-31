@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import Results from "./Results";
+import { getGroupById } from "@/app/LocalStorageFunc";
 
 export default function SearchBox({ type }) {
 
@@ -33,16 +34,14 @@ export default function SearchBox({ type }) {
   }
 
   useEffect(() => {
-    const storedData = localStorage.getItem('myDataKey');
-    if (storedData) {
-      setData(JSON.parse(storedData));
-    }
+    setData(getGroupById({groupId: 1}))
   }, [])
 
   useEffect(() => {
-    if (data){
-      handleSearch(search, type)
-    }
+    // if (data){
+    //   handleSearch(search, type)
+    // }
+    console.log(data);
   }, [data, search, type])
 
   const handleSubmit = (e) => {
