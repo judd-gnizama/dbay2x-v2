@@ -1,5 +1,6 @@
 'use client'
 
+import GroupDesc from "@/components/GroupDesc";
 import GroupName from "@/components/GroupName";
 import Results from "@/components/Results";
 import SearchBox from "@/components/SearchBox";
@@ -14,7 +15,10 @@ export default function GroupPage({ params }) {
   return (
     <div className="grid gap-4"
     style={{gridTemplateRows: "auto 1fr"}}>
-      <GroupName group={group}/>
+      <div>
+        <GroupName group={group}/>
+        <GroupDesc group={group}/>
+      </div>
       <section className="border-2 border-gray-300 rounded-md p-4 relative bg-inherit">
         <h2 id="users" className="text-lg font-bold bg-white text-gray-400 absolute top-0 left-2 px-1"
         style={{translate: '0 -50%'}}

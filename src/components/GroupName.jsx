@@ -19,7 +19,6 @@ export default function GroupName({group}) {
     }
   }
 
-
   const handleEnterPress = (event) => {
     if(event.key === 'Enter' && groupNameDivRef.current) {
       groupNameDivRef.current.blur();
@@ -41,7 +40,7 @@ export default function GroupName({group}) {
 
 
   return (
-    <div className="flex text-wrap break-all max-w-4xl">
+    <div className="flex text-wrap break-all max-w-lg">
       <div className={`text-3xl font-bold flex items-cente min-w-10 z-8 relative ${ editing && 'border-4 rounded-lg' }`}
       ref={groupNameDivRef}
       contentEditable={editing}
