@@ -2,16 +2,23 @@
 import Link from "next/link";
 import { useEffect, useState } from "react"
 import LocalStorageManager from "./LocalStorageManager";
-import { getCurrentGroup, getGroups, setCurrentGroupId } from "@/functions/LocalStorageFunc";
+import { createNewGroup, appendNewGroup, getAllUniqueUserIds, getCurrentGroup, getGroups, setCurrentGroupId } from "@/functions/LocalStorageFunc";
+import { useRouter } from "next/navigation";
 
 export default function Sidebar() {
 
   const [ showSidebar , setShowSidebar] = useState(false);
   const [ groups, setGroups ] = useState([]);
+  const router = useRouter();
 
   const handleChangeGroup = (groupId) => {
     setCurrentGroupId({groupId: groupId})
     setShowSidebar(false);
+  }
+
+  const handleAddNewGroup = () => {
+    const { id } = createNewGroup();
+    router.push(`/groups/${id}`)
   }
 
   useEffect(() => {
@@ -30,12 +37,12 @@ export default function Sidebar() {
         <span className="material-symbols-outlined p-2 w-fit cursor-pointer hover:bg-slate-300 rounded-full" style={{fontSize: '2rem'}}
         onClick={() => showSidebar === false ? setShowSidebar(true) : setShowSidebar(false)}>menu</span>
         
-        <div className="flex items-center gap-2 p-2 cursor-pointer hover:bg-slate-300 rounded-full z-10">
+        <div className="flex items-center gap-2 p-2 cursor-pointer hover:bg-slate-300 rounded-full z-10"
+        onClick={()=>handleAddNewGroup()}>
           <span className="material-symbols-outlined "
           style={{fontSize: '2rem'}}>group_add</span>
-          <p className="justify-center" hidden={!showSidebar}>Create Group</p>
+        <p className="justify-center" hidden={!showSidebar}>Create New Group</p>
         </div>
-        
 
         {showSidebar && 
         <div className="flex flex-col gap-2 pl-4" >

@@ -10,8 +10,7 @@ export default function GroupPage({ params }) {
   const groupId = params.groupId;
   const group = getGroupById({groupId: groupId});
   const groupName = group && Object.keys(group).length !== 0 ? group.name : null;
-
-
+  
   return (
     <div className="grid gap-4"
     style={{gridTemplateRows: "auto 1fr"}}>
@@ -32,7 +31,7 @@ export default function GroupPage({ params }) {
         <h2 id="settlements" className="text-lg font-bold bg-white text-gray-400 absolute top-0 left-2 px-1"
         style={{translate: '0 -50%'}}
         >Settlements</h2>
-        <Results type='settlement' results={group.settlements}/>
+        {/* <Results type='settlement' results={group.settlements}/> */}
       </section>
       
     </div>

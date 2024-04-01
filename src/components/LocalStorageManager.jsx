@@ -1,5 +1,6 @@
 'use client'
 
+import { createNewGroup } from "@/functions/InterfaceFunc";
 import { getCurrentGroup, getRawData, replaceGroup} from "@/functions/LocalStorageFunc";
 import { ProcessGroupData } from "@/functions/ProcessGroupData";
 
@@ -790,10 +791,7 @@ export default function LocalStorageManager() {
   }
 
  const handleFunction = () => {
-    const currentGroup = getCurrentGroup();
-    const processedGroup = ProcessGroupData(currentGroup)
-    replaceGroup({newGroup: processedGroup})
-    console.log(getRawData());
+    createNewGroup();
   }
 
   return (

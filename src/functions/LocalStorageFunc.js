@@ -3,14 +3,14 @@
 const key = 'myDataKey'
 
 const isObjEmpty = (obj) => {
+  
+  if (!obj) return false;
   return Object.keys(obj).length === 0
 }
 
 const isListEmpty = (list) => {
   return list.length <= 0
 }
-
-
 // Get Methods
 
 export function getKey() {
@@ -19,7 +19,8 @@ export function getKey() {
 
 export function getRawData() {
   const storedData = localStorage.getItem(key);
-  return storedData ? JSON.parse(storedData) : null;
+  console.log(JSON.parse(storedData), 'raw data')
+  return storedData ? JSON.parse(storedData) : {};
 }
 
 export function getCurrentGroupId() {
@@ -107,7 +108,6 @@ export function setCurrentGroupId({groupId})  {
 }
 
 export function replaceGroups({newGroups}) {
-  console.log(newGroups, 'new groups')
   if(isObjEmpty(newGroups)) return null;
   var oldData = getRawData();
   if (!isObjEmpty(oldData)){
@@ -128,12 +128,33 @@ export function appendNewGroup({newGroup}) {
   if(isObjEmpty(newGroup)) return;
   const oldGroups = getGroups();
   if (isListEmpty(oldGroups)) return;
-  const newGroups = [...oldGroups, newGroup]
-  replaceGroups({newGroups: newGroups});
+  const tempGroup = getGroupById({groupId: newGroup.id})
+  if(!tempGroup){
+    const newGroups = [...oldGroups, newGroup]
+    replaceGroups({newGroups: newGroups});
+  }
 }
+
 
 // Remove Methods
 
 export function removeRawData() {
   localStorage.removeItem(key)  
+}
+
+export function createNewGroup() {
+
+  const userIds = getAllUniqueUserIds();
+  const newUserId = Math.max(...userIds) + 1;
+  const tempGroupName = `NewGroup#000${newUserId}`
+
+  const newGroup = {
+    id: newUserId,
+    name: tempGroupName,
+    description: "This is a Group Description",
+    transactions: [],
+    users: [],
+  }
+  appendNewGroup({newGroup: newGroup})
+  return newGroup;
 }
