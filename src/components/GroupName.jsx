@@ -1,27 +1,49 @@
 'use client'
 
 import { changeGroupProp } from "@/functions/LocalStorageFunc";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function GroupName({group}) {
 
   const { id, name } = group;
   const [ newName, setNewName ] = useState(name);
   const [ editing, setEditing ] = useState(false);
+  const groupNameDivRef = useRef(null);
 
   const handleSaveName = (event) => {
     setEditing(false)
     const name = event.target.textContent;
     if(name.trim() !== "") {
-      console.log("To save", name)
       setNewName(name)
       changeGroupProp({ groupId: id, key:'name', value: name })
     }
   }
 
+
+  const handleEnterPress = (event) => {
+    if(event.key === 'Enter' && groupNameDivRef.current) {
+      groupNameDivRef.current.blur();
+    }
+  }
+
+  useEffect(() => {
+    const div = groupNameDivRef.current;
+    if(div) {
+      div.addEventListener('keydown', handleEnterPress)
+    }
+
+    return () => {
+      if(div) {
+        div.removeEventListener('keydown', handleEnterPress)
+      }
+    }
+  }, [groupNameDivRef])
+
+
   return (
     <div className="flex text-wrap break-all max-w-4xl">
       <div className={`text-3xl font-bold flex items-cente min-w-10 z-8 relative ${ editing && 'border-4 rounded-lg' }`}
+      ref={groupNameDivRef}
       contentEditable={editing}
       suppressContentEditableWarning={true}
       onBlur={handleSaveName}>
