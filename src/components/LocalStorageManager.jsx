@@ -1,6 +1,6 @@
 'use client'
 
-import { createNewGroup, getAllUniqueUserIds, getCurrentGroup, getRawData, replaceGroup} from "@/functions/LocalStorageFunc";
+import { createNewGroup, getAllUniqueUserIds, getCurrentGroup, getGroups, getRawData, getUserById, getUserInGroup, getUserStatsFromEachGroup, replaceGroup, replaceGroups} from "@/functions/LocalStorageFunc";
 import { ProcessGroupData } from "@/functions/ProcessGroupData";
 
 export default function LocalStorageManager() {
@@ -790,7 +790,10 @@ export default function LocalStorageManager() {
   }
 
  const handleFunction = () => {
-    console.log('Function Output')
+  const groups = getGroups();
+  const processedGroups = groups.map(group => ProcessGroupData(group));
+  replaceGroups({newGroups: processedGroups});
+  console.log('Done process')
   }
 
   return (

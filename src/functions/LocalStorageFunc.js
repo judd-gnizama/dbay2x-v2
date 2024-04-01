@@ -70,25 +70,38 @@ export function getAllUniqueUserIds() {
   return userIds.length > 0 ? [... new Set(userIds)] : []
 }
 
-export function getOverallStatsByUser( {userId} ) {
+export function getUserStatsFromEachGroup({ userId }) {
+  const usersFromGroups = getUsersFromAllGroups();
+  return usersFromGroups.filter(user => user.id === userId)
+}
+
+export function getUserInGroup({ groupId, userId }){
+  const users = getUsersFromGroup({ groupId })
+  const index = users.findIndex(user => user.id === userId)
+  if (index !== -1) return users[index]
+}
+
+export function getOverallStatsUser( {userId} ) {
   const usersFromGroups = getUsersFromAllGroups();
   let userPaid = 0;
   let userShare = 0;
   let userNet = 0;
+  let userName = ''
   usersFromGroups && usersFromGroups.forEach(user => {
     if(user.id === userId) {
       userPaid += user.paid
       userShare += user.share
       userNet += user.net
+      userName = user.name
     }
   });
-  return {id: userId, total_paid: userPaid, total_share: userShare, total_net: userNet}
+  return {id: userId, name: userName, total_paid: userPaid, total_share: userShare, total_net: userNet}
 }
 
 export function getUniqueUsers() {
   const userIds = getAllUniqueUserIds();
   let users = []
-  userIds && userIds.forEach(id => users.push(getOverallStatsByUser({userId: id})))
+  userIds && userIds.forEach(id => users.push(getOverallStatsUser({userId: id})))
   return users
 }
 

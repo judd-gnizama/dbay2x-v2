@@ -2,9 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 
-export default function EditableDiv( { editableText , handleSubmit } ) {
+export default function EditableDiv( { editableText, setEditableText, editing, setEditing, handleSubmitFcn } ) {
 
-  const [ editing, setEditing ] = useState(false);
   const divRef = useRef(null);
 
   const handleEnterPress = (event) => {
@@ -28,12 +27,12 @@ export default function EditableDiv( { editableText , handleSubmit } ) {
 
 
   return (
-    <div className="flex text-wrap break-all max-w-lg">
-      <div className={`text-3xl font-bold flex items-cente min-w-10 z-8 relative ${ editing && 'border-4 rounded-lg' }`}
+    <div className="flex text-wrap break-all max-w-sm">
+      <div className={`text-3xl font-bold flex items-center min-w-10 z-8 relative ${ editing && 'border-4 rounded-lg' }`}
       ref={divRef}
       contentEditable={editing}
       suppressContentEditableWarning={true}
-      onBlur={handleSubmit}>
+      onBlur={handleSubmitFcn}>
         {editableText}   
       </div>
         <button className="material-symbols-outlined p-2 z-9" 
