@@ -130,6 +130,13 @@ export function replaceGroup({newGroup}) {
   replaceGroups({newGroups: newGroups});
 }
 
+export function changeGroupProp({ groupId, key, value }) {
+  const group = getGroupById({groupId: groupId});
+  const changedGroup = {...group, [key]: value}
+  console.log(changedGroup, "changedgroup")
+  replaceGroup({ newGroup: changedGroup });
+}
+
 export function appendNewGroup({newGroup}) {
   if(isObjEmpty(newGroup)) return;
   const oldGroups = getGroups();

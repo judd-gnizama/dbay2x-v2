@@ -30,7 +30,7 @@ export default function Sidebar() {
     if (storedGroups && storedGroups.length > 0) {
       setGroups(storedGroups);
     }
-  }, [addedGroup])
+  }, [addedGroup, showSidebar])
 
   return (
     <div className="bg-slate-200 dark:bg-gray-600 p-4 max-w-7xl z-10 mr-8 min-h-full"
