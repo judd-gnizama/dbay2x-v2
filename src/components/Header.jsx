@@ -10,7 +10,7 @@ export default function Header() {
   return (
     <div className="grid place-items-center gap-4"
     style={{gridTemplateColumns: '5rem 1fr'}}>
-      <span className="material-symbols-outlined text-teal-400" style={{fontSize: '4rem'}}>request_quote</span>
+      <Link href='/' className="material-symbols-outlined text-teal-400" style={{fontSize: '4rem'}}>request_quote</Link>
       <div className="flex items-center justify-between gap-4 w-full max-w-6xl"
       style={{gridColumn: '2'}}>
         <Brand/>  
