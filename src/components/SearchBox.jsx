@@ -2,14 +2,13 @@
 
 import { useEffect, useState } from "react"
 import Results from "./Results";
-import { getCurrentGroup, getGroupById } from "@/functions/LocalStorageFunc";
+import { getGroupById } from "@/functions/LocalStorageFunc";
 
-export default function SearchBox({ type }) {
+export default function SearchBox({ type, groupId }) {
 
   const [ search, setSearch ] = useState("");
   const [ data, setData ] = useState([]);
   const [ results, setResults ] = useState([]);
-
 
   const handleSearch = (searchTerm, type) => {
     let searchResults = []
@@ -34,7 +33,7 @@ export default function SearchBox({ type }) {
   }
 
   useEffect(() => {
-    const currentGroup = getCurrentGroup()
+    const currentGroup = getGroupById({groupId: groupId})
     setData(currentGroup);
   }, [])
 
