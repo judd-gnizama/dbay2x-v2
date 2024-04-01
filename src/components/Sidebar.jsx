@@ -33,8 +33,7 @@ export default function Sidebar() {
   }, [addedGroup, showSidebar])
 
   return (
-    <div className="bg-slate-200 dark:bg-gray-600 p-4 z-10 mr-8"
-    style={{position: 'absolute'}}
+    <div className="bg-slate-200 dark:bg-gray-600 p-4 z-10 mr-8 absolute"
     >
       <div className="flex flex-col justify-start gap-4 max-w-xs">
         

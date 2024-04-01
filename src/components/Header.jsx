@@ -8,10 +8,12 @@ export default function Header() {
 
   
   return (
-    <div className="flex justify-center gap-4 items-center">
-      <Brand/>
-      <div className="flex items-center justify-end gap-4 w-full max-w-6xl">
-        
+    <div className="grid place-items-center gap-4"
+    style={{gridTemplateColumns: '5rem 1fr'}}>
+      <span className="material-symbols-outlined text-teal-400" style={{fontSize: '4rem'}}>request_quote</span>
+      <div className="flex items-center justify-between gap-4 w-full max-w-6xl"
+      style={{gridColumn: '2'}}>
+        <Brand/>  
         <nav className="flex justify-center items-center gap-4">
           {/* <Link className='hover:text-teal-400' href={'/users'}>Users</Link>
           <Link className='hover:text-teal-400' href={'/transactions'}>Transactions</Link>
