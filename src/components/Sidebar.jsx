@@ -33,10 +33,10 @@ export default function Sidebar() {
   }, [addedGroup, showSidebar])
 
   return (
-    <div className="bg-slate-200 dark:bg-gray-600 p-4 max-w-7xl z-10 mr-8 min-h-full"
+    <div className="bg-slate-200 dark:bg-gray-600 p-4 z-10 mr-8"
     style={{position: 'absolute'}}
     >
-      <div className="flex flex-col justify-start gap-4">
+      <div className="flex flex-col justify-start gap-4 max-w-xs">
         
         <span className="material-symbols-outlined p-2 w-fit cursor-pointer hover:bg-slate-300 rounded-full" style={{fontSize: '2rem'}}
         onClick={() => showSidebar === false ? setShowSidebar(true) : setShowSidebar(false)}>menu</span>
@@ -49,8 +49,9 @@ export default function Sidebar() {
         </div>
 
         {showSidebar && 
-        <div className="flex flex-col gap-2 pl-4" >
-          <h2 className="font-bold">Available Groups</h2>
+        <div className="flex flex-col gap-2 px-4 max-w-64" >
+          <h2 className="font-bold">Available Groups 
+          <span className="ml-1">{`[${groups.length}]`}</span></h2>
           <div className="grid gap-2 max-h-64 overflow-y-scroll">
             {groups && groups.map((group, index) => 
               <Link key={index} href={`/groups/${group.id}`} 
