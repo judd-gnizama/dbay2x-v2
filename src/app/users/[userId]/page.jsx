@@ -1,6 +1,6 @@
 'use client'
 import EditableDiv from '@/components/EditableDiv';
-import { getCurrentGroupId, getGroups, getOverallStatsUser, getUserInGroup} from '@/functions/LocalStorageFunc';
+import { getCurrentGroupId, getGroups, getGroupsWithUser, getOverallStatsUser, getUserInGroup} from '@/functions/LocalStorageFunc';
 import React, { useState } from 'react'
 
 export default function UserPage( { params }) {
@@ -8,7 +8,7 @@ export default function UserPage( { params }) {
   const userId = parseInt(params.userId);
   const currentGroupId = getCurrentGroupId();
   const userInGroup = getUserInGroup({ groupId: currentGroupId, userId: userId})
-  const groups = getGroups();
+  const groupsWithUser = getGroupsWithUser({userId: userId});
 
   const [ editableText, setEditableText ] = useState(userInGroup.name);
   const [ editing, setEditing ] = useState(false);
@@ -51,8 +51,8 @@ export default function UserPage( { params }) {
             value={selectedGroup}
             onChange={handleOnChangeDropDown}
             >
-              <option value="-1">All Groups</option>
-              {groups?.map(group => <option key={group.id} value={group.id}>{group.name}</option>)}
+              <option value="-1">All Involved Groups</option>
+              {groupsWithUser?.map(group => <option key={group.id} value={group.id}>{group.name}</option>)}
             </select>
           </div>
           <div className='grid grid-cols-2 w-fit gap-x-4 list-none place-items-end'>

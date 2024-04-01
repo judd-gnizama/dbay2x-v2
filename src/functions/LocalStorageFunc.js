@@ -110,6 +110,11 @@ export function getSettlementsByGroupId({groupId}) {
   return group ? group.transactions : [];
 }
 
+export function getGroupsWithUser({ userId }) {
+  const groups = getGroups();
+  return groups.filter(group => group.users.some(user=>user.id === userId))
+}
+
 
 // Set Methods
 
