@@ -2,13 +2,15 @@
 import Link from "next/link";
 import { useEffect, useState } from "react"
 import LocalStorageManager from "./LocalStorageManager";
-import { createNewGroup, appendNewGroup, getAllUniqueUserIds, getCurrentGroup, getGroups, setCurrentGroupId } from "@/functions/LocalStorageFunc";
+import { appendNewGroup, getAllUniqueUserIds, getCurrentGroup, getGroups, setCurrentGroupId } from "@/functions/LocalStorageFunc";
 import { useRouter } from "next/navigation";
+import { createNewGroup } from "@/functions/InterfaceFunc";
 
 export default function Sidebar() {
 
   const [ showSidebar , setShowSidebar] = useState(false);
   const [ groups, setGroups ] = useState([]);
+  const [ addedGroup, setAddedGroup ] = useState(0);
   const router = useRouter();
 
   const handleChangeGroup = (groupId) => {
@@ -18,7 +20,9 @@ export default function Sidebar() {
 
   const handleAddNewGroup = () => {
     const { id } = createNewGroup();
-    router.push(`/groups/${id}`)
+    router.push(`/groups/${id}`);
+    setAddedGroup(id);
+    setShowSidebar(false);
   }
 
   useEffect(() => {
@@ -26,7 +30,7 @@ export default function Sidebar() {
     if (storedGroups && storedGroups.length > 0) {
       setGroups(storedGroups);
     }
-  }, [])
+  }, [addedGroup])
 
   return (
     <div className="bg-slate-200 dark:bg-gray-600 p-4 max-w-7xl z-10 mr-8 min-h-full"

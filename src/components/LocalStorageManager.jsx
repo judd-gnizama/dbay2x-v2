@@ -1,7 +1,6 @@
 'use client'
 
-import { createNewGroup } from "@/functions/InterfaceFunc";
-import { getCurrentGroup, getRawData, replaceGroup} from "@/functions/LocalStorageFunc";
+import { createNewGroup, getAllUniqueUserIds, getCurrentGroup, getRawData, replaceGroup} from "@/functions/LocalStorageFunc";
 import { ProcessGroupData } from "@/functions/ProcessGroupData";
 
 export default function LocalStorageManager() {
@@ -791,7 +790,7 @@ export default function LocalStorageManager() {
   }
 
  const handleFunction = () => {
-    createNewGroup();
+    console.log('Function Output')
   }
 
   return (

@@ -19,7 +19,6 @@ export function getKey() {
 
 export function getRawData() {
   const storedData = localStorage.getItem(key);
-  console.log(JSON.parse(storedData), 'raw data')
   return storedData ? JSON.parse(storedData) : {};
 }
 
@@ -31,6 +30,12 @@ export function getCurrentGroupId() {
 export function getGroups() {
   const data = getRawData()
     return data ? data.groups : []
+}
+
+export function getAllGroupIds() {
+  const groups = getGroups();
+  if(groups.length === 0) return;
+  return groups.map(group=>group.id)
 }
 
 export function getGroupById({ groupId }) {
@@ -60,7 +65,8 @@ export function getUsersFromAllGroups(){
 
 export function getAllUniqueUserIds() {
   const users = getUsersFromAllGroups();
-  const userIds = users ? users.map(user=>user.id) : [];
+  console.log(users);
+  const userIds = users ? users.map(user=>user.id) : []
   return userIds.length > 0 ? [... new Set(userIds)] : []
 }
 
@@ -140,21 +146,4 @@ export function appendNewGroup({newGroup}) {
 
 export function removeRawData() {
   localStorage.removeItem(key)  
-}
-
-export function createNewGroup() {
-
-  const userIds = getAllUniqueUserIds();
-  const newUserId = Math.max(...userIds) + 1;
-  const tempGroupName = `NewGroup#000${newUserId}`
-
-  const newGroup = {
-    id: newUserId,
-    name: tempGroupName,
-    description: "This is a Group Description",
-    transactions: [],
-    users: [],
-  }
-  appendNewGroup({newGroup: newGroup})
-  return newGroup;
 }
