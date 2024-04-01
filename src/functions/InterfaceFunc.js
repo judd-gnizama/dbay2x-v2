@@ -1,4 +1,4 @@
-import { appendNewGroup, getAllGroupIds, getAllUniqueUserIds } from "./LocalStorageFunc";
+import { appendNewGroup, getAllGroupIds, getAllUniqueUserIds, getGroups } from "./LocalStorageFunc";
 
 
 // Add New Group
@@ -17,4 +17,13 @@ export function createNewGroup() {
   }
   appendNewGroup({newGroup: newGroup})
   return newGroup;
+}
+
+
+// Process all groups and Commit to local Storage
+
+export function ProcessAllGroups() {
+  const groups = getGroups();
+  const processedGroups = groups.map(group => ProcessGroupData(group));
+  replaceGroups({newGroups: processedGroups});
 }

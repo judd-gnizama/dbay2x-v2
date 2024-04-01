@@ -95,7 +95,7 @@ export function getOverallStatsUser( {userId} ) {
       userName = user.name
     }
   });
-  return {id: userId, name: userName, total_paid: userPaid, total_share: userShare, total_net: userNet}
+  return {id: userId, name: userName, paid: userPaid, share: userShare, net: userNet}
 }
 
 export function getUniqueUsers() {
