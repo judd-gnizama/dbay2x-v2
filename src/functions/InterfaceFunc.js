@@ -12,7 +12,7 @@ export function createNewGroup() {
   const newGroup = {
     id: newGroupId,
     name: tempGroupName,
-    description: "No group desciption",
+    description: "No group description",
     transactions: [],
     users: [],
   }
