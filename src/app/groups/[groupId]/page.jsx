@@ -5,7 +5,6 @@ import GroupName from "@/components/GroupName";
 import Results from "@/components/Results";
 import SearchBox from "@/components/SearchBox";
 import { getGroupById } from "@/functions/LocalStorageFunc";
-import { useEffect, useState } from "react";
 
 export default function GroupPage({ params }) {
   
