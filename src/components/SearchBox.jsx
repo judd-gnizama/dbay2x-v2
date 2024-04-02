@@ -69,7 +69,7 @@ export default function SearchBox({ type, groupId }) {
       if (canAdd) {
         // add new transaction
         // go to page
-        console.log(`Add new ${search}`)
+        
       }
     }
   }
