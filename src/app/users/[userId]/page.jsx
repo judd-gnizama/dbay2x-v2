@@ -1,6 +1,7 @@
 'use client'
 import EditableDiv from '@/components/EditableDiv';
-import { getCurrentGroupId, getGroups, getGroupsWithUser, getOverallStatsUser, getUserInGroup} from '@/functions/LocalStorageFunc';
+import { getCurrentGroup, getCurrentGroupId, getGroups, getGroupsWithUser, getOverallStatsUser, getUserInGroup} from '@/functions/LocalStorageFunc';
+import Link from 'next/link';
 import React, { useState } from 'react'
 
 export default function UserPage( { params }) {
@@ -20,9 +21,9 @@ export default function UserPage( { params }) {
     const userName = event.target.textContent;
     if (userName.trim() !== "") {
       setEditableText(userName)
+      
     }
   }
-
 
   const handleOnChangeDropDown = (event) => {
     const selectedGroupId = event.target.value
@@ -37,11 +38,16 @@ export default function UserPage( { params }) {
     
   }
 
-
   return (
-    <div>
-      <h1>User Profile Page</h1>
-      <div className='grid gap-4'
+    <div className='flex flex-col'>
+      <Link 
+      href={`/groups/${currentGroupId}`}
+      className='w-fit flex items-center gap-2'
+      >
+        <span class="material-symbols-outlined">arrow_back_ios_new</span>
+        Go back to <strong>{getCurrentGroup({groupId: currentGroupId}).name}</strong>
+      </Link>
+      <div className='grid gap-4 p-4 ml-4'
       style={{gridTemplateRows: 'auto auto 1fr'}}>
         <EditableDiv editableText={editableText} setEditableText={setEditableText} editing={editing} setEditing={setEditing} handleSubmitFcn={handleSubmit}/>
         <div className='p-4 border-2 rounded-lg w-fit'>
