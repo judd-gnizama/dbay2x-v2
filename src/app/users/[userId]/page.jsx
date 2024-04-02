@@ -1,6 +1,6 @@
 'use client'
 import EditableDiv from '@/components/EditableDiv';
-import { getCurrentGroup, getCurrentGroupId, getGroups, getGroupsWithUser, getOverallStatsUser, getUserInGroup} from '@/functions/LocalStorageFunc';
+import { getCurrentGroup, getCurrentGroupId, getGroups, getGroupsWithUser, getOverallStatsUser, getUserInGroup, replaceUserProp} from '@/functions/LocalStorageFunc';
 import Link from 'next/link';
 import React, { useState } from 'react'
 
@@ -21,7 +21,7 @@ export default function UserPage( { params }) {
     const userName = event.target.textContent;
     if (userName.trim() !== "") {
       setEditableText(userName)
-      
+      replaceUserProp({ userId: userId, key: 'name', value: userName })
     }
   }
 

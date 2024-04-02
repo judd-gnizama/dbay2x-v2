@@ -1,7 +1,7 @@
 'use client'
 
 import { ProcessAllGroups } from "@/functions/InterfaceFunc";
-import { getRawData  } from "@/functions/LocalStorageFunc";
+import { getRawData, replaceUserProp  } from "@/functions/LocalStorageFunc";
 
 export default function LocalStorageManager() {
 
@@ -790,7 +790,7 @@ export default function LocalStorageManager() {
   }
 
  const handleFunction = () => {
-  ProcessAllGroups();
+  replaceUserProp({userId: 1, key: 'name', value: 'Judd rocks'})
   }
 
   return (

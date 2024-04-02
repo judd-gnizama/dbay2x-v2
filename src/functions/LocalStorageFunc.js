@@ -166,6 +166,36 @@ export function appendNewGroup({newGroup}) {
   }
 }
 
+export function replaceUserInGroup({ groupId, userId, newUser }) {
+  const group = getGroupById({groupId: groupId})
+  const newUsers = group.users.map(user => user.id === userId ? newUser : user)
+  const newGroup = {...group, users: newUsers }
+  replaceGroup({newGroup: newGroup})
+}
+
+export function replaceUser({ userId, newUser }) { 
+  const groups = getGroups();
+  const newGroups = groups.map(group => ({...group, users: group.users.map(user=>user.id === userId ? newUser : user)}
+  ))
+  replaceGroups({newGroups: newGroups})
+}
+
+export function replaceUserProp({ userId, key, value }) { 
+  // modify props of users with the same userid across groups
+  const groups = getGroups();
+  const newGroups = groups.map(group => ({...group, 
+    users: group.users.map(user=>user.id === userId ? {...user, [key]: value } : user)}));
+  replaceGroups({newGroups: newGroups})
+}
+
+
+
+export function changeUserName({ userId, newName}) {
+  const groupsWithUser = getGroupsWithUser({userId: userId});
+  const modifiedGroups = groupsWithUser.map((group) => {
+    group.users.find()
+  })
+}
 
 // Remove Methods
 
