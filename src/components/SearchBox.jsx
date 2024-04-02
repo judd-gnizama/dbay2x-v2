@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import Results from "./Results";
-import { getGroupById } from "@/functions/LocalStorageFunc";
+import { addUserToGroup, getAllUniqueUserIds, getGroupById } from "@/functions/LocalStorageFunc";
 
 export default function SearchBox({ type, groupId }) {
 
@@ -53,7 +53,16 @@ export default function SearchBox({ type, groupId }) {
     if (type === 'user') {
       if (canAdd) {
         // add new user
-        console.log(`Add new ${search}`)
+        const userIds = getAllUniqueUserIds();
+        const newUser = {
+          id: Math.max(...userIds) + 1,
+          name: search,
+          paid: 0,
+          share: 0,
+          net: 0,
+        }
+        addUserToGroup({ groupId: groupId, newUser: newUser})
+        setSearch("")
       }
       
     } else if (type === 'transaction') {
@@ -69,7 +78,7 @@ export default function SearchBox({ type, groupId }) {
   useEffect(() => {
     const currentGroup = getGroupById({groupId: groupId})
     setData(currentGroup);
-  }, [])
+  }, [canAdd])
 
   useEffect(() => {
     if (data){

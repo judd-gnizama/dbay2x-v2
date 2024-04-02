@@ -186,13 +186,20 @@ export function replaceUserProp({ userId, key, value }) {
   replaceGroups({newGroups: newGroups})
 }
 
-
-
 export function changeUserName({ userId, newName}) {
   const groupsWithUser = getGroupsWithUser({userId: userId});
   const modifiedGroups = groupsWithUser.map((group) => {
     group.users.find()
   })
+}
+
+export function addUserToGroup({ groupId, newUser }) {
+  const group = getGroupById({groupId: groupId})
+  const index = group.users.findIndex(user => user.id === newUser.id);
+  if (index === -1) {
+    const newGroup = {...group, users: [...group.users, newUser]}
+    replaceGroup({ newGroup: newGroup})
+  }
 }
 
 // Remove Methods
