@@ -11,12 +11,12 @@ export default function Results({ type, search, results }) {
       {results && results.length > 0 ? 
         <ul className="grid md:grid-cols-2 lg:grid-cols-3 gap-2">
           {type !== 'settlement' && <AddItem type={type}/>}
-          {results.map(result => {
+          {results.map((result, index) => {
             if (type === 'user') return <UserResult key={result.id} result={result}/>
             if (type === 'transaction') return <TransactionResult key={result.id} result={result}/>
             if (type === 'settlement') 
             {
-              return <SettlementResult key={result.id} result={result}/>
+              return <SettlementResult key={index} result={result}/>
             }
           })}
         </ul>

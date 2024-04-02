@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react"
 import LocalStorageManager from "./LocalStorageManager";
-import { getCurrentGroupId, getGroups, setCurrentGroupId } from "@/functions/LocalStorageFunc";
+import { getCurrentGroup, getCurrentGroupId, getGroups, setCurrentGroupId } from "@/functions/LocalStorageFunc";
 import { useRouter } from "next/navigation";
 import { createNewGroup } from "@/functions/InterfaceFunc";
 
@@ -11,6 +11,7 @@ export default function Sidebar() {
   const [ showSidebar , setShowSidebar] = useState(false);
   const [ groups, setGroups ] = useState([]);
   const [ _currentGroupId, _setCurrentGroupId ] = useState(0);
+  const [ links, setLinks] = useState({});
   const router = useRouter();
 
   const handleChangeGroup = (groupId) => {
@@ -28,6 +29,11 @@ export default function Sidebar() {
   useEffect(() => {
   const currentGroupIdFromDb = getCurrentGroupId();
   setCurrentGroupId(currentGroupIdFromDb);
+  setLinks({
+    usersLink: `/groups/${currentGroupIdFromDb}/#users`,
+    transactionsLink: `/groups/${currentGroupIdFromDb}/#transactions`,
+    settlementsLink: `/groups/${currentGroupIdFromDb}/#settlements`
+  })
   }, [])
 
   useEffect(() => {
@@ -66,17 +72,17 @@ export default function Sidebar() {
           </div>
         </div>}
 
-        <Link href={`/groups/${getCurrentGroupId()}#users`} className="flex items-center gap-2 p-2 cursor-pointer hover:bg-slate-300 rounded-full z-10">
+        <Link href={links.usersLink || '/'} className="flex items-center gap-2 p-2 cursor-pointer hover:bg-slate-300 rounded-full z-10">
           <span className="material-symbols-outlined "
           style={{fontSize: '2rem'}}>person</span>
           <p hidden={!showSidebar}>Users</p>
         </Link>
-        <Link href={`/groups/${getCurrentGroupId()}#transactions`} className="flex items-center gap-2 p-2 cursor-pointer hover:bg-slate-300 rounded-full z-10">
+        <Link href={links.transactionsLink || '/'} className="flex items-center gap-2 p-2 cursor-pointer hover:bg-slate-300 rounded-full z-10">
           <span className="material-symbols-outlined "
           style={{fontSize: '2rem'}}>receipt_long</span>
           <p hidden={!showSidebar}>Transactions</p>
         </Link>
-        <Link href={`/groups/${getCurrentGroupId()}#settlements`} className="flex items-center gap-2 p-2 cursor-pointer hover:bg-slate-300 rounded-full z-10">
+        <Link href={links.settlementsLink || '/'} className="flex items-center gap-2 p-2 cursor-pointer hover:bg-slate-300 rounded-full z-10">
           <span className="material-symbols-outlined "
           style={{fontSize: '2rem'}}>handshake</span>
           <p hidden={!showSidebar}>Settlements</p>
