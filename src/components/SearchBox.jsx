@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react"
 import Results from "./Results";
-import { addUserToGroup, getAllUniqueUserIds, getGroupById } from "@/functions/LocalStorageFunc";
+import { addTransaction, addUserToGroup, getAllUniqueTransactionIds, getAllUniqueUserIds, getGroupById } from "@/functions/LocalStorageFunc";
+import { useRouter } from "next/navigation";
 
 export default function SearchBox({ type, groupId }) {
 
@@ -10,6 +11,7 @@ export default function SearchBox({ type, groupId }) {
   const [ data, setData ] = useState([]);
   const [ results, setResults ] = useState([]);
   const [ canAdd, setCanAdd ] = useState(false);
+  const router = useRouter();
 
   const handleSearch = (searchTerm, type) => {
     let searchResults = []
@@ -69,7 +71,23 @@ export default function SearchBox({ type, groupId }) {
       if (canAdd) {
         // add new transaction
         // go to page
-        
+        const transactionIds = getAllUniqueTransactionIds();
+        console.log(transactionIds)
+        const newTransaction = {
+          id: Math.max(...transactionIds) + 1, 
+          amount: 0,
+          date: '', 
+          description: "",
+          payer: 0,
+          recipient: 0,
+          split_members: [],
+          type: 1,
+        }
+        console.log(newTransaction)
+        addTransaction({ groupId: groupId, newTransaction: newTransaction})
+        setSearch("")
+        router.push(`/transactions/${newTransaction.id}`)
+
       }
     }
   }

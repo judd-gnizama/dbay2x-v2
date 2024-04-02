@@ -1,7 +1,7 @@
 'use client'
 
 import { ProcessAllGroups } from "@/functions/InterfaceFunc";
-import { getRawData, replaceUserProp  } from "@/functions/LocalStorageFunc";
+import { addTransaction, getRawData, replaceUserProp  } from "@/functions/LocalStorageFunc";
 
 export default function LocalStorageManager() {
 
