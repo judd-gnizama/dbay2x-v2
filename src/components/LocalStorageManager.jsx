@@ -786,7 +786,7 @@ export default function LocalStorageManager() {
   }
 
   const handleShow = () => {
-    console.log(getRawData())
+  console.log(getRawData())
   }
 
  const handleFunction = () => {

@@ -14,9 +14,7 @@ export default function Sidebar() {
   const [ links, setLinks] = useState({});
   const router = useRouter();
   const pathname = usePathname();
-  console.log(pathname)
   const showLinks = pathname.startsWith('/groups');
-  console.log(showLinks)
 
   const handleChangeGroup = (groupId) => {
     setCurrentGroupId({groupId: groupId})

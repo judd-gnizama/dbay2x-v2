@@ -65,7 +65,6 @@ export function getUsersFromAllGroups(){
 
 export function getAllUniqueUserIds() {
   const users = getUsersFromAllGroups();
-  console.log(users);
   const userIds = users ? users.map(user=>user.id) : []
   return userIds.length > 0 ? [... new Set(userIds)] : []
 }
@@ -151,7 +150,6 @@ export function replaceGroup({newGroup}) {
 export function changeGroupProp({ groupId, key, value }) {
   const group = getGroupById({groupId: groupId});
   const changedGroup = {...group, [key]: value}
-  console.log(changedGroup, "changedgroup")
   replaceGroup({ newGroup: changedGroup });
 }
 
