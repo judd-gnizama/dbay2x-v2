@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 export default function GroupDesc({group}) {
 
   const { id, name, description } = group;
-  const [ newDesc, setNewDesc ] = useState(description);
+  const [ newDesc, setNewDesc ] = useState(description ? description: "No description");
   const [ editing, setEditing ] = useState(false);
   const groupDescDivRef = useRef(null);
 
@@ -45,7 +45,8 @@ export default function GroupDesc({group}) {
       ref={groupDescDivRef}
       contentEditable={editing}
       suppressContentEditableWarning={true}
-      onBlur={handleSaveDesc}>
+      onBlur={handleSaveDesc}
+      >
         {newDesc}   
       </div>
         <button className="material-symbols-outlined z-9" 

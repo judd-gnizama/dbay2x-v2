@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react"
 import LocalStorageManager from "./LocalStorageManager";
-import { appendNewGroup, getAllUniqueUserIds, getCurrentGroup, getCurrentGroupId, getGroups, setCurrentGroupId } from "@/functions/LocalStorageFunc";
+import { getCurrentGroupId, getGroups, setCurrentGroupId } from "@/functions/LocalStorageFunc";
 import { useRouter } from "next/navigation";
 import { createNewGroup } from "@/functions/InterfaceFunc";
 
@@ -10,8 +10,7 @@ export default function Sidebar() {
 
   const [ showSidebar , setShowSidebar] = useState(false);
   const [ groups, setGroups ] = useState([]);
-  const currentGroupIdFromDb = getCurrentGroupId();
-  const [ _currentGroupId, _setCurrentGroupId ] = useState(currentGroupIdFromDb);
+  const [ _currentGroupId, _setCurrentGroupId ] = useState(0);
   const router = useRouter();
 
   const handleChangeGroup = (groupId) => {
@@ -25,6 +24,11 @@ export default function Sidebar() {
     _setCurrentGroupId(id);
     handleChangeGroup(id);
   }
+
+  useEffect(() => {
+  const currentGroupIdFromDb = getCurrentGroupId();
+  setCurrentGroupId(currentGroupIdFromDb);
+  }, [])
 
   useEffect(() => {
     const storedGroups = getGroups();

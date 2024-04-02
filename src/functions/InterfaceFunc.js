@@ -1,4 +1,5 @@
-import { appendNewGroup, getAllGroupIds, getAllUniqueUserIds, getGroups } from "./LocalStorageFunc";
+import { appendNewGroup, getAllGroupIds, getAllUniqueUserIds, getGroups, replaceGroups } from "./LocalStorageFunc";
+import { ProcessGroupData } from "./ProcessGroupData";
 
 
 // Add New Group
@@ -11,7 +12,7 @@ export function createNewGroup() {
   const newGroup = {
     id: newGroupId,
     name: tempGroupName,
-    description: "This is a Group Description",
+    description: "No group desciption",
     transactions: [],
     users: [],
   }
