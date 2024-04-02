@@ -790,7 +790,7 @@ export default function LocalStorageManager() {
   }
 
  const handleFunction = () => {
-  replaceUserProp({userId: 1, key: 'name', value: 'Judd rocks'})
+  ProcessAllGroups();
   }
 
   return (

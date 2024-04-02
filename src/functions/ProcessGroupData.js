@@ -126,7 +126,7 @@ export function ProcessGroupData(group) {
   }
 
   
-  const { users, transactions, id, name } = group;
+  const { users, transactions} = group;
     
   const initializedUsers = initializeMembers(users);
   const involvedMembersList = computeMembersList(transactions);
@@ -134,10 +134,7 @@ export function ProcessGroupData(group) {
   const newMembers = appendMembersNet(mergedMembersList);
   const reimbursements = computeReimbursements(newMembers);
   const _newMembers = appendMembersNet(mergedMembersList);
-  console.log(reimbursements, '------------------------')
-  const updatedGroup = {
-    id: id,
-    name: name,
+  const updatedGroup = {...group,
     transactions: transactions,
     users: _newMembers,
     reimbursements: reimbursements,

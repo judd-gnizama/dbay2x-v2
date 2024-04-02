@@ -51,7 +51,7 @@ export default function SearchBox({ type, groupId }) {
     <div className="flex flex-col gap-4">
       <form onSubmit={handleSubmit}>
         <div className="relative flex items-center">
-          <input value={search} onChange={(e) => setSearch(e.target.value)} className="bg-slate-200 dark:bg-gray-500 dark:text-gray-100 p-2 px-4 rounded-full w-full" type="text" placeholder={`Filter ${type}`} 
+          <input value={search} onChange={(e) => setSearch(e.target.value)} className="bg-slate-200 dark:bg-gray-500 dark:text-gray-100 p-2 px-4 rounded-full w-full" type="text" placeholder={`Search/Add ${type}`} 
           />
           <span 
           className="material-symbols-outlined text-slate-600 absolute right-2 rounded-full cursor-pointer hover:bg-slate-300"
