@@ -118,8 +118,15 @@ export function getAllUniqueTransactionIds() {
   const groups = getGroups();
   let transactionIds = []
   groups.forEach(group => group.transactions.forEach(transaction => transactionIds.push(transaction.id))) 
-  console.log(transactionIds)
   return [...new Set(transactionIds)]
+}
+
+export function getTransactionFromGroup({ groupId, transactionId }){
+  const group = getGroupById({groupId: groupId})
+  const index = group.transactions.findIndex(transaction => transaction.id === transactionId);
+  if(index !== -1) {
+    return group.transactions[index]
+  }
 }
 
 // Set Methods
@@ -213,9 +220,7 @@ export function addTransaction({ groupId, newTransaction}){
   const group = getGroupById({groupId: groupId})
   const index = group.transactions.findIndex(transaction => transaction.id === newTransaction.id)
   if (index === -1) {
-    console.log('adding new transaction')
     const newGroup = {...group, transactions: [...group.transactions, newTransaction]}
-    console.log(newGroup)
     replaceGroup({ newGroup: newGroup})
   }
 }

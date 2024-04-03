@@ -44,7 +44,7 @@ export default function UserPage( { params }) {
       href={`/groups/${currentGroupId}`}
       className='w-fit flex items-center gap-2'
       >
-        <span class="material-symbols-outlined">arrow_back_ios_new</span>
+        <span className="material-symbols-outlined">arrow_back_ios_new</span>
         Go back to <strong>{getCurrentGroup({groupId: currentGroupId}).name}</strong>
       </Link>
       <div className='grid gap-4 p-4 ml-4'

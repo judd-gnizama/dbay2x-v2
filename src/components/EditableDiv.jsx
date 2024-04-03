@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-export default function EditableDiv( { editableText, setEditableText, editing, setEditing, handleSubmitFcn } ) {
+export default function EditableDiv( { editableText, setEditableText, editing, setEditing, handleEditable } ) {
 
   const divRef = useRef(null);
 
@@ -13,7 +13,7 @@ export default function EditableDiv( { editableText, setEditableText, editing, s
   }
 
   useEffect(() => {
-    const div = divRef.current;
+    const div = divRef.current; 
     if(div) {
       div.addEventListener('keydown', handleEnterPress)
     }
@@ -32,7 +32,7 @@ export default function EditableDiv( { editableText, setEditableText, editing, s
       ref={divRef}
       contentEditable={editing}
       suppressContentEditableWarning={true}
-      onBlur={handleSubmitFcn}>
+      onBlur={handleEditable}>
         {editableText}   
       </div>
         <button className="material-symbols-outlined p-2 z-9" 
