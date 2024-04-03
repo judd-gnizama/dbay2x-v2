@@ -1,10 +1,10 @@
 'use client'
 
 import EditableDiv from "@/components/EditableDiv";
+import ToggleGroup from "@/components/formComponents/ToggleGroup";
 import { getCurrentGroup, getTransactionFromGroup } from "@/functions/LocalStorageFunc";
 import Link from "next/link";
 import { useState } from "react";
-import ToggleSwitch from "@/components/formComponents/ToggleSwitch";
 
 export default function TransactionPage({ params }) {
 
@@ -16,18 +16,25 @@ export default function TransactionPage({ params }) {
   const [ editableText, setEditableText ] = useState(transaction.description);
   const [ editing, setEditing ] = useState(false);
 
-  // For Transaction Type
-  const [ selectType, setSelectType ] = useState(1);
-
-
-  const iconList = ['airport_shuttle', 'restaurant', 'cake', 'sports_soccer', 'sports_tennis', 'shopping_cart', 'monitoring']
-
   const handleChangeEditable = (event) => {
     const description = event.target.textContent;
     setEditing(false);
     setEditableText(description);
     // save description to Transaction
   }
+
+
+  // For Transaction Type
+  const [ selectType, setSelectType ] = useState(1);
+  
+  const handleToggleChange = (event) => {
+    setSelectType(event.target.value)
+    console.log(selectType);
+  }
+
+
+  const iconList = ['airport_shuttle', 'restaurant', 'cake', 'sports_soccer', 'sports_tennis', 'shopping_cart', 'monitoring']
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -45,7 +52,6 @@ export default function TransactionPage({ params }) {
         Go back to <strong>{currentGroup.name}</strong>
       </Link>
 
-
       <form onSubmit={handleSubmit} className="border p-4 rounded-lg grid">
         <EditableDiv editableText={editableText} setEditableText={setEditableText} editing={editing} setEditing={setEditing} handleEditable={handleChangeEditable} required/>
         <div className="flex items-center gap-2">
@@ -56,7 +62,7 @@ export default function TransactionPage({ params }) {
             <input className="hidden" type="radio" name="type" id="transactionType-2" value={2} />
             <label htmlFor="transactionType-2">Transfer</label>
           </div> */}
-          <ToggleSwitch/>
+          <ToggleGroup options={['Expense', 'Transfer']} handleToggleChange={handleToggleChange}/>
         </div>
         {/* <div>
           <label htmlFor="transactionDate">Date: </label>
