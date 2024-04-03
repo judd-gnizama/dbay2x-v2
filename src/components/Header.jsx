@@ -18,8 +18,8 @@ export default function Header() {
           {/* <Link className='hover:text-teal-400' href={'/users'}>Users</Link>
           <Link className='hover:text-teal-400' href={'/transactions'}>Transactions</Link>
           <Link className='hover:text-teal-400' href={'/settlements'}>Settlements</Link> */}
-          <Link href='/'>Home</Link>
-          <Link href='/about'>About</Link>
+          {/* <Link href='/'>Home</Link>
+          <Link href='/about'>About</Link> */}
           <DarkModeSwitch/>
         </nav>
         {/* <nav className="flex justify-center items-center gap-4 sm:hidden">
