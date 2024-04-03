@@ -11,9 +11,9 @@ export default function ToggleGroup({ options, onToggleChange }) {
   }
 
   return (
-    <div className="flex items-center border-2">
+    <div className="flex justify-center items-center border-2">
       {options?.map(option => 
-        <div className={`p-2 ${toggleSelect === option ? 'bg-teal-300' : 'bg-inherit'}`} key={option}>
+        <div className={`flex flex-1 items-center justify-center ${toggleSelect === option ? 'bg-teal-300' : 'bg-inherit'}`} key={option}>
           <input 
           type="radio" 
           name="radioGroup" 
@@ -23,7 +23,7 @@ export default function ToggleGroup({ options, onToggleChange }) {
           onChange={handleChange}
           hidden={true}/>
           <label 
-          className="cursor-pointer"
+          className="p-2 w-full text-center cursor-pointer"
           htmlFor={option}>{option}</label>
         </div>
       )}

@@ -15,7 +15,6 @@ export default function TransactionPage({ params }) {
   // For Description
   const [ editableText, setEditableText ] = useState(transaction.description);
   const [ editing, setEditing ] = useState(false);
-
   const handleChangeEditable = (event) => {
     const description = event.target.textContent;
     setEditing(false);
@@ -23,14 +22,12 @@ export default function TransactionPage({ params }) {
     // save description to Transaction
   }
 
-
   // For Transaction Type
   const options = ['Expense', 'Transfer'];
   const [ selectType, setSelectType ] = useState(options[0]);
   const onToggleChange = (value) => {
     setSelectType(value)
   }
-
 
   const iconList = ['airport_shuttle', 'restaurant', 'cake', 'sports_soccer', 'sports_tennis', 'shopping_cart', 'monitoring']
 
@@ -42,7 +39,7 @@ export default function TransactionPage({ params }) {
 
   return (
     <div className="grid gap-4"
-    style={{gridTemplateRows: 'auto 1fr'}}>
+    style={{gridTemplateRows: 'auto auto 1fr'}}>
       <Link 
       href={`/groups/${currentGroup.id}`}
       className='w-fit flex items-center gap-2'
@@ -50,19 +47,21 @@ export default function TransactionPage({ params }) {
         <span className="material-symbols-outlined">arrow_back_ios_new</span>
         Go back to <strong>{currentGroup.name}</strong>
       </Link>
+      <EditableDiv editableText={editableText} setEditableText={setEditableText} editing={editing} setEditing={setEditing} handleEditable={handleChangeEditable} required/>
+      <form onSubmit={handleSubmit} className="border p-4 rounded-lg grid md:grid-cols-2 items-center h-fit gap-2"
+      style={{gridTemplateColumns: 'auto 1fr'}}>
+        
+        <span>Type: </span>
+        <ToggleGroup options={options} onToggleChange={onToggleChange}/>
+        
+        <label htmlFor="transactionDate">Date: </label>
+        <input type="date" name="date" id="transactionDate" 
+        className="p-2 pl-4 border-2 bg-gray-200 rounded-full"/>
+        
+        <label htmlFor="transactionAmount">Amount Spent: </label>
+        <input className="p-2 pl-4 border-2 bg-gray-200 rounded-full" type="number" name="amount" id="transactionAmount" />
 
-      <form onSubmit={handleSubmit} className="border p-4 rounded-lg grid">
-        <EditableDiv editableText={editableText} setEditableText={setEditableText} editing={editing} setEditing={setEditing} handleEditable={handleChangeEditable} required/>
-        <div className="flex items-center gap-2">
-          <span>Transaction Type: </span>
-          <ToggleGroup options={options} onToggleChange={onToggleChange}/>
-        </div>
-        <p>{selectType}</p>
         {/* <div>
-          <label htmlFor="transactionDate">Date: </label>
-          <input type="date" name="date" id="transactionDate" required/>
-        </div>
-        <div>
           <span>Icon: </span>
           {iconList?.map((icon, index) => (
             <div key={index}>
@@ -73,11 +72,8 @@ export default function TransactionPage({ params }) {
             </div>
           ))}
         </div>
-        <div>
-          <label htmlFor="transactionAmount">Amount Spent: </label>
-          <input type="number" name="amount" id="transactionAmount" />
-        </div>
-        <div>
+         */}
+        {/* <div>
           <label htmlFor="transactionPayor">Payor: </label>
           <select id="transactionPayor">
             {currentGroup.users?.map((user, index) => <option key={index} value={user.id}>{user.name}</option>)}

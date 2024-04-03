@@ -4,7 +4,7 @@ export default function UserResult({ result, mode }) {
 
   const { id, name, paid, share, net } = result
   return (
-    <Link href={`/users/${id}`} className="flex justify-start items-center border border-slate-200 rounded-2xl p-4 gap-4 hover:bg-teal-200 hover:shadow-md">
+    <span /*href={`/users/${id}`}*/ className="flex justify-start items-center border border-slate-200 rounded-2xl p-4 gap-4 hover:bg-teal-200 hover:shadow-md">
       <span className="material-symbols-outlined"
       style={{fontSize: '6rem'}}>account_circle</span>
       <article className=" overflow-hidden">
@@ -13,6 +13,6 @@ export default function UserResult({ result, mode }) {
         <p>{`Share: ${share}`}</p>
         <p>{`Net: ${net}`}</p>
       </article>
-    </Link>
+    </span>
   )
 }
