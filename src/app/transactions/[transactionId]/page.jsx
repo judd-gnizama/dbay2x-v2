@@ -25,11 +25,10 @@ export default function TransactionPage({ params }) {
 
 
   // For Transaction Type
-  const [ selectType, setSelectType ] = useState(1);
-  
-  const handleToggleChange = (event) => {
-    setSelectType(event.target.value)
-    console.log(selectType);
+  const options = ['Expense', 'Transfer'];
+  const [ selectType, setSelectType ] = useState(options[0]);
+  const onToggleChange = (value) => {
+    setSelectType(value)
   }
 
 
@@ -56,14 +55,9 @@ export default function TransactionPage({ params }) {
         <EditableDiv editableText={editableText} setEditableText={setEditableText} editing={editing} setEditing={setEditing} handleEditable={handleChangeEditable} required/>
         <div className="flex items-center gap-2">
           <span>Transaction Type: </span>
-          {/* <div className="">
-            <input className="hidden" type="radio" name="type" id="transactionType-1" value={1}/>
-            <label htmlFor="transactionType-1">Expense</label>
-            <input className="hidden" type="radio" name="type" id="transactionType-2" value={2} />
-            <label htmlFor="transactionType-2">Transfer</label>
-          </div> */}
-          <ToggleGroup options={['Expense', 'Transfer']} handleToggleChange={handleToggleChange}/>
+          <ToggleGroup options={options} onToggleChange={onToggleChange}/>
         </div>
+        <p>{selectType}</p>
         {/* <div>
           <label htmlFor="transactionDate">Date: </label>
           <input type="date" name="date" id="transactionDate" required/>
