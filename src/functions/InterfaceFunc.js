@@ -28,3 +28,12 @@ export function ProcessAllGroups() {
   const processedGroups = groups.map(group => ProcessGroupData(group));
   replaceGroups({newGroups: processedGroups});
 }
+
+// is Strictly Number
+export function isStrictlyNumeric(str) {
+  // Regular expression for non-numeric characters (excluding optional dot)
+  const nonNumericRegex = /[^0-9.]/g;
+
+  // Check if the string contains any non-numeric characters, allowing optional hyphen at the beginning
+  return !nonNumericRegex.test(str) && str.length > 0 && /^[-+]?\d+(?:\.\d+)?$/.test(str);
+}
