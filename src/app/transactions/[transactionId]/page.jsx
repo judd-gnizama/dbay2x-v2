@@ -111,14 +111,27 @@ export default function TransactionPage({ params }) {
     const splitMemberId = parseInt(event.target.id.split('-')[1]);
     const splitMember = splitMembers.filter(member => member.id === splitMemberId)[0];
     if (splitMember.split) {
-      if(isStrictlyNumeric(event.target.value)) {
-        const weight = parseInt(event.target.value);
-        const newSplitMembers = splitMembers.map(member => member.id === splitMemberId ? {...member, share: weight} : member)
+      let value = event.target.value;
+      const weight = parseInt(value);
+      const newSplitMembers = splitMembers.map(member => member.id === splitMemberId ? {...member, share: weight} : member)
+      setSplitMembers(newSplitMembers);  
+      computeTotal(newSplitMembers)
+    }  
+  }
+  const handleBlurWeight = (event) => {
+    const splitMemberId = parseInt(event.target.id.split('-')[1]);
+    const splitMember = splitMembers.filter(member => member.id === splitMemberId)[0];
+    if (splitMember.split) {
+      const value = event.target.value;
+      if (!value || value < 0) {
+        const newSplitMembers = splitMembers.map(member => member.id === splitMemberId ? {...member, share: 0 } : member)
         setSplitMembers(newSplitMembers);  
         computeTotal(newSplitMembers)
       }
     }  
+
   }
+
   const computeTotal = (newMembers) => {
     let total = 0;
     newMembers.forEach(member => total+=member.share)
@@ -127,6 +140,11 @@ export default function TransactionPage({ params }) {
   const computePercentage = (share, total) => {
     if(total === 0) return 0
     return (share/total * 100).toFixed(2)
+  }
+  const computeShare = (share, total, amount) => {
+    const per = (share/total)
+
+    return (per * amount).toFixed(2)
   }
 
 
@@ -153,30 +171,28 @@ export default function TransactionPage({ params }) {
       <EditableDiv editableText={editableText} setEditableText={setEditableText} editing={editing} setEditing={setEditing} handleEditable={handleChangeEditable} required/>
       <form onSubmit={handleSubmit} className="border p-4 rounded-lg grid  items-center h-fit gap-2 sm:grid-cols-[auto_1fr]"
       >
-        <>
-        {/* <span>Type: </span>
-        <ToggleGroup options={typeOptions} onToggleChange={onToggleChange}/>
+      <span>Type: </span>
+      <ToggleGroup options={typeOptions} onToggleChange={onToggleChange}/>
 
-        <label htmlFor="transactionDate">Date: </label>
-        <input type="date" name="date" id="transactionDate" 
-        className="p-2 pl-4 border-2 bg-gray-200 rounded-full" onChange={handleChangeDate}/>
-        
-        <label htmlFor="transactionAmount">Amount: </label>
-        <input className="p-2 pl-4 border-2 bg-gray-200 rounded-full" type="number" name="amount" id="transactionAmount" onChange={handleChangeAmount}/>
+      <label htmlFor="transactionDate">Date: </label>
+      <input type="date" name="date" id="transactionDate" 
+      className="p-2 pl-4 border-2 bg-gray-200 rounded-full" onChange={handleChangeDate}/>
+      
+      <label htmlFor="transactionAmount">Amount: </label>
+      <input className="p-2 pl-4 border-2 bg-gray-200 rounded-full" type="number" name="amount" id="transactionAmount" onChange={handleChangeAmount}/>
 
-        <span>Icon: </span>
-        <ToggleGroup options={iconList} onToggleChange={handleChangeIcon} icon={true}/>
-        
-        <label htmlFor="transactionPayor">Payor: </label>
-        <select id="transactionPayor" className="p-2 border-2" onChange={handleChangePayor}>
-          {payorOptions?.map((user, index) => <option key={index} value={user.id}>{user.name}</option>)}
-        </select>
+      <span>Icon: </span>
+      <ToggleGroup options={iconList} onToggleChange={handleChangeIcon} icon={true}/>
+      
+      <label htmlFor="transactionPayor">Payor: </label>
+      <select id="transactionPayor" className="p-2 border-2" onChange={handleChangePayor}>
+        {payorOptions?.map((user, index) => <option key={index} value={user.id}>{user.name}</option>)}
+      </select>
 
-        <label htmlFor="transactionPayee">Payee: </label>
-        <select id="transactionPayor" className="p-2 border-2" onChange={handleChangePayee}>
-          {payeeOptions?.map((user, index) => <option key={index} value={user.id}>{user.name}</option>)}
-        </select> */}
-        </>
+      <label htmlFor="transactionPayee">Payee: </label>
+      <select id="transactionPayor" className="p-2 border-2" onChange={handleChangePayee}>
+        {payeeOptions?.map((user, index) => <option key={index} value={user.id}>{user.name}</option>)}
+      </select>
        
         <span>Split Mode: </span>
         <ToggleGroup options={splitOptions} onToggleChange={handleChangeSplit}/>
@@ -200,10 +216,10 @@ export default function TransactionPage({ params }) {
                 onChange={(e) => handleChangeSplitMembers(parseInt(e.target.value))}/>
                 {user.name}
                 <label htmlFor={`weight-${user.id}`}>Share:</label>
-                <input className="p-2 pl-4 border-2 bg-gray-200 rounded-full" type="number" name="weight" id={`weight-${user.id}`} value={user.share} onChange={handleChangeWeight}/>
+                <input className="p-2 pl-4 border-2 bg-gray-200 rounded-full" type="number" name="weight" id={`weight-${user.id}`} value={user.share} onChange={handleChangeWeight} onBlur={handleBlurWeight}/>
 
                 <span>{`${computePercentage(user.share, totalShare)}%`}</span>
-                <span>{computePercentage(user.share, totalShare)/100 * transactionAmount}</span>
+                <span>{computeShare(user.share, totalShare, transactionAmount)}</span>
 
               </label>
               )}
