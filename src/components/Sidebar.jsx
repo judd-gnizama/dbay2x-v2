@@ -5,6 +5,7 @@ import LocalStorageManager from "./LocalStorageManager";
 import { getCurrentGroup, getCurrentGroupId, getGroups, setCurrentGroupId } from "@/functions/LocalStorageFunc";
 import { usePathname, useRouter } from "next/navigation";
 import { createNewGroup } from "@/functions/InterfaceFunc";
+import DarkModeSwitch from "./DarkModeSwitch";
 
 export default function Sidebar() {
 
@@ -46,19 +47,21 @@ export default function Sidebar() {
   }, [_currentGroupId, showSidebar])
 
   return (
-    <div className="bg-slate-200 dark:bg-gray-600 p-4 z-10 mr-8 absolute"
+    <div className="z-10 top-5 right-5 absolute"
     >
-      <div className="flex flex-col justify-start gap-4 max-w-xs">
+      <div className={`flex flex-col p-4 justify-start items-end gap-4 max-w-xs ${showSidebar ? 'bg-slate-200': ''}`}>
         
         <span className="material-symbols-outlined p-2 w-fit cursor-pointer hover:bg-slate-300 rounded-full" style={{fontSize: '2rem'}}
         onClick={() => showSidebar === false ? setShowSidebar(true) : setShowSidebar(false)}>menu</span>
         
-        <div className="flex items-center gap-2 p-2 cursor-pointer hover:bg-slate-300 rounded-full z-10"
+        {showSidebar && <div className="flex items-center gap-2 p-2 cursor-pointer hover:bg-slate-300 rounded-full z-10"
         onClick={()=>handleAddNewGroup()}>
           <span className="material-symbols-outlined "
-          style={{fontSize: '2rem'}}>group_add</span>
+          style={{fontSize: '2rem'}}
+          >group_add</span>
         <p className="justify-center" hidden={!showSidebar}>Create New Group</p>
         </div>
+        }
 
         {showSidebar && 
         <div className="flex flex-col gap-2 px-4 max-w-64" >
@@ -74,7 +77,7 @@ export default function Sidebar() {
           </div>
         </div>}
         
-        {showLinks && <>
+        {showSidebar && <>
           <Link href={links.usersLink || '/'} className="flex items-center gap-2 p-2 cursor-pointer hover:bg-slate-300 rounded-full z-10">
             <span className="material-symbols-outlined "
             style={{fontSize: '2rem'}}>person</span>
@@ -90,6 +93,7 @@ export default function Sidebar() {
             style={{fontSize: '2rem'}}>handshake</span>
             <p hidden={!showSidebar}>Settlements</p>
           </Link>
+          <DarkModeSwitch/>
         </>}
 
         {showSidebar && <LocalStorageManager/>}

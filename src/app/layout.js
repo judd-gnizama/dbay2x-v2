@@ -3,8 +3,6 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Providers from "./Providers";
-import Sidebar from "@/components/Sidebar";
-
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -27,13 +25,10 @@ export default function RootLayout({ children }) {
         <Providers>
             <main>
               <Header/>
-              <div className="submain">
-                <Sidebar/>
                 <div className="subsubmain">
                   {children}
                   <Footer/>
                 </div>
-              </div>
             </main>
         </Providers>
       </body>
