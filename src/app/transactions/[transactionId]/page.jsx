@@ -58,16 +58,16 @@ export default function TransactionPage({ params }) {
 
   // For Payor
   const payorOptions = currentGroup.users
-  const [ selectPayor, setSelectPayor ] = useState();
+  const [ selectPayor, setSelectPayor ] = useState(payorOptions[0].id);
   const handleChangePayor = (event) => {
-    setSelectPayor(event.target.value)
+    setSelectPayor(parseInt(event.target.value))
   }
-
+  
   // For Payee
   const payeeOptions = currentGroup.users
-  const [ selectPayee, setSelectPayee ] = useState();
+  const [ selectPayee, setSelectPayee ] = useState(payorOptions[0].id);
   const handleChangePayee = (event) => {
-    setSelectPayee(event.target.value)
+    setSelectPayee(parseInt(event.target.value))
   }
   // For Split Mode
   const splitOptions = ['Evenly', 'Specific'];
@@ -100,12 +100,14 @@ export default function TransactionPage({ params }) {
     setSplitMembers(newMembers)
     computeTotal(newMembers)
   }
-  const handleSelectAll = () => {
+  const handleSelectAll = (event) => {
+    event.preventDefault();
     const newMembers = splitMembers.map(member => ({...member, split: true}))
     setSplitMembers(newMembers)
     computeTotal(newMembers)
   }
-  const handleUnselectAll = () => {
+  const handleUnselectAll = (event) => {
+    event.preventDefault()
     const newMembers = splitMembers.map(member => ({...member, share: 0, split: false}))
     setSplitMembers(newMembers)
     computeTotal(newMembers);
@@ -153,13 +155,42 @@ export default function TransactionPage({ params }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    if (!editableText) {
+      return;
+    }
+
+    if (selectSplit === 'Specific') {
+      var split_members = splitMembers.filter(member => member.split)
+    } else {
+      var split_members = splitMembers.map(member => ({
+        id: member.id,
+        name: member.name,
+        share: 1,
+        split: true
+      }))
+    }
+
+    if (selectPayor === selectPayee) return;
+
+    const newTransaction = {
+      id: transactionId,
+      description: editableText,
+      type: selectType,
+      date: transactionDate,
+      icon: selectType === 'Transfer' ? 'receipt_long' : selectIcon,
+      amount: transactionAmount ? transactionAmount : 0,
+      payer: selectPayor,
+      recipient: selectType === 'Expense' ? 0 : selectPayee,
+      split_mode: selectSplit,
+      split_members: split_members
+    }
+    console.log(newTransaction)
+
+
+
+
   }
-
-  useEffect(() => {
-    console.log(splitMembers)
-
-  }, [splitMembers])
-
 
   return (
     <div className="grid gap-4"
@@ -168,70 +199,95 @@ export default function TransactionPage({ params }) {
       href={`/groups/${currentGroup.id}`}
       className='w-fit flex items-center gap-2'
       >
-        <span className="material-symbols-outlined">arrow_back_ios_new</span>
+      <span className="material-symbols-outlined">arrow_back_ios_new</span>
         Go back to <strong>{currentGroup.name}</strong>
       </Link>
-      <EditableDiv editableText={editableText} setEditableText={setEditableText} editing={editing} setEditing={setEditing} handleEditable={handleChangeEditable} required/>
-      <form onSubmit={handleSubmit} className="border p-4 rounded-lg grid  items-center h-fit gap-2 sm:grid-cols-[auto_1fr]"
+      <EditableDiv editableText={editableText} setEditableText={setEditableText} editing={editing} setEditing={setEditing} handleEditable={handleChangeEditable}/>
+
+      <form className="border p-4 rounded-lg grid  items-center h-fit gap-2 sm:grid-cols-[auto_1fr]"
       >
-      <span>Type: </span>
-      <ToggleGroup options={typeOptions} onToggleChange={onToggleChange}/>
+        <span>Type: </span>
+        <ToggleGroup options={typeOptions} onToggleChange={onToggleChange}/>
 
-      <label htmlFor="transactionDate">Date: </label>
-      <input type="date" name="date" id="transactionDate" 
-      className="p-2 pl-4 border-2 bg-gray-200 rounded-full" onChange={handleChangeDate}/>
-      
-      <label htmlFor="transactionAmount">Amount: </label>
-      <input className="p-2 pl-4 border-2 bg-gray-200 rounded-full" type="number" name="amount" id="transactionAmount" value={transactionAmount} onChange={handleChangeAmount} onBlur={handleBlurAmount}/>
+        <label htmlFor="transactionDate">Date: </label>
+        <input type="date" name="date" id="transactionDate" 
+        className="p-2 pl-4 border-2 bg-gray-200 rounded-full" onChange={handleChangeDate}/>
+        
+        {selectType === 'Expense' &&
+         <>
+          <span>Icon: </span>
+          <ToggleGroup options={iconList} onToggleChange={handleChangeIcon} icon={true}/>
+        </>
+        }
 
-      <span>Icon: </span>
-      <ToggleGroup options={iconList} onToggleChange={handleChangeIcon} icon={true}/>
-      
-      <label htmlFor="transactionPayor">Payor: </label>
-      <select id="transactionPayor" className="p-2 border-2" onChange={handleChangePayor}>
-        {payorOptions?.map((user, index) => <option key={index} value={user.id}>{user.name}</option>)}
-      </select>
+        <label htmlFor="transactionAmount">Amount: </label>
+        <input className="p-2 pl-4 border-2 bg-gray-200 rounded-full" type="number" name="amount" id="transactionAmount" value={transactionAmount} onChange={handleChangeAmount} onBlur={handleBlurAmount}/>
+        
+        <label htmlFor="transactionPayor">Payor: </label>
+        <select id="transactionPayor" className="p-2 border-2" onChange={handleChangePayor}>
+          {payorOptions?.map((user, index) => <option key={index} value={user.id}>{user.name}</option>)}
+        </select>
 
-      <label htmlFor="transactionPayee">Payee: </label>
-      <select id="transactionPayor" className="p-2 border-2" onChange={handleChangePayee}>
-        {payeeOptions?.map((user, index) => <option key={index} value={user.id}>{user.name}</option>)}
-      </select>
-       
+        {selectType === 'Transfer' &&
+         <>
+          <label htmlFor="transactionPayee">Payee: </label>
+          <select id="transactionPayor" className="p-2 border-2" onChange={handleChangePayee}>
+            {payeeOptions?.map((user, index) => <option key={index} value={user.id}>{user.name}</option>)}
+          </select>
+         </>
+        }
+        
         <span>Split Mode: </span>
         <ToggleGroup options={splitOptions} onToggleChange={handleChangeSplit}/>
 
         <span>Split Details: </span>
+        <div>
+          {selectSplit === 'Evenly' &&
+          <>
+            <div className="">Split among 
+              <strong> {splitMembers.length}</strong> members: 
+              <strong> {(transactionAmount/splitMembers.length).toLocaleString()} each</strong> 
+            </div>
+          </>
+          }
+          {selectSplit === 'Specific' &&
+         <>
+            <div className="">
+              <div className="flex gap-2">
+                <button onClick={handleSelectAll} className="border-2 p-1 rounded-md bg-gray-200">Select All</button>
+                <button onClick={handleUnselectAll} className="border-2 p-1 rounded-md bg-gray-200">Unselect All</button>
+              </div>
+              <div className="flex flex-col gap-2">
+                {splitMembers?.map((user, index) => 
+                  <label key={index} className="border p-2 px-4 flex gap-2 items-center" htmlFor={`checkbox-${user.id}`}>
+                    <input 
+                    type="checkbox" 
+                    name="share" 
+                    id={`checkbox-${user.id}`} 
+                    value={user.id}
+                    checked={user.split}
+                    onChange={(e) => handleChangeSplitMembers(parseInt(e.target.value))}/>
+                    {user.name}
+                    <label htmlFor={`weight-${user.id}`}>Share:</label>
+                    <input className="p-2 pl-4 border-2 bg-gray-200 rounded-full" type="number" name="weight" id={`weight-${user.id}`} value={user.share.toString()} onChange={handleChangeWeight} onBlur={handleBlurWeight}/>
 
-        <div className="">
-          <div className="flex gap-2">
-            <button onClick={handleSelectAll} className="border-2 p-1 rounded-md bg-gray-200">Select All</button>
-            <button onClick={handleUnselectAll} className="border-2 p-1 rounded-md bg-gray-200">Unselect All</button>
-          </div>
-          <div className="flex flex-col gap-2">
-            {splitMembers?.map((user, index) => 
-              <label key={index} className="border p-2 px-4 flex gap-2 items-center" htmlFor={`checkbox-${user.id}`}>
-                <input 
-                type="checkbox" 
-                name="share" 
-                id={`checkbox-${user.id}`} 
-                value={user.id}
-                checked={user.split}
-                onChange={(e) => handleChangeSplitMembers(parseInt(e.target.value))}/>
-                {user.name}
-                <label htmlFor={`weight-${user.id}`}>Share:</label>
-                <input className="p-2 pl-4 border-2 bg-gray-200 rounded-full" type="number" name="weight" id={`weight-${user.id}`} value={user.share.toString()} onChange={handleChangeWeight} onBlur={handleBlurWeight}/>
+                    <span>{`${computePercentage(user.share, totalShare)}%`}</span>
+                    <span>{computeShare(user.share, totalShare, transactionAmount).toLocaleString()}</span>
 
-                <span>{`${computePercentage(user.share, totalShare)}%`}</span>
-                <span>{computeShare(user.share, totalShare, transactionAmount).toLocaleString()}</span>
+                  </label>
+                  )}
+              </div>
 
-              </label>
-              )}
-          </div>
+            </div>
+         </>
+          }
 
         </div>
-        <button>Save</button>
-        <button>Cancel</button>
       </form>
+        <div className="flex max-sm:flex-col gap-2 justify-end">
+          <button onClick={handleSubmit} className="bg-green-400 p-2 px-4 rounded-full">Update Changes</button>
+          <button className="bg-red-400 p-2 px-4 rounded-full">Delete Transaction</button>
+        </div>
 
     </div>
   )
