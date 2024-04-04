@@ -52,6 +52,22 @@ export default function TransactionPage({ params }) {
     console.log(value);
   }
 
+  // For Payor
+  const payorOptions = currentGroup.users
+  const [ selectPayor, setSelectPayor ] = useState();
+  const handleChangePayor = (event) => {
+    setSelectPayor(event.target.value)
+  }
+
+  // For Payee
+  const payeeOptions = currentGroup.users
+  const [ selectPayee, setSelectPayee ] = useState();
+  const handleChangePayee = (event) => {
+    setSelectPayee(event.target.value)
+  }
+
+
+
   const handleSubmit = (event) => {
     event.preventDefault();
   }
@@ -78,35 +94,22 @@ export default function TransactionPage({ params }) {
         <input type="date" name="date" id="transactionDate" 
         className="p-2 pl-4 border-2 bg-gray-200 rounded-full" onChange={handleChangeDate}/>
         
-        <label htmlFor="transactionAmount">Amount Spent: </label>
+        <label htmlFor="transactionAmount">Amount: </label>
         <input className="p-2 pl-4 border-2 bg-gray-200 rounded-full" type="number" name="amount" id="transactionAmount" onChange={handleChangeAmount}/>
 
         <span>Icon: </span>
         <ToggleGroup options={iconList} onToggleChange={onChangeIcon} icon={true}/>
-        {/* <div>
-          {iconList?.map((icon, index) => (
-            <div key={index}>
-              <input type="radio" name="transactionIcon" id={index} value="airport_shuttle" />
-              <label htmlFor={index}>
-                <span className="material-symbols-outlined">{icon}</span>
-              </label>
-            </div>
-          ))}
-        </div> */}
         
-        {/* <div>
-          <label htmlFor="transactionPayor">Payor: </label>
-          <select id="transactionPayor">
-            {currentGroup.users?.map((user, index) => <option key={index} value={user.id}>{user.name}</option>)}
-          </select>
-        </div>
-        <div>
-          <label htmlFor="transactionPayee">Payee: </label>
-          <select id="transactionPayee">
-            {currentGroup.users?.map((user, index) => <option key={index} value={user.id}>{user.name}</option>)}
-          </select>
-        </div>
-        
+        <label htmlFor="transactionPayor">Payor: </label>
+        <select id="transactionPayor" className="p-2 border-2" onChange={handleChangePayor}>
+          {payorOptions?.map((user, index) => <option key={index} value={user.id}>{user.name}</option>)}
+        </select>
+
+        <label htmlFor="transactionPayee">Payee: </label>
+        <select id="transactionPayor" className="p-2 border-2" onChange={handleChangePayee}>
+          {payeeOptions?.map((user, index) => <option key={index} value={user.id}>{user.name}</option>)}
+        </select>
+       
         <div>
           <label htmlFor="transactionSplit">Share:</label>
           <select name="type" id="transactionSplit">
@@ -114,7 +117,7 @@ export default function TransactionPage({ params }) {
             <option value="2">Specific</option>
           </select>
         </div>
-        <div>
+        {/* <div>
           <button>Select All</button>
           <button>UnSelect All</button>
         </div>
