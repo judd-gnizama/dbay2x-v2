@@ -252,12 +252,12 @@ export default function TransactionPage({ params }) {
           }
           {selectSplit === 'Specific' &&
          <>
-            <div className="">
-              <div className="flex gap-2">
+            <div className="flex flex-col">
+              <div className="flex p-2 gap-2">
                 <button onClick={handleSelectAll} className="border-2 p-1 rounded-md bg-gray-200">Select All</button>
                 <button onClick={handleUnselectAll} className="border-2 p-1 rounded-md bg-gray-200">Unselect All</button>
               </div>
-              <div className="flex flex-col gap-2">
+              <div className="">
                 {splitMembers?.map((user, index) => 
                   <label key={index} className="border p-2 px-4 flex gap-2 items-center" htmlFor={`checkbox-${user.id}`}>
                     <input 
@@ -268,11 +268,13 @@ export default function TransactionPage({ params }) {
                     checked={user.split}
                     onChange={(e) => handleChangeSplitMembers(parseInt(e.target.value))}/>
                     {user.name}
-                    <label htmlFor={`weight-${user.id}`}>Share:</label>
-                    <input className="p-2 pl-4 border-2 bg-gray-200 rounded-full" type="number" name="weight" id={`weight-${user.id}`} value={user.share.toString()} onChange={handleChangeWeight} onBlur={handleBlurWeight}/>
+                    <div>
+                      <label htmlFor={`weight-${user.id}`}>Share:</label>
+                      <input className="p-2 pl-4 border-2 bg-gray-200 rounded-full" type="number" name="weight" id={`weight-${user.id}`} value={user.share.toString()} onChange={handleChangeWeight} onBlur={handleBlurWeight}/>
 
-                    <span>{`${computePercentage(user.share, totalShare)}%`}</span>
-                    <span>{computeShare(user.share, totalShare, transactionAmount).toLocaleString()}</span>
+                      <span>{`${computePercentage(user.share, totalShare)}%`}</span>
+                      <span>{computeShare(user.share, totalShare, transactionAmount).toLocaleString()}</span>
+                    </div>
 
                   </label>
                   )}
