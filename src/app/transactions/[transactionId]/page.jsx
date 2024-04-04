@@ -40,8 +40,12 @@ export default function TransactionPage({ params }) {
   const [ transactionAmount, setTransactionAmount ] = useState(0);
   const handleChangeAmount = (event) => {
     const value = event.target.value
-    if (value) {
-      setTransactionAmount(value)
+    setTransactionAmount(value)
+  }
+
+  const handleBlurAmount = (event) => {
+    if (!event.target.value) {
+      setTransactionAmount(0);
     }
   }
 
@@ -143,8 +147,7 @@ export default function TransactionPage({ params }) {
   }
   const computeShare = (share, total, amount) => {
     const per = (share/total)
-
-    return (per * amount).toFixed(2)
+    return total ? (per * amount) : 0
   }
 
 
@@ -179,7 +182,7 @@ export default function TransactionPage({ params }) {
       className="p-2 pl-4 border-2 bg-gray-200 rounded-full" onChange={handleChangeDate}/>
       
       <label htmlFor="transactionAmount">Amount: </label>
-      <input className="p-2 pl-4 border-2 bg-gray-200 rounded-full" type="number" name="amount" id="transactionAmount" onChange={handleChangeAmount}/>
+      <input className="p-2 pl-4 border-2 bg-gray-200 rounded-full" type="number" name="amount" id="transactionAmount" value={transactionAmount} onChange={handleChangeAmount} onBlur={handleBlurAmount}/>
 
       <span>Icon: </span>
       <ToggleGroup options={iconList} onToggleChange={handleChangeIcon} icon={true}/>
@@ -216,10 +219,10 @@ export default function TransactionPage({ params }) {
                 onChange={(e) => handleChangeSplitMembers(parseInt(e.target.value))}/>
                 {user.name}
                 <label htmlFor={`weight-${user.id}`}>Share:</label>
-                <input className="p-2 pl-4 border-2 bg-gray-200 rounded-full" type="number" name="weight" id={`weight-${user.id}`} value={user.share} onChange={handleChangeWeight} onBlur={handleBlurWeight}/>
+                <input className="p-2 pl-4 border-2 bg-gray-200 rounded-full" type="number" name="weight" id={`weight-${user.id}`} value={user.share.toString()} onChange={handleChangeWeight} onBlur={handleBlurWeight}/>
 
                 <span>{`${computePercentage(user.share, totalShare)}%`}</span>
-                <span>{computeShare(user.share, totalShare, transactionAmount)}</span>
+                <span>{computeShare(user.share, totalShare, transactionAmount).toLocaleString()}</span>
 
               </label>
               )}
