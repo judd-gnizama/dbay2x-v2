@@ -73,83 +73,71 @@ export default function TransactionPage({ params }) {
   }
 
   // For Split Details
-  const initializeSplitMembers = (users) => {
-    return users.map(user => ({
-      id: user.id,
-      name: user.name,
-      share: 0,
+  const initializeMembers = (members) => {
+    return members.map(member => ({
+      id: member.id,
+      name: member.name,
+      share: 0, 
+      split: false
     }))
   }
 
-  const splitMemberOptions = initializeSplitMembers(currentGroup.users);
-  const [ splitMembers, setSplitMembers ] = useState(splitMemberOptions);
+  const memberOptions = initializeMembers(currentGroup.users)
+  const [ splitMembers, setSplitMembers ] = useState(memberOptions);
   const [ totalShare, setTotalShare ] = useState(0);
 
   const handleChangeSplitMembers = (value) => {
-    const newMember = {id: value, share: 0};
-    const index = splitMembers.findIndex(member => member.id === newMember.id)
-    if (index !== -1) {
-      setSplitMembers(splitMembers.filter(member => member.id !== value))
-    } else {
-      setSplitMembers([...splitMembers, newMember])
-    }
-    computeTotal(splitMembers)
+    const newMembers = splitMembers.map(member=>member.id === value ? 
+      {
+        ...member, 
+        split: member.split ? false : true, 
+        share: 0
+      } : member)
+    setSplitMembers(newMembers)
+    computeTotal(newMembers)
   }
-
-
-
   const handleSelectAll = () => {
-    setSplitMembers(splitMemberOptions)
+    const newMembers = splitMembers.map(member => ({...member, split: true}))
+    setSplitMembers(newMembers)
+    computeTotal(newMembers)
   }
   const handleUnselectAll = () => {
-    setSplitMembers([]);
-    computeTotal([])
+    const newMembers = splitMembers.map(member => ({...member, share: 0, split: false}))
+    setSplitMembers(newMembers)
+    computeTotal(newMembers);
   }
   const handleChangeWeight = (event) => {
+
     const splitMemberId = parseInt(event.target.id.split('-')[1]);
-    if (splitMembers.findIndex(member => member.id === splitMemberId) === -1) return;
-    if(isStrictlyNumeric(event.target.value))
-    {
-      const weight = parseInt(event.target.value);
-      const newSplitMembers = splitMembers.map(member => member.id === splitMemberId ? {...member, share: weight} : member)
-      setSplitMembers(newSplitMembers);
-      computeTotal(newSplitMembers)
-    }
+    const splitMember = splitMembers.filter(member => member.id === splitMemberId)[0];
+    if (splitMember.split) {
+      if(isStrictlyNumeric(event.target.value)) {
+        const weight = parseInt(event.target.value);
+        const newSplitMembers = splitMembers.map(member => member.id === splitMemberId ? {...member, share: weight} : member)
+        setSplitMembers(newSplitMembers);  
+        computeTotal(newSplitMembers)
+      }
+    }  
   }
-
-  const computeTotal = (newSplitMembers) => {
-    if (!newSplitMembers || newSplitMembers.length === 0) return 0;
-    let total = 0
-    newSplitMembers.forEach(member => total+=member.share)
-    setTotalShare(total)
+  const computeTotal = (newMembers) => {
+    let total = 0;
+    newMembers.forEach(member => total+=member.share)
+    setTotalShare(total);
   }
-
-  const computePercentage = (id) => {
-    if (totalShare === 0) return 'N/A'
-    const user = splitMembers.filter(member=>member.id === id)[0]
-    if (!user) return 0
-    return user.share/totalShare
+  const computePercentage = (share, total) => {
+    if(total === 0) return 0
+    return (share/total * 100).toFixed(2)
   }
-
-
-
-  useEffect(()=> {
-    computeTotal(splitMembers)
-
-  },[splitMembers])
-
-  
-
-
-
-
-
-
 
 
   const handleSubmit = (event) => {
     event.preventDefault();
   }
+
+  useEffect(() => {
+    console.log(splitMembers)
+
+  }, [splitMembers])
 
 
   return (
@@ -165,10 +153,10 @@ export default function TransactionPage({ params }) {
       <EditableDiv editableText={editableText} setEditableText={setEditableText} editing={editing} setEditing={setEditing} handleEditable={handleChangeEditable} required/>
       <form onSubmit={handleSubmit} className="border p-4 rounded-lg grid  items-center h-fit gap-2 sm:grid-cols-[auto_1fr]"
       >
-        
-        <span>Type: </span>
+        <>
+        {/* <span>Type: </span>
         <ToggleGroup options={typeOptions} onToggleChange={onToggleChange}/>
-        
+
         <label htmlFor="transactionDate">Date: </label>
         <input type="date" name="date" id="transactionDate" 
         className="p-2 pl-4 border-2 bg-gray-200 rounded-full" onChange={handleChangeDate}/>
@@ -187,34 +175,35 @@ export default function TransactionPage({ params }) {
         <label htmlFor="transactionPayee">Payee: </label>
         <select id="transactionPayor" className="p-2 border-2" onChange={handleChangePayee}>
           {payeeOptions?.map((user, index) => <option key={index} value={user.id}>{user.name}</option>)}
-        </select>
+        </select> */}
+        </>
        
         <span>Split Mode: </span>
         <ToggleGroup options={splitOptions} onToggleChange={handleChangeSplit}/>
 
         <span>Split Details: </span>
+
         <div className="">
           <div className="flex gap-2">
             <button onClick={handleSelectAll} className="border-2 p-1 rounded-md bg-gray-200">Select All</button>
             <button onClick={handleUnselectAll} className="border-2 p-1 rounded-md bg-gray-200">Unselect All</button>
           </div>
           <div className="flex flex-col gap-2">
-            {splitMembers.length}
-            {splitMemberOptions?.map((user, index) => 
+            {splitMembers?.map((user, index) => 
               <label key={index} className="border p-2 px-4 flex gap-2 items-center" htmlFor={`checkbox-${user.id}`}>
                 <input 
                 type="checkbox" 
                 name="share" 
                 id={`checkbox-${user.id}`} 
                 value={user.id}
-                checked={splitMembers.findIndex(member => member.id === user.id) !== -1}
+                checked={user.split}
                 onChange={(e) => handleChangeSplitMembers(parseInt(e.target.value))}/>
                 {user.name}
                 <label htmlFor={`weight-${user.id}`}>Share:</label>
-                <input className="p-2 pl-4 border-2 bg-gray-200 rounded-full" type="number" name="weight" id={`weight-${user.id}`} onChange={handleChangeWeight}/>
+                <input className="p-2 pl-4 border-2 bg-gray-200 rounded-full" type="number" name="weight" id={`weight-${user.id}`} value={user.share} onChange={handleChangeWeight}/>
 
-                <span>{computePercentage(user.id)}</span>
-                <span>{totalShare}</span>
+                <span>{`${computePercentage(user.share, totalShare)}%`}</span>
+                <span>{computePercentage(user.share, totalShare)/100 * transactionAmount}</span>
 
               </label>
               )}
