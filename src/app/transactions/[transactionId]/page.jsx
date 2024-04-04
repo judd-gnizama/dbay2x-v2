@@ -29,8 +29,28 @@ export default function TransactionPage({ params }) {
     setSelectType(value)
   }
 
-  const iconList = ['airport_shuttle', 'restaurant', 'cake', 'sports_soccer', 'sports_tennis', 'shopping_cart', 'monitoring']
+  // For Date
+  const [ transactionDate, setTransactionDate ] = useState();
+  const handleChangeDate = (event) => {
+    setTransactionDate(event.target.value)
+  }
 
+  // For Amount
+  const [ transactionAmount, setTransactionAmount ] = useState(0);
+  const handleChangeAmount = (event) => {
+    const value = event.target.value
+    if (value) {
+      setTransactionAmount(value)
+    }
+  }
+
+  // For Icon
+  const iconList = ['airport_shuttle', 'restaurant', 'cake', 'sports_soccer', 'sports_tennis', 'shopping_cart', 'monitoring']
+  const [ selectIcon, setSelectIcon ] = useState(iconList[0]);
+  const onChangeIcon = (value) => {
+    setSelectIcon(value)
+    console.log(value);
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -48,21 +68,22 @@ export default function TransactionPage({ params }) {
         Go back to <strong>{currentGroup.name}</strong>
       </Link>
       <EditableDiv editableText={editableText} setEditableText={setEditableText} editing={editing} setEditing={setEditing} handleEditable={handleChangeEditable} required/>
-      <form onSubmit={handleSubmit} className="border p-4 rounded-lg grid md:grid-cols-2 items-center h-fit gap-2"
-      style={{gridTemplateColumns: 'auto 1fr'}}>
+      <form onSubmit={handleSubmit} className="border p-4 rounded-lg grid  items-center h-fit gap-2 sm:grid-cols-[auto_1fr]"
+      >
         
         <span>Type: </span>
         <ToggleGroup options={options} onToggleChange={onToggleChange}/>
         
         <label htmlFor="transactionDate">Date: </label>
         <input type="date" name="date" id="transactionDate" 
-        className="p-2 pl-4 border-2 bg-gray-200 rounded-full"/>
+        className="p-2 pl-4 border-2 bg-gray-200 rounded-full" onChange={handleChangeDate}/>
         
         <label htmlFor="transactionAmount">Amount Spent: </label>
-        <input className="p-2 pl-4 border-2 bg-gray-200 rounded-full" type="number" name="amount" id="transactionAmount" />
+        <input className="p-2 pl-4 border-2 bg-gray-200 rounded-full" type="number" name="amount" id="transactionAmount" onChange={handleChangeAmount}/>
 
+        <span>Icon: </span>
+        <ToggleGroup options={iconList} onToggleChange={onChangeIcon} icon={true}/>
         {/* <div>
-          <span>Icon: </span>
           {iconList?.map((icon, index) => (
             <div key={index}>
               <input type="radio" name="transactionIcon" id={index} value="airport_shuttle" />
@@ -71,8 +92,8 @@ export default function TransactionPage({ params }) {
               </label>
             </div>
           ))}
-        </div>
-         */}
+        </div> */}
+        
         {/* <div>
           <label htmlFor="transactionPayor">Payor: </label>
           <select id="transactionPayor">
