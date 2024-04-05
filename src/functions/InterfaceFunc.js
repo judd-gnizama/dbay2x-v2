@@ -1,5 +1,5 @@
 import { appendNewGroup, getAllGroupIds, getAllUniqueUserIds, getGroups, replaceGroups } from "./LocalStorageFunc";
-import { ProcessGroupData } from "./ProcessGroupData";
+import { ProcessGroupData, processGroup } from "./ProcessGroupData";
 
 
 // Add New Group
@@ -27,16 +27,16 @@ export function createNewGroup() {
 // Process all groups and Commit to local Storage
 
 export function processTheseGroups({ groups }) { 
-  return groups.map(group => ProcessGroupData(group))
+  return groups.map(group => processGroup(group))
 }
 
 
 
-export function ProcessAllGroups() {
-  const groups = getGroups();
-  const processedGroups = groups.map(group => ProcessGroupData(group));
-  replaceGroups({newGroups: processedGroups});
-}
+// export function ProcessAllGroups() {
+//   const groups = getGroups();
+//   const processedGroups = groups.map(group => processGroup(group));
+//   replaceGroups({newGroups: processedGroups});
+// }
 
 // is Strictly Number
 export function isStrictlyNumeric(str) {
