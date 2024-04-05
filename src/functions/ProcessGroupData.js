@@ -142,3 +142,87 @@ export function ProcessGroupData(group) {
   return updatedGroup
 
 }
+
+
+export function processGroup(group) {
+  const initializedUsers = group.users.map(user => ({
+    ...user, 
+    paid: 0,
+    share: 0,
+    net: 0,
+  }))
+  const computeTotalWeight = (transactions) => {
+    let total_weight = 0
+    transactions.forEach(transaction=>transaction.split_members.forEach(split_member => total_weight += split_member.split ? split_member.weight : 0 ))
+    return total_weight
+  }
+  const total_weight = computeTotalWeight(group.transactions);
+
+  const updatedUsers = initializedUsers.map(user => {
+
+    let paid = 0
+    let received = 0
+    let share = 0
+
+    group.transactions.forEach(transaction => {
+
+      paid += transaction.payer === user.id ? transaction.amount : 0
+      received += transaction.recipient === user.id && transaction.type === 'Transfer' ? -transaction.amount : 0
+      transaction.split_members.forEach(split_member => {
+        if(split_member.id === user.id && split_member.split) {
+          share += split_member.weight / total_weight * transaction.amount
+        }
+      })
+    })
+
+    return({
+      ...user, 
+      paid: paid + received,
+      share: share,
+      net: share - (paid + received),
+      _net: share - (paid + received)
+    })
+  })
+
+  const computeReimbursements = (membersList) => {
+    if (!membersList || !membersList.length) return [];
+
+    let reimbursements = [];
+    let done = false;
+    let count = 0;
+    while (!done) {
+
+
+      if (membersList.findIndex((member) => member.net > 0) === -1 || count === 100) {
+        done = true;
+        break;
+      }
+      // sort lowest to highest
+      let sortedMembersList = membersList.sort((member1, member2) => member1.net - member2.net);
+      
+      
+      // append to reimbursements
+      const maxIndex = sortedMembersList.length - 1;
+      reimbursements.push(
+        {
+          from: sortedMembersList[maxIndex].id,
+          to: sortedMembersList[0].id,
+          amount: sortedMembersList[maxIndex].net
+        }
+        )
+        
+        // update net list
+        sortedMembersList[0].net += sortedMembersList[maxIndex].net;
+        sortedMembersList[maxIndex].net = 0;
+      }
+      
+    return reimbursements;
+
+  }
+
+
+  // const reimbursements = computeReimbursements(updatedUsers);
+
+  return {...group, users: updatedUsers, reimbursements: []}
+
+}

@@ -2,6 +2,7 @@
 
 import { ProcessAllGroups } from "@/functions/InterfaceFunc";
 import { addTransaction, getAllGroupIds, getAllUniqueUserIds, getCurrentGroup, getCurrentGroupId, getGroupById, getGroups, getRawData, replaceUserProp  } from "@/functions/LocalStorageFunc";
+import { processGroup } from "@/functions/ProcessGroupData";
 
 export default function LocalStorageManager() {
 
@@ -85,49 +86,49 @@ export default function LocalStorageManager() {
             {
               id: 1,
               name: 'Judd',
-              share: 32340,
+              weight: 32340,
               split: true,
             },
             {
               id: 2,
               name: 'Jon',
-              share: 32340,
+              weight: 32340,
               split: true,
             },
             {
               id: 3,
               name: 'Jyll',
-              share: 32340,
+              weight: 32340,
               split: true,
             },
             {
               id: 4,
               name: 'Mom',
-              share: 0,
+              weight: 0,
               split: false,
             },
             {
               id: 5,
               name: 'Maverick',
-              share: 0,
+              weight: 0,
               split: false,
             },
             {
               id: 6,
               name: 'Myles',
-              share: 0,
+              weight: 0,
               split: false,
             },
             {
               id: 7,
               name: 'Mae',
-              share: 0,
+              weight: 0,
               split: false,
             },
             {
               id: 8,
               name: 'Julie',
-              share: 0,
+              weight: 0,
               split: false,
             },
           ]
@@ -146,60 +147,120 @@ export default function LocalStorageManager() {
             {
               id: 1,
               name: 'Judd',
-              share: 0,
+              weight: 0,
               split: false,
             },
             {
               id: 2,
               name: 'Jon',
-              share: 0,
+              weight: 0,
               split: false,
             },
             {
               id: 3,
               name: 'Jyll',
-              share: 0,
+              weight: 0,
               split: false,
             },
             {
               id: 4,
               name: 'Mom',
-              share: 0,
+              weight: 0,
               split: false,
             },
             {
               id: 5,
               name: 'Maverick',
-              share: 0,
+              weight: 0,
               split: false,
             },
             {
               id: 6,
               name: 'Myles',
-              share: 0,
+              weight: 0,
               split: false,
             },
             {
               id: 7,
               name: 'Mae',
-              share: 0,
+              weight: 0,
               split: false,
             },
             {
               id: 8,
               name: 'Julie',
-              share: 0,
+              weight: 0,
               split: false,
             },
           ]
-        }
+        },
+        {
+          id: 3,
+          type: 'Expense', // type: 1 - expense, type: 2 - transfer
+          date: "2003-11-21",
+          description: "Games",
+          icon: 'receipt_long',
+          payer: 6, // user_id
+          amount:  12230,
+          recipient: 0, // user_id, 0 - if type 1
+          split_mode: 'Evenly',
+          split_members: [
+            {
+              id: 1,
+              name: 'Judd',
+              weight: 1,
+              split: true,
+            },
+            {
+              id: 2,
+              name: 'Jon',
+              weight: 1,
+              split: true,
+            },
+            {
+              id: 3,
+              name: 'Jyll',
+              weight: 1,
+              split: true,
+            },
+            {
+              id: 4,
+              name: 'Mom',
+              weight: 1,
+              split: true,
+            },
+            {
+              id: 5,
+              name: 'Maverick',
+              weight: 1,
+              split: true,
+            },
+            {
+              id: 6,
+              name: 'Myles',
+              weight: 1,
+              split: true,
+            },
+            {
+              id: 7,
+              name: 'Mae',
+              weight: 1,
+              split: true,
+            },
+            {
+              id: 8,
+              name: 'Julie',
+              weight: 1,
+              split: true,
+            },
+          ]
+        },
       ],
       reimbursements: [
         // algorithm
         // 1. Get who has highest net, 2. Get who has lowest net, 3. 1 --> 2, 4. update net, 5. repeat process. 5. stop when all net are zero. 
       ]
-      },
-      
+      }, 
       {
         name: 'Boracay Vacation', 
         description: 'Christmas Party at Lolas House',
@@ -352,7 +413,7 @@ export default function LocalStorageManager() {
           // algorithm
           // 1. Get who has highest net, 2. Get who has lowest net, 3. 1 --> 2, 4. update net, 5. repeat process. 5. stop when all net are zero. 
         ]
-        },
+      },
   ]
 
   const test_db = {
@@ -376,7 +437,8 @@ export default function LocalStorageManager() {
   }
 
  const handleFunction = () => {
-  ProcessAllGroups();
+  console.log('before', test_db.groups[0])
+  console.log('after',processGroup(test_db.groups[0]))
 }
 
   return (
