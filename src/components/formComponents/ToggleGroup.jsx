@@ -1,17 +1,14 @@
 'use client'
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
-export default function ToggleGroup({ options, onToggleChange, icon }) {
-
-  const [ toggleSelect, setToggleSelect ] = useState(options[0]);
-
+export default function ToggleGroup({ options, onToggleChange, icon, initial }) {
+  const [ toggleSelect, setToggleSelect ] = useState(initial ? initial : options[0]);
   const handleChange = (event) => {
     setToggleSelect(event.target.value)
     onToggleChange(event.target.value)
   }
 
   return (
-    // <div className="flex justify-center items-center border-2 flex-wrap">
     <div className="grid border-2"
     style={{gridTemplateColumns: 'repeat(auto-fit, minmax(5rem, 1fr))'}}>
       {options?.map(option => 

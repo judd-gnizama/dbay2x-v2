@@ -2,7 +2,6 @@
 
 import EditableDiv from "@/components/EditableDiv";
 import ToggleGroup from "@/components/formComponents/ToggleGroup";
-import { isStrictlyNumeric } from "@/functions/InterfaceFunc";
 import { getCurrentGroup, getTransactionFromGroup, getUserInGroup } from "@/functions/LocalStorageFunc";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -137,7 +136,6 @@ export default function TransactionPage({ params }) {
     }  
 
   }
-
   const computeTotal = (newMembers) => {
     let total = 0;
     newMembers.forEach(member => total+=member.share)
@@ -152,13 +150,51 @@ export default function TransactionPage({ params }) {
     return total ? (per * amount) : 0
   }
 
-
+  // Overall 
   const handleSubmit = (event) => {
+    
     event.preventDefault();
-
+    var hasError = false;
+    if (!transactionDate){
+      console.log('Error', 'No Date')
+      hasError = true;
+    } 
     if (!editableText) {
-      return;
+      console.log('Error', 'No Description')
+      hasError = true;
     }
+    if (!transactionAmount) {
+      console.log('Error', 'Invalid Amount')
+      hasError = true;
+    } 
+    if (!selectPayor || currentGroup.users.findIndex(user=>user.id === selectPayor) === -1) {
+      console.log('Error', "Invalid Payor")
+      hasError = true;
+    }
+    
+    if (selectType === 'Expense') {
+      if (!selectIcon) {
+        console.log('No Icon')
+        hasError = true;
+      }
+    } else if (selectType === 'Transfer') {
+      if (!selectSplit) {
+        console.log('No Split Mode')
+        hasError = true;
+      }
+      if (!selectPayee || currentGroup.users.findIndex(user=>user.id === selectPayee) === -1) {
+        console.log('No Recipient')
+        hasError = true;
+      }
+  
+      if (selectPayor === selectPayee) {
+        console.log('Payor and Recipient cannot be the same')
+        hasError = true;
+      }
+    }
+    if(hasError) return;
+
+    // If No Errors, Process Data
 
     if (selectSplit === 'Specific') {
       var split_members = splitMembers.filter(member => member.split)
@@ -170,8 +206,6 @@ export default function TransactionPage({ params }) {
         split: true
       }))
     }
-
-    if (selectPayor === selectPayee) return;
 
     const newTransaction = {
       id: transactionId,
@@ -185,12 +219,9 @@ export default function TransactionPage({ params }) {
       split_mode: selectSplit,
       split_members: split_members
     }
-    console.log(newTransaction)
-
-
-
-
+    console.log('Success!',newTransaction)
   }
+
 
   return (
     <div className="grid gap-4"
@@ -216,7 +247,7 @@ export default function TransactionPage({ params }) {
         {selectType === 'Expense' &&
          <>
           <span>Icon: </span>
-          <ToggleGroup options={iconList} onToggleChange={handleChangeIcon} icon={true}/>
+          <ToggleGroup options={iconList}  initial={selectIcon} onToggleChange={handleChangeIcon} icon={true}/>
         </>
         }
 
@@ -230,61 +261,74 @@ export default function TransactionPage({ params }) {
 
         {selectType === 'Transfer' &&
          <>
-          <label htmlFor="transactionPayee">Payee: </label>
-          <select id="transactionPayor" className="p-2 border-2" onChange={handleChangePayee}>
+          <label htmlFor="transactionPayee">Recipient: </label>
+          <select id="transactionPayor" className="p-2 border-2" value={selectPayee} onChange={handleChangePayee}>
             {payeeOptions?.map((user, index) => <option key={index} value={user.id}>{user.name}</option>)}
           </select>
          </>
         }
         
-        <span>Split Mode: </span>
-        <ToggleGroup options={splitOptions} onToggleChange={handleChangeSplit}/>
+        {selectType === 'Expense' &&
+        <>
+          <span>Split Mode: </span>
+          <ToggleGroup options={splitOptions}  initial={selectSplit} onToggleChange={handleChangeSplit}/>
 
-        <span>Split Details: </span>
-        <div>
-          {selectSplit === 'Evenly' &&
+          <span>Split Details: </span>
+          <div>
+            {selectSplit === 'Evenly' &&
+            <>
+              <div className="">Split among 
+                <strong> {splitMembers.length}</strong> members: 
+                <strong> {(transactionAmount/splitMembers.length).toLocaleString()} each</strong> 
+              </div>
+            </>
+            }
+            {selectSplit === 'Specific' &&
           <>
-            <div className="">Split among 
-              <strong> {splitMembers.length}</strong> members: 
-              <strong> {(transactionAmount/splitMembers.length).toLocaleString()} each</strong> 
-            </div>
+              <div className="flex flex-col">
+                <div className="flex p-2 gap-2">
+                  <button onClick={handleSelectAll} className="border-2 p-1 rounded-md bg-gray-200">Select All</button>
+                  <button onClick={handleUnselectAll} className="border-2 p-1 rounded-md bg-gray-200">Unselect All</button>
+                </div>
+                <div className="border border-red-400">
+                  {splitMembers?.map((user, index) => 
+                    <label key={index} className="grid border border-blue-500  max-[350px]:grid-cols-1 max-sm:grid-cols-[1fr_2fr] sm:grid-cols-[1fr_1fr_2fr] items-center p-2 px-4 gap-2" htmlFor={`checkbox-${user.id}`}>
+                      <div className="flex gap-2 max-sm:row-span-2">
+                        <input 
+                        type="checkbox" 
+                        name="share" 
+                        id={`checkbox-${user.id}`} 
+                        value={user.id}
+                        checked={user.split}
+                        onChange={(e) => handleChangeSplitMembers(parseInt(e.target.value))}/>
+                        {user.name}
+                      </div>
+                      <label className="flex flex-wrap items-center gap-2" htmlFor={`weight-${user.id}`}>
+                        Weight:
+                        <input 
+                        className=" max-w-32 p-2 border-2 bg-gray-200 rounded-full" type="number" 
+                        name="weight" 
+                        id={`weight-${user.id}`} 
+                        value={user.share.toString()} 
+                        onChange={handleChangeWeight} 
+                        onBlur={handleBlurWeight}/>
+                      </label>
+                      <div className="flex flex-col w-fit">
+                        <span>{`Percentage: ${
+                          computePercentage(user.share, totalShare) < 1 && user.share !== 0 ? '< 1' : computePercentage(user.share, totalShare)}%`}</span>
+                        <span className="font-bold">{`Share: ${computeShare(user.share, totalShare, transactionAmount).toLocaleString()}`}</span>
+                      </div>
+
+                    </label>
+                    )}
+                </div>
+
+              </div>
           </>
-          }
-          {selectSplit === 'Specific' &&
-         <>
-            <div className="flex flex-col">
-              <div className="flex p-2 gap-2">
-                <button onClick={handleSelectAll} className="border-2 p-1 rounded-md bg-gray-200">Select All</button>
-                <button onClick={handleUnselectAll} className="border-2 p-1 rounded-md bg-gray-200">Unselect All</button>
-              </div>
-              <div className="">
-                {splitMembers?.map((user, index) => 
-                  <label key={index} className="border p-2 px-4 flex gap-2 items-center" htmlFor={`checkbox-${user.id}`}>
-                    <input 
-                    type="checkbox" 
-                    name="share" 
-                    id={`checkbox-${user.id}`} 
-                    value={user.id}
-                    checked={user.split}
-                    onChange={(e) => handleChangeSplitMembers(parseInt(e.target.value))}/>
-                    {user.name}
-                    <div>
-                      <label htmlFor={`weight-${user.id}`}>Share:</label>
-                      <input className="p-2 pl-4 border-2 bg-gray-200 rounded-full" type="number" name="weight" id={`weight-${user.id}`} value={user.share.toString()} onChange={handleChangeWeight} onBlur={handleBlurWeight}/>
-
-                      <span>{`${computePercentage(user.share, totalShare)}%`}</span>
-                      <span>{computeShare(user.share, totalShare, transactionAmount).toLocaleString()}</span>
-                    </div>
-
-                  </label>
-                  )}
-              </div>
-
-            </div>
-         </>
-          }
-
-        </div>
+            }
+          </div>
+        </>
+        }
       </form>
         <div className="flex max-sm:flex-col gap-2 justify-end">
           <button onClick={handleSubmit} className="bg-green-400 p-2 px-4 rounded-full">Update Changes</button>
