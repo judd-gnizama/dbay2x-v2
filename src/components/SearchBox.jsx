@@ -76,7 +76,7 @@ export default function SearchBox({ type, groupId }) {
           return;
         } else {
           const transactionIds = getAllUniqueTransactionIds();
-          const newTransactionId = Math.max(...transactionIds) + 1
+          const newTransactionId = transactionIds && transactionIds?.length ? Math.max(...transactionIds) + 1 : 1;
           setSearch("")
           router.push(`/transactions/${newTransactionId}?groupId=${groupId}&mode=add&name=${search}`)
         }

@@ -1,12 +1,6 @@
 
 export default function AddItem({ type }) {
 
-  // const iconTypes = [
-  //   {type: 'user', icon: 'person_add'},
-  //   {type: 'group', icon: 'group_add'},
-  //   {type: 'transaction', icon: 'add_notes'},
-  // ]
-
   const types = {
     user: 'User',
     group: 'Group',

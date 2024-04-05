@@ -1,5 +1,7 @@
 'use client'
 
+import { processTheseGroups } from "./InterfaceFunc";
+
 const key = 'myDataKey'
 
 // Get Methods
@@ -137,8 +139,9 @@ export function setCurrentGroupId({groupId})  {
 }
 
 export function replaceGroups({newGroups}) {
+  const processedGroups = processTheseGroups({groups: newGroups})
   const currentGroupId = getCurrentGroupId();
-  setRawData({currentGroupId: currentGroupId ? currentGroupId : newGroups[0].id, groups: newGroups})
+  setRawData({currentGroupId: currentGroupId ? currentGroupId : processedGroups[0].id, groups: processedGroups})
 }
 
 export function replaceGroup({newGroup}) {

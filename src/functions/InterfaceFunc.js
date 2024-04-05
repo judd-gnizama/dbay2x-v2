@@ -26,6 +26,12 @@ export function createNewGroup() {
 
 // Process all groups and Commit to local Storage
 
+export function processTheseGroups({ groups }) { 
+  return groups.map(group => ProcessGroupData(group))
+}
+
+
+
 export function ProcessAllGroups() {
   const groups = getGroups();
   const processedGroups = groups.map(group => ProcessGroupData(group));
