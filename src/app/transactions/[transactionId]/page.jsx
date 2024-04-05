@@ -293,7 +293,7 @@ export default function TransactionPage({ params }) {
       </Link>
       <EditableDiv editableText={editableText} setEditableText={setEditableText} editing={editing} setEditing={setEditing} handleEditable={handleChangeEditable}/>
 
-      <div className="border p-4 rounded-lg grid  items-center h-fit gap-2 sm:grid-cols-[auto_1fr]"
+      <div className="border p-4 rounded-lg grid items-center h-fit gap-2 gap-x-10 sm:grid-cols-[auto_1fr]"
       >
         <span>Type: </span>
         <ToggleGroup options={typeOptions} initial={selectType} onToggleChange={onToggleChange}/>
@@ -350,7 +350,8 @@ export default function TransactionPage({ params }) {
                 </div>
                 <div className="">
                   {splitMembers?.map((user, index) => 
-                    <label key={index} className="grid max-[350px]:grid-cols-1 max-sm:grid-cols-[1fr_2fr] sm:grid-cols-[1fr_1fr_2fr] items-center p-2 px-4 gap-2" htmlFor={`checkbox-${user.id}`}>
+                    <label key={index} className="grid max-[350px]:grid-cols-1 max-sm:grid-cols-[1fr_2fr] sm:grid-cols-[1fr_1fr_2fr] items-center p-2 px-4 gap-2 border-2" 
+                    htmlFor={`checkbox-${user.id}`}>
                       <div className="flex gap-2 max-sm:row-span-2">
                         <input 
                         type="checkbox" 
