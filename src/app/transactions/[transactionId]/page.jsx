@@ -361,7 +361,7 @@ export default function TransactionPage({ params }) {
                 </div>
                 <div className="">
                   {splitMembers?.map((user, index) => 
-                    <label key={index} className="grid max-[350px]:grid-cols-1 max-sm:grid-cols-[1fr_2fr] sm:grid-cols-[1fr_1fr_2fr] items-center p-2 px-4 gap-2 border-2" 
+                    <label key={index} className={`grid max-[350px]:grid-cols-1 max-sm:grid-cols-[1fr_2fr] sm:grid-cols-[1fr_1fr_2fr] items-center p-2 px-4 gap-2 border-2 `}
                     htmlFor={`checkbox-${user.id}`}>
                       <div className="flex gap-2 max-sm:row-span-2">
                         <input 
@@ -373,15 +373,16 @@ export default function TransactionPage({ params }) {
                         onChange={(e) => handleChangeSplitMembers(parseInt(e.target.value))}/>
                         {user.name}
                       </div>
-                      <label className="flex flex-wrap items-center gap-2" htmlFor={`weight-${user.id}`}>
+                      <label className={`flex flex-wrap items-center gap-2 ${user.split ? '' : 'opacity-40'}`} htmlFor={`weight-${user.id}`}>
                         Weight:
                         <input 
-                        className=" max-w-32 p-2 border-2 bg-gray-200 rounded-full" type="number" 
+                        className=" max-w-32 p-2 border-2 bg-gray-200 rounded-full disabled:opacity-40" type="number" 
                         name="weight" 
                         id={`weight-${user.id}`} 
                         value={user.weight.toString()} 
                         onChange={handleChangeWeight} 
-                        onBlur={handleBlurWeight}/>
+                        onBlur={handleBlurWeight}
+                        disabled={!user.split}/>
                       </label>
                       <div className="flex flex-col w-fit">
                         <span>{`Percentage: ${
