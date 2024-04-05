@@ -2,7 +2,7 @@
 
 import EditableDiv from "@/components/EditableDiv";
 import ToggleGroup from "@/components/formComponents/ToggleGroup";
-import { getCurrentGroup, getTransactionFromGroup, getUserInGroup } from "@/functions/LocalStorageFunc";
+import { getCurrentGroup, getTransactionFromGroup, getUserInGroup, replaceTransaction } from "@/functions/LocalStorageFunc";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -219,6 +219,8 @@ export default function TransactionPage({ params }) {
       split_mode: selectSplit,
       split_members: split_members
     }
+
+    replaceTransaction({groupId: currentGroup.id, updatedTransaction: newTransaction})
     console.log('Success!',newTransaction)
   }
 

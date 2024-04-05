@@ -225,6 +225,13 @@ export function addTransaction({ groupId, newTransaction}){
   }
 }
 
+export function replaceTransaction({ groupId, updatedTransaction }) {
+  const group = getGroupById({ groupId: groupId })
+  const newTransactions = group.transactions.map(transaction => transaction.id === updatedTransaction.id ? updatedTransaction : transaction)
+  const newGroup = {...group, transactions: newTransactions}
+  replaceGroup({newGroup: newGroup})
+}
+
 // Remove Methods
 
 export function removeRawData() {
