@@ -72,21 +72,21 @@ export default function SearchBox({ type, groupId }) {
         // add new transaction
         // go to page
         const transactionIds = getAllUniqueTransactionIds();
-        console.log(transactionIds)
         const newTransaction = {
           id: Math.max(...transactionIds) + 1, 
-          amount: 0,
-          date: '', 
           description: "",
+          type: 'Expense',
+          date: '', 
+          icon: 'receipt_long',
+          amount: 0,
           payer: 0,
           recipient: 0,
+          split_mode: 'Evenly',
           split_members: [],
-          type: 1,
         }
-        console.log(newTransaction)
         addTransaction({ groupId: groupId, newTransaction: newTransaction})
         setSearch("")
-        router.push(`/transactions/${newTransaction.id}`)
+        router.push(`/transactions/${newTransaction.id}?mode=add`)
 
       }
     }

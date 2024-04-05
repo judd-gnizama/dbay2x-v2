@@ -729,7 +729,7 @@ export default function LocalStorageManager() {
         transactions: [
           {
             id: 76,
-            date: "11-11-1995",
+            date: "1995-11-11",
             description: "Birthday Gift",
             type: 1, // type: 1 - expense, type: 2 - transfer
             payer: 1, // user_id
@@ -753,7 +753,7 @@ export default function LocalStorageManager() {
           },
           {
             id: 87,
-            date: "05-12-2025",
+            date: "2025-05-19",
             description: "New Game",
             type: 9, // type: 1 - expense, type: 2 - transfer
             payer: 1, // user_id

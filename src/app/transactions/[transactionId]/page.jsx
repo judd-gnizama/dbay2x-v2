@@ -4,16 +4,36 @@ import EditableDiv from "@/components/EditableDiv";
 import ToggleGroup from "@/components/formComponents/ToggleGroup";
 import { getCurrentGroup, getTransactionFromGroup, getUserInGroup, replaceTransaction } from "@/functions/LocalStorageFunc";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function TransactionPage({ params }) {
 
+  const searchParams = useSearchParams();
+  const mode = searchParams.get('mode')
   const transactionId = parseInt(params.transactionId);
   const currentGroup = getCurrentGroup();
   const transaction = getTransactionFromGroup({groupId: currentGroup.id, transactionId: transactionId})
 
+  const initialValues = mode === 'add' ? 
+    {
+      id: transactionId,
+      description: "Description Here",
+      type: 'Expense',
+      date: "",
+      icon: "receipt_long",
+      amount: 0,
+      payer: currentGroup.users[0].id,
+      recipient: currentGroup.users[0].id,
+      split_mode: "Evenly",
+      split_members: []
+    }
+    :
+    transaction;
+
   // For Description
-  const [ editableText, setEditableText ] = useState(transaction.description);
+  console.log(initialValues)
+  const [ editableText, setEditableText ] = useState(initialValues.description);
   const [ editing, setEditing ] = useState(false);
   const handleChangeEditable = (event) => {
     const description = event.target.textContent;
@@ -24,19 +44,19 @@ export default function TransactionPage({ params }) {
 
   // For Transaction Type
   const typeOptions = ['Expense', 'Transfer'];
-  const [ selectType, setSelectType ] = useState(typeOptions[0]);
+  const [ selectType, setSelectType ] = useState(initialValues.type);
   const onToggleChange = (value) => {
     setSelectType(value)
   }
 
   // For Date
-  const [ transactionDate, setTransactionDate ] = useState();
+  const [ transactionDate, setTransactionDate ] = useState(initialValues.date);
   const handleChangeDate = (event) => {
     setTransactionDate(event.target.value)
   }
 
   // For Amount
-  const [ transactionAmount, setTransactionAmount ] = useState(0);
+  const [ transactionAmount, setTransactionAmount ] = useState(initialValues.amount);
   const handleChangeAmount = (event) => {
     const value = event.target.value
     setTransactionAmount(value)
@@ -49,28 +69,29 @@ export default function TransactionPage({ params }) {
   }
 
   // For Icon
-  const iconList = ['airport_shuttle', 'restaurant', 'cake', 'sports_soccer', 'sports_tennis', 'shopping_cart', 'monitoring']
-  const [ selectIcon, setSelectIcon ] = useState(iconList[0]);
+  const iconList = ['receipt_long','airport_shuttle', 'restaurant', 'cake', 'sports_soccer', 'sports_tennis', 'shopping_cart', 'monitoring']
+  const [ selectIcon, setSelectIcon ] = useState(initialValues.icon);
   const handleChangeIcon = (value) => {
     setSelectIcon(value)
   }
 
   // For Payor
   const payorOptions = currentGroup.users
-  const [ selectPayor, setSelectPayor ] = useState(payorOptions[0].id);
+  const [ selectPayor, setSelectPayor ] = useState(initialValues.payer);
   const handleChangePayor = (event) => {
     setSelectPayor(parseInt(event.target.value))
   }
   
   // For Payee
   const payeeOptions = currentGroup.users
-  const [ selectPayee, setSelectPayee ] = useState(payorOptions[0].id);
+  const isInUsers = currentGroup.users.findIndex(user=>user.id === initialValues.recipient) !== -1
+  const [ selectPayee, setSelectPayee ] = useState(isInUsers ? initialValues.recipient : payeeOptions[0].id);
   const handleChangePayee = (event) => {
     setSelectPayee(parseInt(event.target.value))
   }
   // For Split Mode
   const splitOptions = ['Evenly', 'Specific'];
-  const [ selectSplit, setSelectSplit ] = useState(splitOptions[0]);
+  const [ selectSplit, setSelectSplit ] = useState(initialValues.split_mode);
   const handleChangeSplit = (value) => {
     setSelectSplit(value)
   }
@@ -86,8 +107,14 @@ export default function TransactionPage({ params }) {
   }
 
   const memberOptions = initializeMembers(currentGroup.users)
-  const [ splitMembers, setSplitMembers ] = useState(memberOptions);
-  const [ totalShare, setTotalShare ] = useState(0);
+  const [ splitMembers, setSplitMembers ] = useState(mode === 'add'? memberOptions : initialValues.split_members);
+  const computeInitialTotal = (newMembers) => {
+    let total = 0;
+    newMembers.forEach(member => total+=member.share)
+    return total
+  }
+
+  const [ totalShare, setTotalShare ] = useState(computeInitialTotal(splitMembers));
 
   const handleChangeSplitMembers = (value) => {
     const newMembers = splitMembers.map(member=>member.id === value ? 
@@ -174,6 +201,7 @@ export default function TransactionPage({ params }) {
     
     if (selectType === 'Expense') {
       if (!selectIcon) {
+        console.log(selectIcon)
         console.log('No Icon')
         hasError = true;
       }
@@ -195,18 +223,6 @@ export default function TransactionPage({ params }) {
     if(hasError) return;
 
     // If No Errors, Process Data
-
-    if (selectSplit === 'Specific') {
-      var split_members = splitMembers.filter(member => member.split)
-    } else {
-      var split_members = splitMembers.map(member => ({
-        id: member.id,
-        name: member.name,
-        share: 1,
-        split: true
-      }))
-    }
-
     const newTransaction = {
       id: transactionId,
       description: editableText,
@@ -216,14 +232,25 @@ export default function TransactionPage({ params }) {
       amount: transactionAmount ? transactionAmount : 0,
       payer: selectPayor,
       recipient: selectType === 'Expense' ? 0 : selectPayee,
-      split_mode: selectSplit,
-      split_members: split_members
+      split_mode: selectType === 'Expense' ? selectSplit : "",
+      split_members: selectSplit === 'Specific' ? splitMembers
+      : splitMembers.map(member => ({
+        id: member.id,
+        name: member.name,
+        share: 1,
+        split: true
+      }))
     }
 
     replaceTransaction({groupId: currentGroup.id, updatedTransaction: newTransaction})
     console.log('Success!',newTransaction)
   }
 
+
+  useEffect(()=> {
+    console.log(transactionDate)
+    console.log(selectPayee)
+  }, [transactionDate])
 
   return (
     <div className="grid gap-4"
@@ -237,14 +264,14 @@ export default function TransactionPage({ params }) {
       </Link>
       <EditableDiv editableText={editableText} setEditableText={setEditableText} editing={editing} setEditing={setEditing} handleEditable={handleChangeEditable}/>
 
-      <form className="border p-4 rounded-lg grid  items-center h-fit gap-2 sm:grid-cols-[auto_1fr]"
+      <div className="border p-4 rounded-lg grid  items-center h-fit gap-2 sm:grid-cols-[auto_1fr]"
       >
         <span>Type: </span>
-        <ToggleGroup options={typeOptions} onToggleChange={onToggleChange}/>
+        <ToggleGroup options={typeOptions} initial={selectType} onToggleChange={onToggleChange}/>
 
         <label htmlFor="transactionDate">Date: </label>
         <input type="date" name="date" id="transactionDate" 
-        className="p-2 pl-4 border-2 bg-gray-200 rounded-full" onChange={handleChangeDate}/>
+        className="p-2 pl-4 border-2 bg-gray-200 rounded-full" value={transactionDate} onChange={handleChangeDate}/>
         
         {selectType === 'Expense' &&
          <>
@@ -257,14 +284,14 @@ export default function TransactionPage({ params }) {
         <input className="p-2 pl-4 border-2 bg-gray-200 rounded-full" type="number" name="amount" id="transactionAmount" value={transactionAmount} onChange={handleChangeAmount} onBlur={handleBlurAmount}/>
         
         <label htmlFor="transactionPayor">Payor: </label>
-        <select id="transactionPayor" className="p-2 border-2" onChange={handleChangePayor}>
+        <select id="transactionPayor" className="p-2 border-2" value={selectPayor} onChange={handleChangePayor}>
           {payorOptions?.map((user, index) => <option key={index} value={user.id}>{user.name}</option>)}
         </select>
 
         {selectType === 'Transfer' &&
          <>
           <label htmlFor="transactionPayee">Recipient: </label>
-          <select id="transactionPayor" className="p-2 border-2" value={selectPayee} onChange={handleChangePayee}>
+          <select id="transactionPayee" className="p-2 border-2" value={selectPayee} onChange={handleChangePayee}>
             {payeeOptions?.map((user, index) => <option key={index} value={user.id}>{user.name}</option>)}
           </select>
          </>
@@ -292,9 +319,9 @@ export default function TransactionPage({ params }) {
                   <button onClick={handleSelectAll} className="border-2 p-1 rounded-md bg-gray-200">Select All</button>
                   <button onClick={handleUnselectAll} className="border-2 p-1 rounded-md bg-gray-200">Unselect All</button>
                 </div>
-                <div className="border border-red-400">
+                <div className="">
                   {splitMembers?.map((user, index) => 
-                    <label key={index} className="grid border border-blue-500  max-[350px]:grid-cols-1 max-sm:grid-cols-[1fr_2fr] sm:grid-cols-[1fr_1fr_2fr] items-center p-2 px-4 gap-2" htmlFor={`checkbox-${user.id}`}>
+                    <label key={index} className="grid max-[350px]:grid-cols-1 max-sm:grid-cols-[1fr_2fr] sm:grid-cols-[1fr_1fr_2fr] items-center p-2 px-4 gap-2" htmlFor={`checkbox-${user.id}`}>
                       <div className="flex gap-2 max-sm:row-span-2">
                         <input 
                         type="checkbox" 
@@ -331,9 +358,9 @@ export default function TransactionPage({ params }) {
           </div>
         </>
         }
-      </form>
+      </div>
         <div className="flex max-sm:flex-col gap-2 justify-end">
-          <button onClick={handleSubmit} className="bg-green-400 p-2 px-4 rounded-full">Update Changes</button>
+          <button onClick={handleSubmit} className="bg-green-400 p-2 px-4 rounded-full">{`${mode === 'add' ? 'Add New' : 'Update Changes'}`}</button>
           <button className="bg-red-400 p-2 px-4 rounded-full">Delete Transaction</button>
         </div>
 
