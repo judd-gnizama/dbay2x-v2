@@ -47,11 +47,11 @@ export default function Sidebar() {
   }, [_currentGroupId, showSidebar])
 
   return (
-    <div className="z-10 top-5 right-5 absolute"
+    <div className="z-10 top-0 right-0 absolute translate-x-2 -translate-y-2"
     >
       <div className={`flex flex-col p-4 justify-start items-end gap-4 max-w-xs ${showSidebar ? 'bg-slate-200': ''}`}>
         
-        <span className="material-symbols-outlined p-2 w-fit cursor-pointer hover:bg-slate-300 rounded-full" style={{fontSize: '2rem'}}
+        <span className="material-symbols-outlined w-fit p-2 cursor-pointer hover:bg-slate-300 rounded-full" style={{fontSize: '2rem'}}
         onClick={() => showSidebar === false ? setShowSidebar(true) : setShowSidebar(false)}>menu</span>
         
         {showSidebar && <div className="flex items-center gap-2 p-2 cursor-pointer hover:bg-slate-300 rounded-full z-10"
