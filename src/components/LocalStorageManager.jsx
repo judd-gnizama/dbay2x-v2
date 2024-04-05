@@ -317,44 +317,44 @@ export default function LocalStorageManager() {
             description: "Weapons",
             icon: 'receipt_long',
             payer: 61, // user_id
-            amount: 10000000,
+            amount: 10000,
             recipient: 0, // user_id, 0 - if type 1
             split_mode: 'Evenly',
             split_members: [
               {
                 id: 1,
                 name: 'Judd',
-                share: 10,
+                weight: 10,
                 split: true,
               },
               {
                 id: 2,
                 name: 'Jon',
-                share: 10,
+                weight: 10,
                 split: true,
               },
               {
                 id: 3,
                 name: 'Jyll',
-                share: 10,
+                weight: 10,
                 split: true,
               },
               {
                 id: 55,
                 name: 'Rodney',
-                share: 10,
+                weight: 10,
                 split: true,
               },
               {
                 id: 51,
                 name: 'Niko',
-                share: 10,
+                weight: 10,
                 split: true,
               },
               {
                 id: 61,
                 name: 'Avatar',
-                share: 10,
+                weight: 10,
                 split: true,
               },
             ]
@@ -438,7 +438,7 @@ export default function LocalStorageManager() {
 
  const handleFunction = () => {
   console.log('before', test_db.groups[0])
-  console.log('after',processGroup(test_db.groups[0]))
+  console.log('after',processGroup(test_db.groups[1]))
 }
 
   return (

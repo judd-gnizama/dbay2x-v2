@@ -221,8 +221,8 @@ export function processGroup(group) {
   }
 
 
-  // const reimbursements = computeReimbursements(updatedUsers);
+  const reimbursements = computeReimbursements(updatedUsers);
 
-  return {...group, users: updatedUsers, reimbursements: []}
+  return {...group, users: updatedUsers, reimbursements: reimbursements}
 
 }
