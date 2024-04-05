@@ -60,7 +60,7 @@ export default function SearchBox({ type, groupId }) {
           id: userIds && userIds?.length ? Math.max(...userIds) + 1 : 1,
           name: search,
           paid: 0,
-          share: 0,
+          weight: 0,
           net: 0,
         }
         addUserToGroup({ groupId: groupId, newUser: newUser})

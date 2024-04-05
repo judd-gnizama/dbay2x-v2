@@ -117,7 +117,7 @@ export default function TransactionPage({ params }) {
     return members.map(member => ({
       id: member.id,
       name: member.name,
-      share: 0, 
+      weight: 0, 
       split: false
     }))
   }
@@ -126,18 +126,18 @@ export default function TransactionPage({ params }) {
   const [ splitMembers, setSplitMembers ] = useState(mode === 'add'? memberOptions : initialValues.split_members);
   const computeInitialTotal = (newMembers) => {
     let total = 0;
-    newMembers.forEach(member => total+=member.share)
+    newMembers.forEach(member => total+=member.weight)
     return total
   }
 
-  const [ totalShare, setTotalShare ] = useState(computeInitialTotal(splitMembers));
+  const [ totalWeight, setTotalWeight ] = useState(computeInitialTotal(splitMembers));
 
   const handleChangeSplitMembers = (value) => {
     const newMembers = splitMembers.map(member=>member.id === value ? 
       {
         ...member, 
         split: member.split ? false : true, 
-        share: 0
+        weight: 0
       } : member)
     setSplitMembers(newMembers)
     computeTotal(newMembers)
@@ -150,7 +150,7 @@ export default function TransactionPage({ params }) {
   }
   const handleUnselectAll = (event) => {
     event.preventDefault()
-    const newMembers = splitMembers.map(member => ({...member, share: 0, split: false}))
+    const newMembers = splitMembers.map(member => ({...member, weight: 0, split: false}))
     setSplitMembers(newMembers)
     computeTotal(newMembers);
   }
@@ -161,7 +161,7 @@ export default function TransactionPage({ params }) {
     if (splitMember.split) {
       let value = event.target.value;
       const weight = parseInt(value);
-      const newSplitMembers = splitMembers.map(member => member.id === splitMemberId ? {...member, share: weight} : member)
+      const newSplitMembers = splitMembers.map(member => member.id === splitMemberId ? {...member, weight: weight} : member)
       setSplitMembers(newSplitMembers);  
       computeTotal(newSplitMembers)
     }  
@@ -172,7 +172,7 @@ export default function TransactionPage({ params }) {
     if (splitMember.split) {
       const value = event.target.value;
       if (!value || value < 0) {
-        const newSplitMembers = splitMembers.map(member => member.id === splitMemberId ? {...member, share: 0 } : member)
+        const newSplitMembers = splitMembers.map(member => member.id === splitMemberId ? {...member, weight: 0 } : member)
         setSplitMembers(newSplitMembers);  
         computeTotal(newSplitMembers)
       }
@@ -181,15 +181,15 @@ export default function TransactionPage({ params }) {
   }
   const computeTotal = (newMembers) => {
     let total = 0;
-    newMembers.forEach(member => total+=member.share)
-    setTotalShare(total);
+    newMembers.forEach(member => total+=member.weight)
+    setTotalWeight(total);
   }
-  const computePercentage = (share, total) => {
+  const computePercentage = (weight, total) => {
     if(total === 0) return 0
-    return (share/total * 100).toFixed(2)
+    return (weight/total * 100).toFixed(2)
   }
-  const computeShare = (share, total, amount) => {
-    const per = (share/total)
+  const computeWeight = (weight, total, amount) => {
+    const per = (weight/total)
     return total ? (per * amount) : 0
   }
 
@@ -252,7 +252,7 @@ export default function TransactionPage({ params }) {
       : splitMembers.map(member => ({
         id: member.id,
         name: member.name,
-        share: 1,
+        weight: 1,
         split: true
       }))
     }
@@ -368,7 +368,7 @@ export default function TransactionPage({ params }) {
                       <div className="flex gap-2 max-sm:row-span-2">
                         <input 
                         type="checkbox" 
-                        name="share" 
+                        name="weight" 
                         id={`checkbox-${user.id}`} 
                         value={user.id}
                         checked={user.split}
@@ -381,14 +381,14 @@ export default function TransactionPage({ params }) {
                         className=" max-w-32 p-2 border-2 bg-gray-200 rounded-full" type="number" 
                         name="weight" 
                         id={`weight-${user.id}`} 
-                        value={user.share.toString()} 
+                        value={user.weight.toString()} 
                         onChange={handleChangeWeight} 
                         onBlur={handleBlurWeight}/>
                       </label>
                       <div className="flex flex-col w-fit">
                         <span>{`Percentage: ${
-                          computePercentage(user.share, totalShare) < 1 && user.share !== 0 ? '< 1' : computePercentage(user.share, totalShare)}%`}</span>
-                        <span className="font-bold">{`Share: ${computeShare(user.share, totalShare, transactionAmount).toLocaleString()}`}</span>
+                          computePercentage(user.weight, totalWeight) < 1 && user.weight !== 0 ? '< 1' : computePercentage(user.weight, totalWeight)}%`}</span>
+                        <span className="font-bold">{`Weight: ${computeWeight(user.weight, totalWeight, transactionAmount).toLocaleString()}`}</span>
                       </div>
 
                     </label>
