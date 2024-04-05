@@ -19,22 +19,26 @@ export function getKey() {
 
 export function getRawData() {
   const storedData = localStorage.getItem(key);
-  return storedData ? JSON.parse(storedData) : {};
+  if (storedData) {
+    return JSON.parse(storedData)
+  }
 }
 
 export function getCurrentGroupId() {
   const data = getRawData();
-  return !isObjEmpty(data) ? data.currentGroupId : ''
+  if(data) return data.currentGroupId
 }
 
 export function getGroups() {
   const data = getRawData()
-    return data ? data.groups : []
+  if(data) {
+    return data.groups
+  }
 }
 
 export function getAllGroupIds() {
   const groups = getGroups();
-  if(groups.length === 0) return;
+  if(!groups) return [];
   return groups.map(group=>group.id)
 }
 
@@ -145,11 +149,13 @@ export function setCurrentGroupId({groupId})  {
 }
 
 export function replaceGroups({newGroups}) {
-  if(isObjEmpty(newGroups)) return null;
-  var oldData = getRawData();
-  if (!isObjEmpty(oldData)){
-    oldData.groups = newGroups
-    setRawData(oldData);
+  const oldData = getRawData();
+  console.log(oldData)
+  if (!oldData){
+    const newData = {...oldData, groups: newGroups}
+    setRawData(newData);
+  } else {
+    setRawData({currentGroupId: newGroups[0].id, groups: newGroups});
   }
 }
 
@@ -168,13 +174,13 @@ export function changeGroupProp({ groupId, key, value }) {
 }
 
 export function appendNewGroup({newGroup}) {
-  if(isObjEmpty(newGroup)) return;
+  console.log('awr3r', newGroup)
   const oldGroups = getGroups();
-  if (isListEmpty(oldGroups)) return;
-  const tempGroup = getGroupById({groupId: newGroup.id})
-  if(!tempGroup){
-    const newGroups = [...oldGroups, newGroup]
-    replaceGroups({newGroups: newGroups});
+  if (oldGroups) {
+    const newGroups = oldGroups.map(group => group.id === newGroup.id ? newGroup : group)
+    replaceGroups({newGroups: newGroups})
+  } else {
+    replaceGroups({newGroups: [newGroup]})
   }
 }
 

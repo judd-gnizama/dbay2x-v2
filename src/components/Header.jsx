@@ -4,12 +4,16 @@ import Link from "next/link";
 import DarkModeSwitch from "./DarkModeSwitch";
 import Brand from "./Brand";
 import Sidebar from "./Sidebar";
+import { usePathname } from "next/navigation";
+
 
 export default function Header() {
 
-  
+  const pathname = usePathname();
+  const isHome = pathname === '/'
   return (
-    <div className="grid place-items-center gap-4">
+    <div className="grid place-items-center gap-4"
+    style={isHome ? {visibility: 'hidden'} : {visibility: 'visible'}}>
       {/* <Link href='/' className="material-symbols-outlined text-teal-400" style={{fontSize: '4rem'}}>request_quote</Link> */}
       <div className="flex items-center justify-between gap-4 w-full max-w-6xl relative p-2">
         <Brand/>  
