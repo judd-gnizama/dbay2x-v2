@@ -1,11 +1,14 @@
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 
 export default function TransactionResult({ result, mode }) {
 
   const { id, date, description, payer, split_members, recipient } = result
+  const pathname = usePathname();
+  const groupId = parseInt(pathname.split('/').pop())  
 
   return (
-    <Link href={`/transactions/${id}?mode=edit`} className="flex justify-start items-center border border-slate-200 rounded-2xl p-4 gap-4 hover:bg-teal-200 hover:shadow-md flex-wrap">
+    <Link href={`/transactions/${id}?mode=edit&groupId=${groupId}`} className="flex justify-start items-center border border-slate-200 rounded-2xl p-4 gap-4 hover:bg-teal-200 hover:shadow-md flex-wrap">
       <span className="material-symbols-outlined"
       style={{fontSize: '6rem'}}>receipt_long</span>
       <article className=" overflow-hidden">

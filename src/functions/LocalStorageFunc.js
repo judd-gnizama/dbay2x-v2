@@ -237,3 +237,10 @@ export function replaceTransaction({ groupId, updatedTransaction }) {
 export function removeRawData() {
   localStorage.removeItem(key)  
 }
+
+export function removeTransaction({ groupId, transactionId }){
+  const group = getGroupById({groupId: groupId})
+  const newTransactions = group.transactions.filter(transaction => transaction.id !== transactionId)
+  const newGroup = {...group, transactions: newTransactions}
+  replaceGroup({ newGroup: newGroup })
+}

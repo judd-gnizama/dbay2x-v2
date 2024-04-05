@@ -2,23 +2,29 @@
 
 import EditableDiv from "@/components/EditableDiv";
 import ToggleGroup from "@/components/formComponents/ToggleGroup";
-import { getCurrentGroup, getTransactionFromGroup, getUserInGroup, replaceTransaction } from "@/functions/LocalStorageFunc";
+import { addTransaction, getCurrentGroup, getTransactionFromGroup, getUserInGroup, removeTransaction, replaceTransaction } from "@/functions/LocalStorageFunc";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function TransactionPage({ params }) {
 
   const searchParams = useSearchParams();
   const mode = searchParams.get('mode')
+  const description = searchParams.get('name')
+  const groupId = searchParams.get('groupId')
   const transactionId = parseInt(params.transactionId);
+
   const currentGroup = getCurrentGroup();
   const transaction = getTransactionFromGroup({groupId: currentGroup.id, transactionId: transactionId})
+
+  const router = useRouter();
 
   const initialValues = mode === 'add' ? 
     {
       id: transactionId,
-      description: "Description Here",
+      description: description,
       type: 'Expense',
       date: "",
       icon: "receipt_long",
@@ -30,9 +36,12 @@ export default function TransactionPage({ params }) {
     }
     :
     transaction;
+  // For Global Edits
+  const [ isMounted, setIsMounted ] = useState(false);
+  const [ isChanged, setIsChanged ] = useState(false);
+
 
   // For Description
-  console.log(initialValues)
   const [ editableText, setEditableText ] = useState(initialValues.description);
   const [ editing, setEditing ] = useState(false);
   const handleChangeEditable = (event) => {
@@ -241,16 +250,36 @@ export default function TransactionPage({ params }) {
         split: true
       }))
     }
-
-    replaceTransaction({groupId: currentGroup.id, updatedTransaction: newTransaction})
+    if (mode === 'add') {
+      addTransaction({ groupId: groupId, newTransaction: newTransaction})
+    } else if (mode === 'edit') {
+      replaceTransaction({groupId: currentGroup.id, updatedTransaction: newTransaction})
+    }
     console.log('Success!',newTransaction)
+    goBackToGroup();
   }
 
+  const goBackToGroup = () => {
+    router.push(`/groups/${currentGroup.id}`)
+  }
+  const handleDiscard = () => {
+    location.reload()
+  }
+  const handleDelete = () => {
+    removeTransaction({groupId: groupId, transactionId: transactionId})
+    goBackToGroup();
+  }
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   useEffect(()=> {
-    console.log(transactionDate)
-    console.log(selectPayee)
-  }, [transactionDate])
+    if (!isChanged && isMounted) {
+      setIsChanged(true)
+      console.log('changed')
+    }
+  }, [selectType, transactionDate, transactionAmount, selectPayor, selectPayee, selectSplit, selectIcon])
 
   return (
     <div className="grid gap-4"
@@ -360,8 +389,31 @@ export default function TransactionPage({ params }) {
         }
       </div>
         <div className="flex max-sm:flex-col gap-2 justify-end">
-          <button onClick={handleSubmit} className="bg-green-400 p-2 px-4 rounded-full">{`${mode === 'add' ? 'Add New' : 'Update Changes'}`}</button>
-          <button className="bg-red-400 p-2 px-4 rounded-full">Delete Transaction</button>
+          <button 
+            onClick={handleSubmit} 
+            className="bg-green-400 p-2 px-4 rounded-full disabled:opacity-40 disabled:pointer-events-none"
+            disabled={mode === 'add' ? false : !isChanged}>
+              {`${mode === 'add' ?  'Save Transaction' : 'Update Changes' }`}
+          </button>
+          <button 
+            className="bg-red-300 p-2 px-4 rounded-full " 
+            hidden={mode !== 'add'}
+            onClick={goBackToGroup}>
+              Cancel
+          </button>
+          <button 
+            className="bg-red-300 p-2 px-4 rounded-full disabled:opacity-40 disabled:pointer-events-none"
+            disabled={!isChanged}
+            onClick={handleDiscard}
+            hidden={mode !== 'edit'}>
+              Discard Changes
+          </button>
+          <button 
+            className="bg-gray-400 p-2 px-4 rounded-full"
+            onClick={handleDelete}
+            hidden={mode !== 'edit'}>
+              Delete Transaction
+          </button>
         </div>
 
     </div>

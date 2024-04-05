@@ -69,25 +69,10 @@ export default function SearchBox({ type, groupId }) {
       
     } else if (type === 'transaction') {
       if (canAdd) {
-        // add new transaction
-        // go to page
         const transactionIds = getAllUniqueTransactionIds();
-        const newTransaction = {
-          id: Math.max(...transactionIds) + 1, 
-          description: "",
-          type: 'Expense',
-          date: '', 
-          icon: 'receipt_long',
-          amount: 0,
-          payer: 0,
-          recipient: 0,
-          split_mode: 'Evenly',
-          split_members: [],
-        }
-        addTransaction({ groupId: groupId, newTransaction: newTransaction})
+        const newTransactionId = Math.max(...transactionIds) + 1
         setSearch("")
-        router.push(`/transactions/${newTransaction.id}?mode=add`)
-
+        router.push(`/transactions/${newTransactionId}?groupId=${groupId}&mode=add&name=${search}`)
       }
     }
   }
