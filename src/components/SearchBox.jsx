@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import Results from "./Results";
 import { addTransaction, addUserToGroup, getAllUniqueTransactionIds, getAllUniqueUserIds, getGroupById } from "@/functions/LocalStorageFunc";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function SearchBox({ type, groupId }) {
 
@@ -22,7 +23,7 @@ export default function SearchBox({ type, groupId }) {
           
           const index = searchResults.findIndex(user=>user.name.toLowerCase() === searchTerm.toLowerCase())
 
-          index === -1 ? setCanAdd(true) : setCanAdd(false)
+          index === -1 ? setCanAdd(true) : (setCanAdd(false))
 
         } else {
           searchResults = data.users
@@ -37,7 +38,6 @@ export default function SearchBox({ type, groupId }) {
           
           index === -1 ? setCanAdd(true) : setCanAdd(false)
           
-
         } else {
           searchResults = data.transactions
           setCanAdd(false);
@@ -65,6 +65,7 @@ export default function SearchBox({ type, groupId }) {
         }
         addUserToGroup({ groupId: groupId, newUser: newUser})
         setSearch("")
+        toast.success(`New User: ${search} added`)
       }
       
     } else if (type === 'transaction') {
@@ -74,6 +75,13 @@ export default function SearchBox({ type, groupId }) {
         setSearch("")
         router.push(`/transactions/${newTransactionId}?groupId=${groupId}&mode=add&name=${search}`)
       }
+    }
+    if (!canAdd && !search) {
+      toast.error('Invalid Input')
+      return;
+    }
+    if (!canAdd) {
+      toast.error('Entry already exists')
     }
   }
 

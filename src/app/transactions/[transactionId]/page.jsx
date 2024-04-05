@@ -2,20 +2,26 @@
 
 import EditableDiv from "@/components/EditableDiv";
 import ToggleGroup from "@/components/formComponents/ToggleGroup";
-import { addTransaction, getCurrentGroup, getTransactionFromGroup, getUserInGroup, removeTransaction, replaceTransaction } from "@/functions/LocalStorageFunc";
+import { addTransaction, getCurrentGroup, getTransactionFromGroup, removeTransaction, replaceTransaction } from "@/functions/LocalStorageFunc";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { Toaster, toast } from "sonner";
 
 export default function TransactionPage({ params }) {
-
+  // Search params
   const searchParams = useSearchParams();
-  const mode = searchParams.get('mode')
-  const description = searchParams.get('name')
-  const groupId = searchParams.get('groupId')
+  const mode = searchParams.get('mode');
+  const type = searchParams.get('type');
+  const from = parseInt(searchParams.get('from'));
+  const to = parseInt(searchParams.get('to'));
+  const date = searchParams.get('date');
+  const amount = parseInt(searchParams.get('amount'));
+  const description = searchParams.get('name');
+  const groupId = parseInt(searchParams.get('groupId'));
   const transactionId = parseInt(params.transactionId);
-
+  // 
   const currentGroup = getCurrentGroup();
   const transaction = getTransactionFromGroup({groupId: currentGroup.id, transactionId: transactionId})
 
@@ -24,13 +30,13 @@ export default function TransactionPage({ params }) {
   const initialValues = mode === 'add' ? 
     {
       id: transactionId,
-      description: description,
-      type: 'Expense',
-      date: "",
+      description: description ? description : '',
+      type: type ? type : 'Expense',
+      date: date ? date : "",
       icon: "receipt_long",
-      amount: 0,
-      payer: currentGroup.users[0].id,
-      recipient: currentGroup.users[0].id,
+      amount: amount ? amount : 0,
+      payer: from ? from : currentGroup.users[0].id,
+      recipient: to ? to : currentGroup.users[0].id,
       split_mode: "Evenly",
       split_members: []
     }
@@ -192,43 +198,44 @@ export default function TransactionPage({ params }) {
     event.preventDefault();
     var hasError = false;
     if (!transactionDate){
-      console.log('Error', 'No Date')
+      toast.error('Invalid Date')
       hasError = true;
     } 
     if (!editableText) {
-      console.log('Error', 'No Description')
+      toast.error('No Description')
       hasError = true;
     }
     if (!transactionAmount) {
-      console.log('Error', 'Invalid Amount')
+      toast.error('Invalid Amount')
       hasError = true;
     } 
     if (!selectPayor || currentGroup.users.findIndex(user=>user.id === selectPayor) === -1) {
-      console.log('Error', "Invalid Payor")
+      toast.error('Invalid Payor')
       hasError = true;
     }
     
     if (selectType === 'Expense') {
       if (!selectIcon) {
-        console.log(selectIcon)
-        console.log('No Icon')
+        toast.error('Invalid Icon')
         hasError = true;
       }
     } else if (selectType === 'Transfer') {
       if (!selectSplit) {
-        console.log('No Split Mode')
+        toast.error('Invalid Split Mode')
         hasError = true;
       }
       if (!selectPayee || currentGroup.users.findIndex(user=>user.id === selectPayee) === -1) {
-        console.log('No Recipient')
+        toast.error('Invalid Recipient')
         hasError = true;
       }
-  
+      
       if (selectPayor === selectPayee) {
-        console.log('Payor and Recipient cannot be the same')
+        toast.error('Payor and Recipient must not be the same')
         hasError = true;
       }
     }
+    console.log(selectPayor)
+    console.log(selectPayee)
     if(hasError) return;
 
     // If No Errors, Process Data
@@ -252,21 +259,29 @@ export default function TransactionPage({ params }) {
     }
     if (mode === 'add') {
       addTransaction({ groupId: groupId, newTransaction: newTransaction})
+      toast.success(`Transaction: ${newTransaction.description} added`)
     } else if (mode === 'edit') {
       replaceTransaction({groupId: currentGroup.id, updatedTransaction: newTransaction})
+      toast.success(`Transaction: ${newTransaction.description} updated`)
     }
-    console.log('Success!',newTransaction)
     goBackToGroup();
   }
 
   const goBackToGroup = () => {
     router.push(`/groups/${currentGroup.id}`)
   }
+
+  const handleCancel = () => {
+    toast.success('Transaction Cancelled')
+    goBackToGroup();
+  }
+
   const handleDiscard = () => {
     location.reload()
   }
   const handleDelete = () => {
     removeTransaction({groupId: groupId, transactionId: transactionId})
+    toast.success("Transaction Deleted")
     goBackToGroup();
   }
 
@@ -277,7 +292,6 @@ export default function TransactionPage({ params }) {
   useEffect(()=> {
     if (!isChanged && isMounted) {
       setIsChanged(true)
-      console.log('changed')
     }
   }, [selectType, transactionDate, transactionAmount, selectPayor, selectPayee, selectSplit, selectIcon])
 
@@ -399,7 +413,7 @@ export default function TransactionPage({ params }) {
           <button 
             className="bg-red-300 p-2 px-4 rounded-full " 
             hidden={mode !== 'add'}
-            onClick={goBackToGroup}>
+            onClick={handleCancel}>
               Cancel
           </button>
           <button 
