@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import Results from "./Results";
-import { addTransaction, addUserToGroup, getAllUniqueTransactionIds, getAllUniqueUserIds, getGroupById } from "@/functions/LocalStorageFunc";
+import { addTransaction, addUserToGroup, getAllUniqueTransactionIds, getAllUniqueUserIds, getGroupById, getUserInGroup, getUsersFromGroup } from "@/functions/LocalStorageFunc";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
@@ -57,7 +57,7 @@ export default function SearchBox({ type, groupId }) {
         // add new user
         const userIds = getAllUniqueUserIds();
         const newUser = {
-          id: Math.max(...userIds) + 1,
+          id: userIds && userIds?.length ? Math.max(...userIds) + 1 : 1,
           name: search,
           paid: 0,
           share: 0,
@@ -70,12 +70,20 @@ export default function SearchBox({ type, groupId }) {
       
     } else if (type === 'transaction') {
       if (canAdd) {
-        const transactionIds = getAllUniqueTransactionIds();
-        const newTransactionId = Math.max(...transactionIds) + 1
-        setSearch("")
-        router.push(`/transactions/${newTransactionId}?groupId=${groupId}&mode=add&name=${search}`)
+        const users = getUsersFromGroup({ groupId: groupId });
+        if (!users || users?.length === 0) {
+          toast.error('Cannot add transaction. Please add users first.')
+          return;
+        } else {
+          const transactionIds = getAllUniqueTransactionIds();
+          const newTransactionId = Math.max(...transactionIds) + 1
+          setSearch("")
+          router.push(`/transactions/${newTransactionId}?groupId=${groupId}&mode=add&name=${search}`)
+        }
       }
     }
+
+    
     if (!canAdd && !search) {
       toast.error('Invalid Input')
       return;

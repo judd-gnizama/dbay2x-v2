@@ -1,6 +1,7 @@
 'use client'
 import Brand from "@/components/Brand";
 import GroupResult from "@/components/GroupResult";
+import LocalStorageManager from "@/components/LocalStorageManager";
 import { createNewGroup } from "@/functions/InterfaceFunc";
 import { getGroups, setCurrentGroupId } from "@/functions/LocalStorageFunc";
 import { useRouter } from "next/navigation";
@@ -8,12 +9,11 @@ import { useRouter } from "next/navigation";
 export default function Home() {
 
   const groups = getGroups();
-  const isEmpty = groups === undefined;
+  const isEmpty = groups === undefined || groups === null;
   const router = useRouter();
   
   const handleCreateNew = () => {
     const group = createNewGroup();
-    console.log(group)
     setCurrentGroupId({groupId: group.id})
     router.push(`/groups/${group.id}`)
   }
@@ -27,8 +27,8 @@ export default function Home() {
         </div>
         <div className="">
           <p hidden={!isEmpty ? false: true}>Browse from existing groups</p>
-          <div hidden={!isEmpty ? false: true} className="flex justify-center gap-2 rounded-lg p-4">
-            {groups?.map(group => <GroupResult result={group}/>)}
+          <div hidden={!isEmpty ? false: true} className="grid grid-cols-3 justify-center gap-2 rounded-lg p-4">
+            {groups?.map(group => <GroupResult key={group.id} result={group}/>)}
           </div>
           <p>{`${isEmpty ? 'To get started, ' : 'Or you can, '}`} 
             <button 
@@ -38,6 +38,7 @@ export default function Home() {
           </p>
         </div>
       </div>
+      <LocalStorageManager/>
     </div>
   )
 }

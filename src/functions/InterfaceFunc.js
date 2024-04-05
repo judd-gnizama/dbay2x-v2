@@ -6,7 +6,8 @@ import { ProcessGroupData } from "./ProcessGroupData";
 export function createNewGroup() {
 
   const groupIds = getAllGroupIds();
-  const newGroupId = groupIds.length === 0 ? 1 : Math.max(...groupIds) + 1;
+  console.log(groupIds)
+  const newGroupId = groupIds && groupIds?.length > 0 ? Math.max(...groupIds) + 1 : 1;
   const tempGroupName = `NewGroup#000${newGroupId}`
 
   const newGroup = {
@@ -17,6 +18,7 @@ export function createNewGroup() {
     users: [],
     reimbursements: [],
   }
+  console.log(newGroup)
   appendNewGroup({newGroup: newGroup})
   return newGroup;
 }

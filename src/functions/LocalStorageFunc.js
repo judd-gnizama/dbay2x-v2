@@ -2,15 +2,6 @@
 
 const key = 'myDataKey'
 
-const isObjEmpty = (obj) => {
-  
-  if (!obj) return false;
-  return Object.keys(obj).length === 0
-}
-
-const isListEmpty = (list) => {
-  return list.length <= 0
-}
 // Get Methods
 
 export function getKey() {
@@ -21,61 +12,60 @@ export function getRawData() {
   const storedData = localStorage.getItem(key);
   if (storedData) {
     return JSON.parse(storedData)
+  } else {
+    return null
   }
 }
 
 export function getCurrentGroupId() {
   const data = getRawData();
-  if(data) return data.currentGroupId
+  return data?.currentGroupId
 }
 
 export function getGroups() {
   const data = getRawData()
-  if(data) {
-    return data.groups
-  }
+  return data?.groups
 }
 
 export function getAllGroupIds() {
   const groups = getGroups();
-  if(!groups) return [];
-  return groups.map(group=>group.id)
+  return groups?.map(group=>group?.id)
 }
 
 export function getGroupById({ groupId }) {
   const groups = getGroups();
-  const group = groups && groupId ? groups.filter(group => parseInt(group.id) === parseInt(groupId))[0] : {};
+  const group = groups?.filter(group => parseInt(group.id) === parseInt(groupId))[0]
   return group
 }
 
 export function getCurrentGroup() {
   const currentGroupId = getCurrentGroupId();
-  return currentGroupId ? getGroupById({groupId: currentGroupId}) : {};
+  return currentGroupId ? getGroupById({groupId: currentGroupId}) : null;
 }
 
 export function getUsersFromGroup({ groupId }){
   const group = getGroupById({ groupId: groupId })
-  return group ? group.users : []
+  return group?.users
 }
 
 export function getUsersFromAllGroups(){
   const groups = getGroups();
   let usersOutput = []
-  groups && groups.forEach(group => {
-    group.users.forEach(user => usersOutput.push(user))
+  groups?.forEach(group => {
+    group?.users.forEach(user => usersOutput.push(user))
   })
   return usersOutput
 }
 
 export function getAllUniqueUserIds() {
   const users = getUsersFromAllGroups();
-  const userIds = users ? users.map(user=>user.id) : []
-  return userIds.length > 0 ? [... new Set(userIds)] : []
+  const userIds = users?.map(user=>user.id)
+  return userIds?.length > 0 ? [... new Set(userIds)] : null
 }
 
 export function getUserStatsFromEachGroup({ userId }) {
   const usersFromGroups = getUsersFromAllGroups();
-  return usersFromGroups.filter(user => user.id === userId)
+  return usersFromGroups?.filter(user => user.id === userId)
 }
 
 export function getUserInGroup({ groupId, userId }){
@@ -141,30 +131,23 @@ export function setRawData(data) {
 
 export function setCurrentGroupId({groupId})  {
   if (!groupId) return null;
-  var data = getRawData();
-  if (!isObjEmpty(data)) {
-    data.currentGroupId = groupId
-    setRawData(data);
-  }  
+  const data = getRawData();
+  const newData = {...data, currentGroupId: groupId}
+  if (newData) setRawData(newData);
 }
 
 export function replaceGroups({newGroups}) {
-  const oldData = getRawData();
-  console.log(oldData)
-  if (!oldData){
-    const newData = {...oldData, groups: newGroups}
-    setRawData(newData);
-  } else {
-    setRawData({currentGroupId: newGroups[0].id, groups: newGroups});
-  }
+  const currentGroupId = getCurrentGroupId();
+  setRawData({currentGroupId: currentGroupId ? currentGroupId : newGroups[0].id, groups: newGroups})
 }
 
 export function replaceGroup({newGroup}) {
   const groupId = newGroup.id;
   const oldGroups = getGroups();
-  if (isListEmpty(oldGroups)) return;
-  const newGroups = oldGroups.map(group => (group.id === groupId ? newGroup : group))
-  replaceGroups({newGroups: newGroups});
+  if (oldGroups) {
+    const newGroups = oldGroups.map(group => (group.id === groupId ? newGroup : group))
+    replaceGroups({newGroups: newGroups});
+  }
 }
 
 export function changeGroupProp({ groupId, key, value }) {
@@ -174,11 +157,12 @@ export function changeGroupProp({ groupId, key, value }) {
 }
 
 export function appendNewGroup({newGroup}) {
-  console.log('awr3r', newGroup)
   const oldGroups = getGroups();
   if (oldGroups) {
-    const newGroups = oldGroups.map(group => group.id === newGroup.id ? newGroup : group)
-    replaceGroups({newGroups: newGroups})
+    const index = oldGroups.findIndex(group => group.id === newGroup.id)
+    if(index === -1) {
+      replaceGroups({newGroups: [...oldGroups, newGroup]})
+    }
   } else {
     replaceGroups({newGroups: [newGroup]})
   }

@@ -1,10 +1,11 @@
+import { setCurrentGroupId } from "@/functions/LocalStorageFunc";
 import Link from "next/link"
+import { useRouter } from "next/navigation";
 
 export default function GroupResult({ result, mode }) {
-
-  console.log(result)
   const { id, name, users, transactions, reimbursements } = result
   const isSettled = reimbursements && reimbursements.length !== 0;
+  const router = useRouter();
 
   const computeTotalSpent = (transactions) => {
     const expenseTransactions = transactions.filter((transaction) => transaction.type === 1)
@@ -12,8 +13,13 @@ export default function GroupResult({ result, mode }) {
     return totalSpent
   }
 
+  const handleGoTo = () => {
+    setCurrentGroupId({groupId: id})
+    router.push(`/groups/${id}`);
+  }
+
   return (
-    <Link href={`/groups/${id}`} className="flex justify-center items-center border border-slate-200 rounded-2xl p-4 gap-4 cursor-pointer hover:bg-teal-300">
+    <button onClick={handleGoTo} className="flex justify-center items-center border border-slate-200 rounded-2xl p-4 gap-4 cursor-pointer hover:bg-teal-300">
       <span className="material-symbols-outlined"
       style={{fontSize: '4rem'}}>group</span>
       <article>
@@ -24,6 +30,6 @@ export default function GroupResult({ result, mode }) {
         style={{color: isSettled ? 'green' : 'red'}}
         >{isSettled ? 'All Settled' : 'Needs Settling'}</p>
       </article>
-    </Link>
+    </button>
   )
 }

@@ -234,8 +234,6 @@ export default function TransactionPage({ params }) {
         hasError = true;
       }
     }
-    console.log(selectPayor)
-    console.log(selectPayee)
     if(hasError) return;
 
     // If No Errors, Process Data
@@ -272,7 +270,7 @@ export default function TransactionPage({ params }) {
   }
 
   const handleCancel = () => {
-    toast.success('Transaction Cancelled')
+    toast.info('Transaction Cancelled')
     goBackToGroup();
   }
 

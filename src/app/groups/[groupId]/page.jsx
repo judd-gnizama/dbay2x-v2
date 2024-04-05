@@ -34,7 +34,7 @@ export default function GroupPage({ params }) {
         <h2 id="settlements" className="text-lg font-bold bg-white text-gray-400 absolute top-0 left-2 px-1"
         style={{translate: '0 -50%'}}
         >Settlements</h2>
-        <Results type='settlement' results={group.reimbursements}/>
+        <Results type='settlement' results={group?.reimbursements}/>
       </section>
       
     </div>
