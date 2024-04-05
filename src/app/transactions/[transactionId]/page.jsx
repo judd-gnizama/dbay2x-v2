@@ -235,7 +235,6 @@ export default function TransactionPage({ params }) {
       }
     }
     if(hasError) return;
-
     // If No Errors, Process Data
     const newTransaction = {
       id: transactionId,
@@ -243,7 +242,7 @@ export default function TransactionPage({ params }) {
       type: selectType,
       date: transactionDate,
       icon: selectType === 'Transfer' ? 'receipt_long' : selectIcon,
-      amount: transactionAmount ? transactionAmount : 0,
+      amount: transactionAmount ? parseInt(transactionAmount) : 0,
       payer: selectPayor,
       recipient: selectType === 'Expense' ? 0 : selectPayee,
       split_mode: selectType === 'Expense' ? selectSplit : "",
@@ -291,7 +290,7 @@ export default function TransactionPage({ params }) {
     if (!isChanged && isMounted) {
       setIsChanged(true)
     }
-  }, [selectType, transactionDate, transactionAmount, selectPayor, selectPayee, selectSplit, selectIcon])
+  }, [selectType, transactionDate, transactionAmount, selectPayor, selectPayee, selectSplit, selectIcon, splitMembers, totalWeight])
 
   return (
     <div className="grid gap-4"

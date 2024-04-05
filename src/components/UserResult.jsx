@@ -1,4 +1,3 @@
-import Link from "next/link"
 
 export default function UserResult({ result, mode }) {
 
@@ -9,9 +8,9 @@ export default function UserResult({ result, mode }) {
       style={{fontSize: '6rem'}}>account_circle</span>
       <article className=" overflow-hidden">
         <p className="text-lg font-bold text-ellipsis whitespace-nowrap overflow-hidden">{name}</p>
-        <p>{`Paid For:  ${paid}`}</p>
-        <p>{`Share: ${share}`}</p>
-        <p>{`Net: ${net}`}</p>
+        <p>{`Paid For:  ${paid.toLocaleString()}`}</p>
+        <p>{`Share: ${share.toLocaleString()}`}</p>
+        <p>{`Net: ${net.toLocaleString()}`}</p>
       </article>
     </span>
   )
