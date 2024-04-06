@@ -74,7 +74,7 @@ export default function LocalStorageManager() {
       transactions: [
         {
           id: 1,
-          type: 'Expense', // type: 1 - expense, type: 2 - transfer
+          type: 'Expense', // type: 1 - expense, type: 2 - settlement
           date: "2025-05-21",
           description: "Birthday Gift",
           icon: 'receipt_long',
@@ -135,7 +135,7 @@ export default function LocalStorageManager() {
         },
         {
           id: 2,
-          type: 'Transfer', // type: 1 - expense, type: 2 - transfer
+          type: 'Settlement', // type: 1 - expense, type: 2 - settlement
           date: "2025-07-07",
           description: "Basketball",
           icon: 'receipt_long',
@@ -196,7 +196,7 @@ export default function LocalStorageManager() {
         },
         {
           id: 3,
-          type: 'Expense', // type: 1 - expense, type: 2 - transfer
+          type: 'Expense', // type: 1 - expense, type: 2 - settlement
           date: "2003-11-21",
           description: "Games",
           icon: 'receipt_long',
@@ -312,7 +312,7 @@ export default function LocalStorageManager() {
         transactions: [
           {
             id: 34,
-            type: 'Expense', // type: 1 - expense, type: 2 - transfer
+            type: 'Expense', // type: 1 - expense, type: 2 - settlement
             date: "2021-08-11",
             description: "Weapons",
             icon: 'receipt_long',
@@ -361,7 +361,7 @@ export default function LocalStorageManager() {
           },
           {
             id: 2,
-            type: 'Transfer', // type: 1 - expense, type: 2 - transfer
+            type: 'Settlement', // type: 1 - expense, type: 2 - settlement
             date: "2033-11-07",
             description: "Badminton",
             icon: 'receipt_long',

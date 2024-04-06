@@ -58,7 +58,7 @@ export default function TransactionPage({ params }) {
   }
 
   // For Transaction Type
-  const typeOptions = ['Expense', 'Transfer'];
+  const typeOptions = ['Expense', 'Settlement'];
   const [ selectType, setSelectType ] = useState(initialValues.type);
   const onToggleChange = (value) => {
     setSelectType(value)
@@ -230,7 +230,7 @@ export default function TransactionPage({ params }) {
         }
       }
 
-    } else if (selectType === 'Transfer') {
+    } else if (selectType === 'Settlement') {
       if (!selectSplit) {
         toast.error('Invalid Split Mode')
         hasError = true;
@@ -252,7 +252,7 @@ export default function TransactionPage({ params }) {
       description: editableText,
       type: selectType,
       date: transactionDate,
-      icon: selectType === 'Transfer' ? 'receipt_long' : selectIcon,
+      icon: selectType === 'Settlement' ? 'receipt_long' : selectIcon,
       amount: transactionAmount ? parseFloat(transactionAmount) : 0,
       payer: selectPayor,
       recipient: selectType === 'Expense' ? 0 : selectPayee,
@@ -339,7 +339,7 @@ export default function TransactionPage({ params }) {
           {payorOptions?.map((user, index) => <option key={index} value={user.id}>{user.name}</option>)}
         </select>
 
-        {selectType === 'Transfer' &&
+        {selectType === 'Settlement' &&
          <>
           <label htmlFor="transactionPayee">Recipient: </label>
           <select id="transactionPayee" className="p-2 border-2" value={selectPayee} onChange={handleChangePayee}>

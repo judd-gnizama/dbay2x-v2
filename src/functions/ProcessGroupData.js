@@ -167,7 +167,7 @@ export function processGroup(group) {
     group.transactions.forEach(transaction => {
 
       paid += transaction.payer === user.id ? transaction.amount : 0
-      received += transaction.recipient === user.id && transaction.type === 'Transfer' ? -transaction.amount : 0
+      received += transaction.recipient === user.id && transaction.type === 'Settlement' ? -transaction.amount : 0
       transaction.split_members.forEach(split_member => {
         if(split_member.id === user.id && split_member.split) {
           share += split_member.weight / total_weight * transaction.amount

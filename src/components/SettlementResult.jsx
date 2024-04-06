@@ -15,7 +15,7 @@ export default function SettlementResult({ result, mode }) {
   const handleCreateTransaction = () => {
     const transactionIds = getAllUniqueTransactionIds();
     const newTransactionId = Math.max(...transactionIds) + 1
-    router.push(`/transactions/${newTransactionId}?groupId=${currentGroupId}&mode=add&type=Transfer&name=${fromUser.name} -> ${toUser.name}&amount=${amount}&from=${from}&to=${to}`)
+    router.push(`/transactions/${newTransactionId}?groupId=${currentGroupId}&mode=add&type=Settlement&name=${fromUser.name} -> ${toUser.name}&amount=${amount}&from=${from}&to=${to}`)
     
   }
 
