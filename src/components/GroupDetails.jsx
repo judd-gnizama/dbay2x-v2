@@ -1,13 +1,16 @@
 
+export function computeTotalSpent(group) {
+  let totalSpent = 0
+  group.transactions.forEach(transaction => transaction.type === 'Expense' ? totalSpent+=transaction.amount: 0)
+  return totalSpent
+}
+
 export default function GroupDetails({group}) {
 
   const noOfUsers = group?.users?.length ? group.users.length : 0
   const noOfTransactions = group?.transactions?.length ? group.transactions.length : 0
   const noOfReimbursements = group?.reimbursements?.length ? group.reimbursements.length : 0
-  let totalSpent = 0
-  group.transactions.forEach(transaction => transaction.type === 'Expense' ? totalSpent+=transaction.amount: 0)
-
-  // const totalSpent = group.transactions.reduce((total, transaction) => transaction.type === 'Expense' ? total + transaction.amount : 0, 0);
+  const totalSpent = computeTotalSpent(group);
 
   return (
     <div className="flex gap-4 py-2">

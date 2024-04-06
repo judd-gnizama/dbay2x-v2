@@ -1,17 +1,14 @@
 import { setCurrentGroupId } from "@/functions/LocalStorageFunc";
 import Link from "next/link"
 import { useRouter } from "next/navigation";
+import { computeTotalSpent } from "./GroupDetails";
 
 export default function GroupResult({ result, mode }) {
   const { id, name, users, transactions, reimbursements } = result
   const isSettled = reimbursements && reimbursements.length !== 0;
   const router = useRouter();
 
-  const computeTotalSpent = (transactions) => {
-    const expenseTransactions = transactions.filter((transaction) => transaction.type === 1)
-    const totalSpent = expenseTransactions.reduce((acc, expense) => acc += expense.amount, 0) // 0 is the initial value of acc
-    return totalSpent
-  }
+  const totalSpent = computeTotalSpent(result)
 
   const handleGoTo = () => {
     setCurrentGroupId({groupId: id})
@@ -25,7 +22,7 @@ export default function GroupResult({ result, mode }) {
       <article>
         <p className="text-lg font-bold">{name}</p>
         <p>{`Members:  ${users.length}`}</p>
-        <p>{`Total Spent: ${computeTotalSpent(transactions)}`}</p>
+        <p>{`Total Spent: ${totalSpent}`}</p>
         <p className="font-bold"
         style={{color: isSettled ? 'green' : 'red'}}
         >{isSettled ? 'All Settled' : 'Needs Settling'}</p>

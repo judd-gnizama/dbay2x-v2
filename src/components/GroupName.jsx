@@ -5,7 +5,8 @@ import { useEffect, useRef, useState } from "react";
 
 export default function GroupName({group}) {
 
-  const { id, name } = group;
+  const id = group?.id;
+  const name = group?.name;
   const [ newName, setNewName ] = useState(name);
   const [ editing, setEditing ] = useState(false);
   const groupNameDivRef = useRef(null);
