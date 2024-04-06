@@ -442,7 +442,7 @@ export default function LocalStorageManager() {
 }
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 item w-fit">
       <button onClick={()=> handleLegacyLoad()} className="bg-slate-300 hover:opacity-80 p-2">Load Legacy Dummy Data</button>
       <button onClick={()=> handleLoad()} className="bg-slate-300 hover:opacity-80 p-2">Load Dummy Data</button>
       <button onClick={()=> handleClear()} className="bg-slate-300 hover:opacity-80 p-2">Clear Data</button>

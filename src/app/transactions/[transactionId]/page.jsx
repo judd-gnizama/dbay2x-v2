@@ -219,6 +219,17 @@ export default function TransactionPage({ params }) {
         toast.error('Invalid Icon')
         hasError = true;
       }
+      
+      if(selectSplit === 'Specific') {
+        const noSplitMembers = splitMembers?.findIndex(member => member.split) === -1
+        const splitButZero = splitMembers?.findIndex(member => member.split && member.weight === 0 ) !== -1
+  
+        if (noSplitMembers || splitButZero) {
+          toast.error('Invalid Split Details')
+          hasError = true;
+        }
+      }
+
     } else if (selectType === 'Transfer') {
       if (!selectSplit) {
         toast.error('Invalid Split Mode')
@@ -290,6 +301,7 @@ export default function TransactionPage({ params }) {
     if (!isChanged && isMounted) {
       setIsChanged(true)
     }
+    console.log(splitMembers)
   }, [selectType, transactionDate, transactionAmount, selectPayor, selectPayee, selectSplit, selectIcon, splitMembers, totalWeight])
 
   return (

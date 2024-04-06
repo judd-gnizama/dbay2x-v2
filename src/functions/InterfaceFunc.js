@@ -6,7 +6,6 @@ import { ProcessGroupData, processGroup } from "./ProcessGroupData";
 export function createNewGroup() {
 
   const groupIds = getAllGroupIds();
-  console.log(groupIds)
   const newGroupId = groupIds && groupIds?.length > 0 ? Math.max(...groupIds) + 1 : 1;
   const tempGroupName = `NewGroup#000${newGroupId}`
 
