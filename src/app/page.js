@@ -1,14 +1,14 @@
 'use client'
 import Brand from "@/components/Brand";
 import GroupResult from "@/components/GroupResult";
-import LocalStorageManager from "@/components/LocalStorageManager";
 import { createNewGroup } from "@/functions/InterfaceFunc";
 import { getGroups, setCurrentGroupId } from "@/functions/LocalStorageFunc";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Home() {
 
-  const groups = getGroups();
+  const [ groups, setGroups ] = useState(null);
   const router = useRouter();
   
   const handleCreateNew = () => {
@@ -16,6 +16,10 @@ export default function Home() {
     setCurrentGroupId({groupId: group.id})
     router.push(`/groups/${group.id}`)
   }
+  
+  useEffect(()=> {
+    setGroups(getGroups());
+  }, [])
 
   return (
     <div className="flex justify-center items-center text-center">
@@ -24,10 +28,11 @@ export default function Home() {
           <Brand size={'text-6xl'}/>
           <h2>A Bill Splitting App by <strong className="font-bold">JMRTan</strong></h2>
         </div>
-        <div className="">
-          <div className="grid grid-cols-3 justify-center gap-2 rounded-lg p-4">
+        <div className="border p-4 max-w-6xl w-full ">
+          {groups && <div className="grid gap-2 rounded-lg p-4 max-h-80 overflow-y-scroll"
+          style={{gridTemplateColumns: 'repeat(auto-fit,minmax(20rem, 1fr))'}}>
             {groups?.map(group => <GroupResult key={group.id} result={group}/>)}
-          </div>
+          </div>}
           <p>{`If no group yet, `} 
             <button 
             className="bg-teal-400 p-2 px-4 text-white rounded-full"
@@ -35,7 +40,7 @@ export default function Home() {
               Create a New Group</button>
           </p>
         </div>
-        <LocalStorageManager/>
+        {/* <LocalStorageManager/> */}
       </div>
     </div>
   )
