@@ -17,7 +17,7 @@ export default function TransactionPage({ params }) {
   const from = parseInt(searchParams.get('from'));
   const to = parseInt(searchParams.get('to'));
   const date = searchParams.get('date');
-  const amount = parseInt(searchParams.get('amount'));
+  const amount = parseFloat(searchParams.get('amount'));
   const description = searchParams.get('name');
   const groupId = parseInt(searchParams.get('groupId'));
   const transactionId = parseInt(params.transactionId);
@@ -253,7 +253,7 @@ export default function TransactionPage({ params }) {
       type: selectType,
       date: transactionDate,
       icon: selectType === 'Transfer' ? 'receipt_long' : selectIcon,
-      amount: transactionAmount ? parseInt(transactionAmount) : 0,
+      amount: transactionAmount ? parseFloat(transactionAmount) : 0,
       payer: selectPayor,
       recipient: selectType === 'Expense' ? 0 : selectPayee,
       split_mode: selectType === 'Expense' ? selectSplit : "",
