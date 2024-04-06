@@ -84,7 +84,7 @@ export default function TransactionPage({ params }) {
   }
 
   // For Icon
-  const iconList = ['receipt_long','airport_shuttle', 'restaurant', 'cake', 'sports_soccer', 'sports_tennis', 'shopping_cart', 'monitoring']
+  const iconList = ['receipt_long', 'house', 'icecream', 'trip', 'apartment','movie', 'water_drop','electric_bolt','airport_shuttle', 'restaurant', 'cake', 'sports_soccer', 'sports_tennis', 'shopping_cart', 'monitoring']
   const [ selectIcon, setSelectIcon ] = useState(initialValues.icon);
   const handleChangeIcon = (value) => {
     setSelectIcon(value)
