@@ -11,7 +11,7 @@ export default function TransactionResult({ result, mode }) {
   const userRecipient = getUserInGroup({groupId: groupId, userId: recipient})
 
   return (
-    <Link href={`/transactions/${id}?mode=edit&groupId=${groupId}`} className="flex justify-start max-sm:justify-center items-center max-sm:flex-wrap  border border-slate-200 rounded-2xl p-4 gap-4 hover:bg-teal-200 hover:shadow-md">
+    <Link href={`/transactions/${id}?mode=edit&groupId=${groupId}`} className="flex justify-start max-sm:justify-evenly items-center max-sm:flex-wrap border border-slate-200 rounded-2xl p-4 gap-4 hover:bg-teal-200 hover:shadow-md">
       <span className="material-symbols-outlined"
       style={{fontSize: '6rem'}}>{icon}</span>
       <article className=" overflow-hidden">

@@ -16,7 +16,7 @@ export default function GroupResult({ result, mode }) {
   }
 
   return (
-    <button onClick={handleGoTo} className="flex justify-center items-center border border-slate-200 rounded-2xl p-4 gap-4 cursor-pointer hover:bg-teal-300">
+    <button onClick={handleGoTo} className="flex max-sm:flex-col justify-center text-left items-center border border-slate-200 rounded-2xl p-4 gap-4 cursor-pointer hover:bg-teal-300">
       <span className="material-symbols-outlined"
       style={{fontSize: '4rem'}}>group</span>
       <article>

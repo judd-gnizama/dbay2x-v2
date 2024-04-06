@@ -28,17 +28,15 @@ export default function Home() {
           <Brand size={'text-6xl'}/>
           <h2>A Bill Splitting App by <strong className="font-bold">JMRTan</strong></h2>
         </div>
+        <button 
+        className="bg-teal-400 p-2 px-4 text-white rounded-full"
+        onClick={handleCreateNew}>
+          Create a New Group</button>
         <div className="border p-4 max-w-6xl w-full ">
-          {groups && <div className="grid gap-2 rounded-lg p-4 max-h-80 overflow-y-scroll"
-          style={{gridTemplateColumns: 'repeat(auto-fit,minmax(20rem, 1fr))'}}>
+          {groups && <div className="grid gap-2 rounded-lg max-h-80 overflow-y-scroll"
+          style={{gridTemplateColumns: 'repeat(auto-fit,minmax(15rem, 1fr))'}}>
             {groups?.map(group => <GroupResult key={group.id} result={group}/>)}
           </div>}
-          <p>{`If no group yet, `} 
-            <button 
-            className="bg-teal-400 p-2 px-4 text-white rounded-full"
-            onClick={handleCreateNew}>
-              Create a New Group</button>
-          </p>
         </div>
         {/* <LocalStorageManager/> */}
       </div>
