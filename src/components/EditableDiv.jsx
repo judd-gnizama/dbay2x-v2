@@ -28,7 +28,7 @@ export default function EditableDiv( { editableText, setEditableText, editing, s
 
   return (
     <div className="flex text-wrap break-all max-w-sm">
-      <div className={`text-3xl font-bold flex items-center min-w-10 z-8 relative ${ editing && 'border-4 rounded-lg' }`}
+      <div className={`text-3xl font-bold flex items-center min-w-10 z-8 relative ${ editing && 'bg-gray-100 border-2 border-neutral-500 rounded-lg p-2' }`}
       ref={divRef}
       contentEditable={editing}
       suppressContentEditableWarning={true}

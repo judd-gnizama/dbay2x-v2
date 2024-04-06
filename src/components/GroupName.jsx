@@ -42,7 +42,7 @@ export default function GroupName({group}) {
 
   return (
     <div className="flex text-wrap break-all max-w-lg">
-      <div className={`text-3xl font-bold flex items-cente min-w-10 z-8 relative ${ editing && 'border-4 rounded-lg' }`}
+      <div className={`text-3xl font-bold flex items-cente min-w-10 z-8 relative ${ editing && 'bg-gray-100 border-2 border-neutral-500 rounded-lg p-2' }`}
       ref={groupNameDivRef}
       contentEditable={editing}
       suppressContentEditableWarning={true}
