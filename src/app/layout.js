@@ -24,7 +24,7 @@ export default function RootLayout({ children }) {
       </head>
       <body className={inter.className}>
         <Toaster richColors={true} expand={true} position="top-center"/>
-        <Providers>
+        {/* <Providers> */}
             <main>
               <Header/>
                 <div className="subsubmain">
@@ -32,7 +32,7 @@ export default function RootLayout({ children }) {
                   <Footer/>
                 </div>
             </main>
-        </Providers>
+        {/* </Providers> */}
       </body>
     </html>
   );

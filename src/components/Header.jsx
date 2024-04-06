@@ -15,17 +15,20 @@ export default function Header() {
     <div className="grid place-items-center gap-4"
     style={isHome ? {visibility: 'hidden'} : {visibility: 'visible'}}
     >
-      {/* <Link href='/' className="material-symbols-outlined text-teal-400" style={{fontSize: '4rem'}}>request_quote</Link> */}
-      <div className="flex items-center justify-between gap-4 w-full max-w-6xl relative py-2">
+      
+      <div className="flex items-center justify-between gap-4 w-full max-w-6xl  relative py-2">
         <Brand/>  
-        <nav className="flex justify-center items-center gap-4">
-          {/* <Link className='hover:text-teal-400' href={'/users'}>Users</Link>
-          <Link className='hover:text-teal-400' href={'/transactions'}>Transactions</Link>
-          <Link className='hover:text-teal-400' href={'/settlements'}>Settlements</Link> */}
-          {/* <Link href='/'>Home</Link>
-          <Link href='/about'>About</Link> */}
+        <nav className="flex justify-center items-center gap-4 max-md:hidden">
+          <Link className='hover:text-teal-400' href={'/'}>Groups</Link>
+          <Link className='hover:text-teal-400' href={'#users'}>Users</Link>
+          <Link className='hover:text-teal-400' href={'#transactions'}>Transactions</Link>
+          <Link className='hover:text-teal-400' href={'#settlements'}>Settlements</Link>
+          {/* <Link href='/'>Home</Link> */}
+          <Link className='hover:text-teal-400' href='/about'>About</Link>
         </nav>
-        <Sidebar/>
+        <div className="md:hidden">
+          <Sidebar/>
+        </div>
         {/* <nav className="flex justify-center items-center gap-4 sm:hidden">
           <Link className='hover:text-teal-400 flex justify-center items-center' href={'/users'}>
           <span className="material-symbols-outlined">person</span>
