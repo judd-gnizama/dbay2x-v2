@@ -3,8 +3,11 @@
 import { ProcessAllGroups } from "@/functions/InterfaceFunc";
 import { addTransaction, getAllGroupIds, getAllUniqueUserIds, getCurrentGroup, getCurrentGroupId, getGroupById, getGroups, getRawData, replaceUserProp  } from "@/functions/LocalStorageFunc";
 import { processGroup } from "@/functions/ProcessGroupData";
+import { useState } from "react";
 
 export default function LocalStorageManager() {
+
+  const [ values, setValues ]  = useState(null);
 
   const DATA_KEY = 'myDataKey'
 
@@ -531,9 +534,6 @@ export default function LocalStorageManager() {
     groups: test_groups
   }
 
-  const handleLegacyLoad = () => {
-    localStorage.setItem(DATA_KEY, JSON.stringify({users: test_users, group: test_group}));
-  }
   const handleLoad = () => {
     localStorage.setItem(DATA_KEY, JSON.stringify(test_db));
   }
@@ -543,7 +543,7 @@ export default function LocalStorageManager() {
   }
 
   const handleShow = () => {
-  console.log(getRawData())
+  setValues(JSON.stringify(getRawData()))
   }
 
  const handleFunction = () => {
@@ -553,11 +553,13 @@ export default function LocalStorageManager() {
 
   return (
     <div className="flex flex-col gap-4 item w-fit">
-      <button onClick={()=> handleLegacyLoad()} className="bg-slate-300 hover:opacity-80 p-2">Load Legacy Dummy Data</button>
       <button onClick={()=> handleLoad()} className="bg-slate-300 hover:opacity-80 p-2">Load Dummy Data</button>
       <button onClick={()=> handleClear()} className="bg-slate-300 hover:opacity-80 p-2">Clear Data</button>
       <button onClick={()=> handleShow()} className="bg-slate-300 hover:opacity-80 p-2">Console Stored Data</button>
+
+
       <button onClick={()=> handleFunction()} className="bg-slate-300 hover:opacity-80 p-2">Run Custom Function</button>
+      <p>{values ? values : ''}</p>
     </div>
   )
 }
