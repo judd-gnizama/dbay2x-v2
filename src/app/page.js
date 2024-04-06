@@ -32,11 +32,15 @@ export default function Home() {
         className="bg-teal-400 p-2 px-4 text-white rounded-full"
         onClick={handleCreateNew}>
           Create a New Group</button>
-        <div className="border p-4 max-w-6xl w-full ">
-          {groups && <div className="grid gap-2 rounded-lg max-h-80 overflow-y-scroll"
+        <p>Recent Groups:</p>
+        <div className="border p-4 max-w-6xl w-full rounded-lg bg-gray-200">
+          {groups?.length > 0 ? <div className="grid gap-2 rounded-lg max-h-80 overflow-y-scroll"
           style={{gridTemplateColumns: 'repeat(auto-fit,minmax(15rem, 1fr))'}}>
             {groups?.map(group => <GroupResult key={group.id} result={group}/>)}
-          </div>}
+          </div>
+          :
+          <div>No groups found</div>
+        }
         </div>
         {/* <LocalStorageManager/> */}
       </div>
