@@ -22,7 +22,7 @@ export default function SettlementResult({ result, mode }) {
   return (
     <button onClick={handleCreateTransaction} className="flex justify-center items-center border border-slate-200 rounded-2xl p-4 gap-4 hover:bg-teal-200 hover:shadow-md flex-wrap cursor-pointer">
       <span className="font-bold">{fromUser.name}</span>
-      <span>{`> ${amount} > `}</span>
+      <span>{`> ${amount.toLocaleString()} > `}</span>
       <span className="font-bold">{toUser.name}</span>
     </button>
   )
