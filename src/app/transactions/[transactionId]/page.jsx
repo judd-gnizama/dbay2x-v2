@@ -261,8 +261,8 @@ export default function TransactionPage({ params }) {
       : splitMembers.map(member => ({
         id: member.id,
         name: member.name,
-        weight: 1,
-        split: true
+        weight: selectType === 'Expense' ? 1 : 0,
+        split: selectType === 'Expense' ? true : false
       }))
     }
     if (mode === 'add') {
