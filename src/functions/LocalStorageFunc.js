@@ -11,11 +11,13 @@ export function getKey() {
 }
 
 export function getRawData() {
-  const storedData = localStorage.getItem(key);
-  if (storedData) {
-    return JSON.parse(storedData)
-  } else {
-    return null
+  if (typeof window !== 'undefined') {
+    const storedData = localStorage.getItem(key);
+    if (storedData) {
+      return JSON.parse(storedData)
+    } else {
+      return null
+    }
   }
 }
 
