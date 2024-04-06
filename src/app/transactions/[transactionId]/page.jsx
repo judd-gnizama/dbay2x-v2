@@ -301,7 +301,6 @@ export default function TransactionPage({ params }) {
     if (!isChanged && isMounted) {
       setIsChanged(true)
     }
-    console.log(splitMembers)
   }, [selectType, transactionDate, transactionAmount, selectPayor, selectPayee, selectSplit, selectIcon, splitMembers, totalWeight])
 
   return (

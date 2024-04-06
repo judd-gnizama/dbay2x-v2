@@ -15,7 +15,7 @@ export default function Header() {
     <div className="grid place-items-center gap-4"
     style={isHome ? {visibility: 'hidden'} : {visibility: 'visible'}}>
       {/* <Link href='/' className="material-symbols-outlined text-teal-400" style={{fontSize: '4rem'}}>request_quote</Link> */}
-      <div className="flex items-center justify-between gap-4 w-full max-w-6xl relative p-2">
+      <div className="flex items-center justify-between gap-4 w-full max-w-6xl relative py-2">
         <Brand/>  
         <nav className="flex justify-center items-center gap-4">
           {/* <Link className='hover:text-teal-400' href={'/users'}>Users</Link>
