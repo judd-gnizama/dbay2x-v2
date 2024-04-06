@@ -255,6 +255,67 @@ export default function LocalStorageManager() {
             },
           ]
         },
+        {
+          id: 4,
+          type: 'Settlement', // type: 1 - expense, type: 2 - settlement
+          date: "2123-07-21",
+          description: "Box",
+          icon: 'receipt_long',
+          payer: 4, // user_id
+          amount:  3240,
+          recipient: 1, // user_id, 0 - if type 1
+          split_mode: 'Evenly',
+          split_members: [
+            {
+              id: 1,
+              name: 'Judd',
+              weight: 0,
+              split: false,
+            },
+            {
+              id: 2,
+              name: 'Jon',
+              weight: 0,
+              split: false,
+            },
+            {
+              id: 3,
+              name: 'Jyll',
+              weight: 0,
+              split: false,
+            },
+            {
+              id: 4,
+              name: 'Mom',
+              weight: 0,
+              split: false,
+            },
+            {
+              id: 5,
+              name: 'Maverick',
+              weight: 0,
+              split: false,
+            },
+            {
+              id: 6,
+              name: 'Myles',
+              weight: 0,
+              split: false,
+            },
+            {
+              id: 7,
+              name: 'Mae',
+              weight: 0,
+              split: false,
+            },
+            {
+              id: 8,
+              name: 'Julie',
+              weight: 0,
+              split: false,
+            },
+          ]
+        },
       ],
       reimbursements: [
         // algorithm
@@ -360,54 +421,103 @@ export default function LocalStorageManager() {
             ]
           },
           {
-            id: 2,
-            type: 'Settlement', // type: 1 - expense, type: 2 - settlement
-            date: "2033-11-07",
-            description: "Badminton",
+            id: 1422,
+            type: 'Expense', // type: 1 - expense, type: 2 - settlement
+            date: "2026-08-11",
+            description: "Magic",
             icon: 'receipt_long',
-            payer: 51, // user_id
-            amount: 234110,
-            recipient: 55, // user_id, 0 - if type 1
-            split_mode: 'Evenly',
+            payer: 61, // user_id
+            amount: 100,
+            recipient: 0, // user_id, 0 - if type 1
+            split_mode: 'Specific',
             split_members: [
               {
                 id: 1,
                 name: 'Judd',
-                share: 0,
+                weight: 0,
                 split: false,
               },
               {
                 id: 2,
                 name: 'Jon',
-                share: 0,
+                weight: 0,
                 split: false,
               },
               {
                 id: 3,
                 name: 'Jyll',
-                share: 0,
+                weight: 0,
                 split: false,
               },
               {
                 id: 55,
                 name: 'Rodney',
-                share: 0,
+                weight: 0,
                 split: false,
               },
               {
                 id: 51,
                 name: 'Niko',
-                share: 0,
-                split: false,
+                weight: 10,
+                split: true,
               },
               {
                 id: 61,
                 name: 'Avatar',
-                share: 0,
-                split: false,
+                weight: 10,
+                split: true,
               },
             ]
-          }
+          },
+          // {
+          //   id: 2,
+          //   type: 'Settlement', // type: 1 - expense, type: 2 - settlement
+          //   date: "2033-11-07",
+          //   description: "Badminton",
+          //   icon: 'receipt_long',
+          //   payer: 51, // user_id
+          //   amount: 1666.66666666666666,
+          //   recipient: 61, // user_id, 0 - if type 1
+          //   split_mode: 'Evenly',
+          //   split_members: [
+          //     {
+          //       id: 1,
+          //       name: 'Judd',
+          //       share: 0,
+          //       split: false,
+          //     },
+          //     {
+          //       id: 2,
+          //       name: 'Jon',
+          //       share: 0,
+          //       split: false,
+          //     },
+          //     {
+          //       id: 3,
+          //       name: 'Jyll',
+          //       share: 0,
+          //       split: false,
+          //     },
+          //     {
+          //       id: 55,
+          //       name: 'Rodney',
+          //       share: 0,
+          //       split: false,
+          //     },
+          //     {
+          //       id: 51,
+          //       name: 'Niko',
+          //       share: 0,
+          //       split: false,
+          //     },
+          //     {
+          //       id: 61,
+          //       name: 'Avatar',
+          //       share: 0,
+          //       split: false,
+          //     },
+          //   ]
+          // }
         ],
         reimbursements: [
           // algorithm
@@ -437,7 +547,7 @@ export default function LocalStorageManager() {
   }
 
  const handleFunction = () => {
-  console.log('before', test_db.groups[0])
+  console.log('before', test_db.groups[1])
   console.log('after',processGroup(test_db.groups[1]))
 }
 

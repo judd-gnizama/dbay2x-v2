@@ -26,7 +26,7 @@ export default function TransactionPage({ params }) {
   const transaction = getTransactionFromGroup({groupId: currentGroup.id, transactionId: transactionId})
 
   const router = useRouter();
-  console.log(type, mode, from, to, date, amount, description, groupId, transactionId)
+
   const initialValues = mode === 'add' ? 
     {
       id: transactionId,
@@ -43,7 +43,6 @@ export default function TransactionPage({ params }) {
     :
     transaction;
   // For Global Edits
-  console.log(initialValues)
   const [ isMounted, setIsMounted ] = useState(false);
   const [ isChanged, setIsChanged ] = useState(false);
 
