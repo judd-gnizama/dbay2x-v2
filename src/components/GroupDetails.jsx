@@ -23,7 +23,9 @@ export default function GroupDetails({group}) {
         {`Total Spent: `} 
         <strong className="font-bold">{totalSpent.toLocaleString()}</strong>
       </p>
-      <p className={`font-bold ${noOfReimbursements === 0 ? 'text-green-500' : 'text-red-300'}`}>{`${noOfReimbursements === 0 ? 'All Settled!' : 'Needs Settling'}`}</p>
+      {noOfTransactions !== 0 && 
+        <p className={`font-bold ${noOfReimbursements === 0 ? 'text-green-500' : 'text-red-300'}`}>{`${noOfReimbursements === 0 ? 'All Settled!' : 'Needs Settling'}`}</p>
+      }
     </div>
   )
 }
