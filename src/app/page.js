@@ -34,7 +34,7 @@ export default function Home() {
         className="bg-teal-400 p-2 px-4 text-white rounded-full hover:opacity-80 active:opacity-40 transition-opacity duration-300"
         onClick={handleCreateNew}>
           Create a New Group</button>
-        <p>Recent Groups:</p>
+        <p>Browse Groups:</p>
         <div className="border p-4 max-w-6xl w-full rounded-lg bg-gray-200">
           {groups?.length > 0 ? <div className="grid gap-2 rounded-lg max-h-80 overflow-y-scroll"
           style={{gridTemplateColumns: 'repeat(auto-fit,minmax(15rem, 1fr))'}}>
