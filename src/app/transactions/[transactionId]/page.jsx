@@ -26,14 +26,14 @@ export default function TransactionPage({ params }) {
   const transaction = getTransactionFromGroup({groupId: currentGroup.id, transactionId: transactionId})
 
   const router = useRouter();
-
+  console.log(type, mode, from, to, date, amount, description, groupId, transactionId)
   const initialValues = mode === 'add' ? 
     {
       id: transactionId,
       description: description ? description : '',
       type: type ? type : 'Expense',
       date: date ? date : "",
-      icon: "receipt_long",
+      icon: type === 'Expense' ? "receipt_long" : "handshake",
       amount: amount ? amount : 0,
       payer: from ? from : currentGroup.users[0].id,
       recipient: to ? to : currentGroup.users[0].id,
@@ -43,6 +43,7 @@ export default function TransactionPage({ params }) {
     :
     transaction;
   // For Global Edits
+  console.log(initialValues)
   const [ isMounted, setIsMounted ] = useState(false);
   const [ isChanged, setIsChanged ] = useState(false);
 
@@ -252,11 +253,11 @@ export default function TransactionPage({ params }) {
       description: editableText,
       type: selectType,
       date: transactionDate,
-      icon: selectType === 'Settlement' ? 'receipt_long' : selectIcon,
+      icon: selectType === 'Settlement' ? 'handshake' : selectIcon,
       amount: transactionAmount ? parseFloat(transactionAmount) : 0,
       payer: selectPayor,
       recipient: selectType === 'Expense' ? 0 : selectPayee,
-      split_mode: selectType === 'Expense' ? selectSplit : "",
+      split_mode: selectSplit || 'Evenly',
       split_members: selectSplit === 'Specific' ? splitMembers
       : splitMembers.map(member => ({
         id: member.id,

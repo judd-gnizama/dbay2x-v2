@@ -13,7 +13,7 @@ export default function GroupDetails({group}) {
   const totalSpent = computeTotalSpent(group);
 
   return (
-    <div className="flex gap-4 py-2">
+    <div className="flex gap-x-4 py-2 flex-wrap items-center">
       <p className="">
         {`Users: `}
         <strong className="font-bold">{noOfUsers}</strong>
@@ -27,7 +27,7 @@ export default function GroupDetails({group}) {
         <strong className="font-bold">{totalSpent.toLocaleString()}</strong>
       </p>
       {noOfTransactions !== 0 && 
-        <p className={`font-bold ${noOfReimbursements === 0 ? 'text-green-500' : 'text-red-300'}`}>{`${noOfReimbursements === 0 ? 'All Settled!' : 'Needs Settling'}`}</p>
+        <p className={`font-bold text-white p-1 px-2 rounded-full ${noOfReimbursements === 0 ? 'bg-green-500 ' : 'bg-red-300'}`}>{`${noOfReimbursements === 0 ? 'All Settled!' : 'Needs Settling'}`}</p>
       }
     </div>
   )

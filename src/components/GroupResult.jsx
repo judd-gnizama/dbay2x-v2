@@ -5,7 +5,7 @@ import { computeTotalSpent } from "./GroupDetails";
 
 export default function GroupResult({ result, mode }) {
   const { id, name, users, transactions, reimbursements } = result
-  const isSettled = reimbursements && reimbursements.length !== 0;
+  const isSettled = reimbursements && reimbursements.length === 0 && users && users.length !== 0;
   const router = useRouter();
 
   const totalSpent = computeTotalSpent(result)
