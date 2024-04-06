@@ -6,6 +6,7 @@ import { getCurrentGroup, getCurrentGroupId, getGroups, setCurrentGroupId } from
 import { usePathname, useRouter } from "next/navigation";
 import { createNewGroup } from "@/functions/InterfaceFunc";
 import DarkModeSwitch from "./DarkModeSwitch";
+import { toast } from "sonner";
 
 export default function Sidebar() {
 
@@ -31,6 +32,7 @@ export default function Sidebar() {
   const handleAddNewGroup = () => {
     const { id } = createNewGroup();
     router.push(`/groups/${id}`);
+    toast.success(`Group: #${id} created successfully`)
     handleChangeGroup(id);
   }
 

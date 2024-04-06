@@ -14,10 +14,6 @@ export default function UserResult({ result, mode }) {
         <p>{share.toLocaleString()}</p>
         <p>{`${net < 0 ? 'To Receive:':'To Pay:'}`}</p>
         <p>{`${Math.abs(balance).toLocaleString()} / ${Math.abs(net).toLocaleString()}`}</p>
-
-
-        {/* <p>Balance: </p>
-        <p>{Math.abs(balance).toLocaleString()}</p> */}
         <p>Total Paid: </p>
         <p>{total_paid.toLocaleString()}</p>
       </article>

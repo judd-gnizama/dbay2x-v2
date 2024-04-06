@@ -5,6 +5,7 @@ import { createNewGroup } from "@/functions/InterfaceFunc";
 import { getGroups, setCurrentGroupId } from "@/functions/LocalStorageFunc";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 export default function Home() {
 
@@ -14,6 +15,7 @@ export default function Home() {
   const handleCreateNew = () => {
     const group = createNewGroup();
     setCurrentGroupId({groupId: group.id})
+    toast.success(`Group: #${group.id} created successfully`)
     router.push(`/groups/${group.id}`)
   }
   
@@ -29,7 +31,7 @@ export default function Home() {
           <h2>A Bill Splitting App by <strong className="font-bold">JMRTan</strong></h2>
         </div>
         <button 
-        className="bg-teal-400 p-2 px-4 text-white rounded-full"
+        className="bg-teal-400 p-2 px-4 text-white rounded-full hover:opacity-80 active:opacity-40 transition-opacity duration-300"
         onClick={handleCreateNew}>
           Create a New Group</button>
         <p>Recent Groups:</p>

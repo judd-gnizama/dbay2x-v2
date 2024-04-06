@@ -159,7 +159,7 @@ export default function TransactionPage({ params }) {
     const splitMember = splitMembers.filter(member => member.id === splitMemberId)[0];
     if (splitMember.split) {
       let value = event.target.value;
-      const weight = parseInt(value);
+      const weight = parseFloat(value);
       const newSplitMembers = splitMembers.map(member => member.id === splitMemberId ? {...member, weight: weight} : member)
       setSplitMembers(newSplitMembers);  
       computeTotal(newSplitMembers)
@@ -274,23 +274,29 @@ export default function TransactionPage({ params }) {
     }
     goBackToGroup();
   }
-
   const goBackToGroup = () => {
     router.push(`/groups/${currentGroup.id}`)
   }
-
   const handleCancel = () => {
     toast.info('Transaction Cancelled')
     goBackToGroup();
   }
-
   const handleDiscard = () => {
     location.reload()
   }
   const handleDelete = () => {
-    removeTransaction({groupId: groupId, transactionId: transactionId})
-    toast.success("Transaction Deleted")
-    goBackToGroup();
+    const toastId = toast(
+      <div className="flex gap-2 items-center">
+      <p>Delete Transaction? </p>
+      <button className="border-2 p-1 px-4 rounded-full" onClick={()=>{
+        removeTransaction({groupId: groupId, transactionId: transactionId})
+        toast.success("Transaction Deleted")
+        goBackToGroup();
+        toast.dismiss();
+
+      }}>Confirm</button>  
+      <button className="bg-teal-400 p-1 px-4 rounded-full" onClick={()=> toast.dismiss(toastId)}>Cancel</button>  
+    </div>)
   }
 
   useEffect(() => {

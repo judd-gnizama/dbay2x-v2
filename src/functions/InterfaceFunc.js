@@ -1,3 +1,4 @@
+import { toast } from "sonner";
 import { appendNewGroup, getAllGroupIds, getAllUniqueUserIds, getGroups, replaceGroups } from "./LocalStorageFunc";
 import { ProcessGroupData, processGroup } from "./ProcessGroupData";
 
@@ -22,14 +23,10 @@ export function createNewGroup() {
   return newGroup;
 }
 
-
 // Process all groups and Commit to local Storage
-
 export function processTheseGroups({ groups }) { 
   return groups.map(group => processGroup(group))
 }
-
-
 
 // export function ProcessAllGroups() {
 //   const groups = getGroups();
@@ -45,3 +42,4 @@ export function isStrictlyNumeric(str) {
   // Check if the string contains any non-numeric characters, allowing optional hyphen at the beginning
   return !nonNumericRegex.test(str) && str.length > 0 && /^[-+]?\d+(?:\.\d+)?$/.test(str);
 }
+
