@@ -43,3 +43,13 @@ export function isStrictlyNumeric(str) {
   return !nonNumericRegex.test(str) && str.length > 0 && /^[-+]?\d+(?:\.\d+)?$/.test(str);
 }
 
+// get Current Date
+export function getDateToday() {
+  const today = new Date().toLocaleDateString("en-PH");
+  const dateToday = today.split("/");
+  const MM = parseInt(dateToday[0]);
+  const DD = parseInt(dateToday[1]);
+  const YYYY = parseInt(dateToday[2]);
+  const formattedDate = `${YYYY}-${MM > 9 ? MM : `0${MM}`}-${DD > 9 ? DD : `0${DD}`}`
+  return formattedDate
+}

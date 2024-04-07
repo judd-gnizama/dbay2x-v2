@@ -2,6 +2,7 @@
 
 import EditableDiv from "@/components/EditableDiv";
 import ToggleGroup from "@/components/formComponents/ToggleGroup";
+import { getDateToday } from "@/functions/InterfaceFunc";
 import { addTransaction, getCurrentGroup, getTransactionFromGroup, removeTransaction, replaceTransaction } from "@/functions/LocalStorageFunc";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -32,7 +33,7 @@ export default function TransactionPage({ params }) {
       id: transactionId,
       description: description ? description : '',
       type: type ? type : 'Expense',
-      date: date ? date : "",
+      date: date ? date : getDateToday(), // Date today
       icon: type === 'Expense' ? "receipt_long" : "handshake",
       amount: amount ? amount : 0,
       payer: from ? from : currentGroup.users[0].id,

@@ -547,17 +547,13 @@ export default function LocalStorageManager() {
   }
 
  const handleFunction = () => {
-  const testList = [
-    {id: 1, _net: -1000},
-    {id: 2, _net: -500},
-    {id: 3, _net: -500},
-    {id: 4, _net: -100},
-    {id: 5, _net: 350},
-    {id: 6, _net: 500},
-    {id: 7, _net: 1250},
-  ]
-  const reimbursements = computeReimbursements(testList)
-  console.log('Reimbursements:', reimbursements)
+  const today = new Date().toLocaleDateString("en-PH");
+  const dateToday = today.split("/");
+  const MM = parseInt(dateToday[0]);
+  const DD = parseInt(dateToday[1]);
+  const YYYY = parseInt(dateToday[2]);
+  const formattedDate = `${YYYY}/${MM > 9 ? MM : `0${MM}`}/${DD > 9 ? DD : `0${DD}`}`
+  console.log(formattedDate)
 }
 
   return (
