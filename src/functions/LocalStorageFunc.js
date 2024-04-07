@@ -239,3 +239,14 @@ export function removeTransaction({ groupId, transactionId }){
   const newGroup = {...group, transactions: newTransactions}
   replaceGroup({ newGroup: newGroup })
 }
+
+
+export function removeGroup({groupId}) {
+  const groups = getGroups();
+  const filteredGroups = groups.filter(group => group.id !== groupId)
+  setCurrentGroupId({groupId: filteredGroups?.length > 0 ? filteredGroups[0].id : 0})
+  console.log(groupId)
+  console.log(groups)
+  console.log(filteredGroups)
+  replaceGroups({newGroups: filteredGroups})
+}

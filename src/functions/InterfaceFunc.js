@@ -53,3 +53,12 @@ export function getDateToday() {
   const formattedDate = `${YYYY}-${MM > 9 ? MM : `0${MM}`}-${DD > 9 ? DD : `0${DD}`}`
   return formattedDate
 }
+
+export function confirmCancelToast({message, confirmFn}) {
+  toast(
+    <div className="flex gap-2 items-center">
+    <p>{message} </p>
+    <button className="border-2 p-1 px-4 rounded-full" onClick={confirmFn}>Confirm</button>  
+    <button className="bg-teal-400 p-1 px-4 rounded-full" onClick={()=> toast.dismiss()}>Cancel</button>  
+  </div>)
+}
