@@ -136,14 +136,14 @@ export default function TransactionPage({ params }) {
       {
         ...member, 
         split: member.split ? false : true, 
-        weight: 0
+        weight: member.split ? 0 : 1
       } : member)
     setSplitMembers(newMembers)
     computeTotal(newMembers)
   }
   const handleSelectAll = (event) => {
     event.preventDefault();
-    const newMembers = splitMembers.map(member => ({...member, split: true}))
+    const newMembers = splitMembers.map(member => ({...member, weight: 1, split: true}))
     setSplitMembers(newMembers)
     computeTotal(newMembers)
   }

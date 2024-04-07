@@ -565,8 +565,6 @@ export default function LocalStorageManager() {
       <button onClick={()=> handleLoad()} className="bg-slate-300 hover:opacity-80 p-2">Load Dummy Data</button>
       <button onClick={()=> handleClear()} className="bg-slate-300 hover:opacity-80 p-2">Clear Data</button>
       <button onClick={()=> handleShow()} className="bg-slate-300 hover:opacity-80 p-2">Console Stored Data</button>
-
-
       <button onClick={()=> handleFunction()} className="bg-slate-300 hover:opacity-80 p-2">Run Custom Function</button>
       <p>{values ? values : ''}</p>
     </div>

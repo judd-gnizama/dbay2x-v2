@@ -224,11 +224,12 @@ export function processGroup(group) {
 
     return({
       ...user, 
-      total_paid: paid_expense + paid_settlement,
-      paid: paid_expense,
       share: share,
-      net: share - paid_expense,
-      balance: paid_settlement - received,
+      paid: paid_expense,
+      current_balance: paid_settlement - received,
+      total_balance: share - paid_expense,
+      // total_paid: paid_expense + paid_settlement,
+      total_net: paid_expense + paid_settlement - received,
       _net: share - paid_expense - paid_settlement + received
     })
   })
