@@ -206,7 +206,7 @@ export default function TransactionPage({ params }) {
       toast.error('No Description')
       hasError = true;
     }
-    if (!transactionAmount) {
+    if (!transactionAmount || transactionAmount <= 0) {
       toast.error('Invalid Amount')
       hasError = true;
     } 
