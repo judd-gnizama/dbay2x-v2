@@ -2,7 +2,7 @@
 
 import { ProcessAllGroups } from "@/functions/InterfaceFunc";
 import { addTransaction, getAllGroupIds, getAllUniqueUserIds, getCurrentGroup, getCurrentGroupId, getGroupById, getGroups, getRawData, replaceUserProp  } from "@/functions/LocalStorageFunc";
-import { processGroup } from "@/functions/ProcessGroupData";
+import { computeReimbursements, processGroup } from "@/functions/ProcessGroupData";
 import { useState } from "react";
 
 export default function LocalStorageManager() {
@@ -547,8 +547,17 @@ export default function LocalStorageManager() {
   }
 
  const handleFunction = () => {
-  console.log('before', test_db.groups[1])
-  console.log('after',processGroup(test_db.groups[1]))
+  const testList = [
+    {id: 1, _net: -1000},
+    {id: 2, _net: -500},
+    {id: 3, _net: -500},
+    {id: 4, _net: -100},
+    {id: 5, _net: 350},
+    {id: 6, _net: 500},
+    {id: 7, _net: 1250},
+  ]
+  const reimbursements = computeReimbursements(testList)
+  console.log('Reimbursements:', reimbursements)
 }
 
   return (
