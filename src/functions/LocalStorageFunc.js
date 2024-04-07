@@ -250,3 +250,11 @@ export function removeGroup({groupId}) {
   console.log(filteredGroups)
   replaceGroups({newGroups: filteredGroups})
 }
+
+export function removeUserInGroup({userId, groupId}) {
+  const groups = getGroups();
+  const filteredGroup = groups.filter(group => group.id === groupId)[0]
+  const filteredUsers = filteredGroup.users.filter(user => user.id !== userId);
+  const newGroups = groups.map(group => group.id === groupId ? {...filteredGroup, users: filteredUsers} : group)
+  replaceGroups({newGroups: newGroups})
+}

@@ -59,7 +59,7 @@ export default function GroupPage({ params }) {
         >Recommended Settlements</h2>
         <Results type='settlement' results={group?.reimbursements}/>
       </section>
-      <div className="justify-self-end flex gap-2">
+      <div className="justify-self-end flex gap-2 max-sm:flex-col max-sm:w-full">
         <button disabled={true} className="bg-gray-300 p-2 px-4 rounded-full disabled:bg-gray-400 disabled:opacity-40">Export Group Data</button>
         <button onClick={handleDeleteGroup} className="bg-gray-600 text-white p-2 px-4 rounded-full hover:opacity-80 active:opacity-40">Delete Group</button>
       </div>

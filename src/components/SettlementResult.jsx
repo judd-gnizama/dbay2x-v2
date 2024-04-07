@@ -20,7 +20,7 @@ export default function SettlementResult({ result, mode }) {
   }
 
   return (
-    <button onClick={handleCreateTransaction} className="flex flex-col gap-2 justify-center items-center border border-slate-200 rounded-2xl p-4  hover:bg-teal-200 hover:shadow-md cursor-pointer">
+    <button onClick={handleCreateTransaction} className="flex flex-col gap-2 justify-center items-center border border-slate-200 rounded-2xl p-4  hover:bg-teal-200 hover:shadow-md cursor-pointer active:opacity-40 transition-opacity duration-300">
       <div className="flex justify-center items-center gap-4 flex-wrap">
         <span className="font-bold">{fromUser.name}</span>
         <span>{`> ${amount.toLocaleString()} > `}</span>

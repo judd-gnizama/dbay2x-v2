@@ -55,7 +55,6 @@ export default function TransactionPage({ params }) {
     const description = event.target.textContent;
     setEditing(false);
     setEditableText(description);
-    // save description to Transaction
   }
 
   // For Transaction Type

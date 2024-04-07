@@ -1,9 +1,10 @@
+import Link from "next/link"
 
 export default function UserResult({ result, mode }) {
 
   const { id, name, paid, share, current_balance, total_balance, total_net} = result
   return (
-    <span /*href={`/users/${id}`}*/ className="flex  flex-col justify-start max-sm:justify-center items-center max-sm:flex-wrap border border-slate-200 rounded-2xl p-4 gap-4 hover:bg-teal-200 hover:shadow-md">
+    <Link href={`/users/${id}`} className="flex  flex-col justify-start max-sm:justify-center items-center max-sm:flex-wrap border border-slate-200 rounded-2xl p-4 gap-4 hover:bg-teal-200 hover:shadow-md active:opacity-40 transition-opacity duration-300">
       <span className="material-symbols-outlined"
       style={{fontSize: '6rem'}}>account_circle</span>
       <article className="w-full overflow-hidden grid grid-cols-2 gap-x-2 justify-center">
@@ -17,6 +18,6 @@ export default function UserResult({ result, mode }) {
         <p>Total Net: </p>
         <p>{total_net.toLocaleString()}</p>
       </article>
-    </span>
+    </Link>
   )
 }
