@@ -20,10 +20,13 @@ export default function SettlementResult({ result, mode }) {
   }
 
   return (
-    <button onClick={handleCreateTransaction} className="flex justify-center items-center border border-slate-200 rounded-2xl p-4 gap-4 hover:bg-teal-200 hover:shadow-md flex-wrap cursor-pointer">
-      <span className="font-bold">{fromUser.name}</span>
-      <span>{`> ${amount.toLocaleString()} > `}</span>
-      <span className="font-bold">{toUser.name}</span>
+    <button onClick={handleCreateTransaction} className="flex flex-col gap-2 justify-center items-center border border-slate-200 rounded-2xl p-4  hover:bg-teal-200 hover:shadow-md cursor-pointer">
+      <div className="flex justify-center items-center gap-4 flex-wrap">
+        <span className="font-bold">{fromUser.name}</span>
+        <span>{`> ${amount.toLocaleString()} > `}</span>
+        <span className="font-bold">{toUser.name}</span>
+      </div>
+      <p className="text-gray-400 text-sm leading-tight">Click to Settle</p>
     </button>
   )
 }
