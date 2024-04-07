@@ -159,10 +159,7 @@ export const computeReimbursements = (membersList) => {
     }
     
     // sort lowest to highest
-    let sortedMembersList = membersList.sort((member1, member2) => member1._net - member2._net);  // (-) -> to receive, (+) -> to pay
-    
-    console.log(`iteration: ${count}`,sortedMembersList)
-    
+    let sortedMembersList = membersList.sort((member1, member2) => member1._net - member2._net);  // (-) -> to receive, (+) -> to pay 
     
     // append to reimbursements
     const maxIndex = sortedMembersList.length - 1;
@@ -177,9 +174,13 @@ export const computeReimbursements = (membersList) => {
         amount: Math.min(Math.abs(minValue), Math.abs(maxValue))
       }
       )
+      
       // update net list
-      sortedMembersList[0] = {...sortedMembersList[0], _net: minValue + maxValue < 0 ? minValue + maxValue : 0}
-      sortedMembersList[maxIndex] = {...sortedMembersList[maxIndex], _net: minValue + maxValue < 0 ? 0 : minValue + maxValue}
+      sortedMembersList[0] = {...sortedMembersList[0], 
+        _net: minValue + maxValue < 0 ? minValue + maxValue : 0}
+
+      sortedMembersList[maxIndex] = {...sortedMembersList[maxIndex], 
+        _net: minValue + maxValue < 0 ? 0 : minValue + maxValue}
       count += 1
     }
     
@@ -227,7 +228,7 @@ export function processGroup(group) {
       paid: paid_expense,
       share: share,
       net: share - paid_expense,
-      balance: share - paid_expense - paid_settlement + received,
+      balance: paid_settlement - received,
       _net: share - paid_expense - paid_settlement + received
     })
   })
