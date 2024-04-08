@@ -2,7 +2,7 @@
 
 import EditableDiv from "@/components/EditableDiv";
 import ToggleGroup from "@/components/formComponents/ToggleGroup";
-import { getDateToday } from "@/functions/InterfaceFunc";
+import { confirmCancelToast, getDateToday } from "@/functions/InterfaceFunc";
 import { addTransaction, getCurrentGroup, getTransactionFromGroup, removeTransaction, replaceTransaction } from "@/functions/LocalStorageFunc";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -274,6 +274,17 @@ export default function TransactionPage({ params }) {
     }
     goBackToGroup();
   }
+
+  const handleGoBack = () => {
+    confirmCancelToast({message: 'Discard Changes? ', confirmFn: handleBeforeGo})
+  }
+
+  const handleBeforeGo = () => {
+    toast.dismiss();
+    toast.info('Changes Discarded')
+    goBackToGroup();
+  }
+
   const goBackToGroup = () => {
     router.push(`/groups/${currentGroup.id}`)
   }
@@ -282,7 +293,7 @@ export default function TransactionPage({ params }) {
     goBackToGroup();
   }
   const handleDiscard = () => {
-    location.reload()
+    goBackToGroup();
   }
   const handleDelete = () => {
     const toastId = toast(
@@ -312,13 +323,13 @@ export default function TransactionPage({ params }) {
   return (
     <div className="grid gap-4"
     style={{gridTemplateRows: 'auto auto 1fr'}}>
-      <Link 
-      href={`/groups/${currentGroup.id}`}
+      <button 
       className='w-fit flex items-center gap-2'
+      onClick={handleGoBack}
       >
       <span className="material-symbols-outlined">arrow_back_ios_new</span>
         Go back to <strong>{currentGroup.name}</strong>
-      </Link>
+      </button>
       <EditableDiv editableText={editableText} setEditableText={setEditableText} editing={editing} setEditing={setEditing} handleEditable={handleChangeEditable}/>
 
       <div className="border p-4 rounded-lg grid items-center h-fit gap-2 gap-x-10 sm:grid-cols-[auto_1fr]"
