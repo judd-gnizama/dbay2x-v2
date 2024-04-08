@@ -20,9 +20,9 @@ export default function Header() {
         <Brand/>  
         <nav className="flex justify-center items-center gap-4 max-md:hidden">
           <Link className='hover:text-teal-400' href={'/'}>Groups</Link>
-          <Link className='hover:text-teal-400' href={'#users'}>Users</Link>
+          {/* <Link className='hover:text-teal-400' href={'#users'}>Users</Link>
           <Link className='hover:text-teal-400' href={'#transactions'}>Transactions</Link>
-          <Link className='hover:text-teal-400' href={'#settlements'}>Settlements</Link>
+          <Link className='hover:text-teal-400' href={'#settlements'}>Settlements</Link> */}
           {/* <Link href='/'>Home</Link> */}
           <Link className='hover:text-teal-400' href='/about'>About</Link>
         </nav>

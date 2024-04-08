@@ -34,10 +34,9 @@ export default function Home() {
         className="bg-teal-400 p-2 px-4 text-white rounded-full hover:opacity-80 active:opacity-40 transition-opacity duration-300"
         onClick={handleCreateNew}>
           Create a New Group</button>
-        <p>{`Existing Groups [${groups?.length}]:`}</p>
-        <div className="flex gap-2 p-4 max-w-6xl w-full overflow-auto rounded-lg bg-gray-200">
+        <p>{`Existing Groups [${groups ? groups.length : 0}]:`}</p>
+        <div className="flex gap-2 p-4 max-w-6xl w-fit overflow-auto rounded-lg bg-gray-200">
           {groups?.length > 0 ? 
-
           <>
             {groups?.map(group => <GroupResult key={group.id} result={group}/>)}
           </>
