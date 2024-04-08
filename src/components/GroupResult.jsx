@@ -5,7 +5,8 @@ import { computeTotalSpent } from "./GroupDetails";
 
 export default function GroupResult({ result, mode }) {
   const { id, name, users, transactions, reimbursements } = result
-  const isSettled = reimbursements && reimbursements.length === 0 && users && users.length !== 0;
+  const hasReimbursements = reimbursements && reimbursements.length !== 0
+  const hasTransactions = transactions && transactions.length !== 0
   const router = useRouter();
 
   const totalSpent = computeTotalSpent(result)
@@ -16,16 +17,16 @@ export default function GroupResult({ result, mode }) {
   }
 
   return (
-    <button onClick={handleGoTo} className="flex max-sm:flex-col justify-center text-left items-center bg-gray-300 rounded-2xl p-4 gap-4 cursor-pointer hover:bg-teal-300">
+    <button onClick={handleGoTo} className="flex flex-col justify-center text-left items-center bg-gray-300 rounded-2xl p-4 gap-4 cursor-pointer hover:bg-teal-300">
       <span className="material-symbols-outlined"
       style={{fontSize: '4rem'}}>group</span>
-      <article>
+      <article className="text-center">
         <p className="text-lg font-bold">{name}</p>
-        <p>{`Members:  ${users.length}`}</p>
-        <p>{`Total Spent: ${totalSpent}`}</p>
-        <p className="font-bold"
-        style={{color: isSettled ? 'green' : 'red'}}
-        >{isSettled ? 'All Settled' : 'Needs Settling'}</p>
+        <p>{`${users.length} members`}</p>
+        <p>{`Total: ${totalSpent}`}</p>
+        {hasTransactions && !hasReimbursements && <p className="font-bold text-green-600">All Settled</p>}
+        {hasTransactions && hasReimbursements && <p className="font-bold text-teal-600">Settle Up</p>}
+
       </article>
     </button>
   )
