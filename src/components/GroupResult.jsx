@@ -17,13 +17,14 @@ export default function GroupResult({ result, mode }) {
   }
 
   return (
-    <button onClick={handleGoTo} className="flex flex-col justify-center text-left items-center bg-gray-300 rounded-2xl p-4 gap-4 cursor-pointer hover:bg-teal-300">
+    <button onClick={handleGoTo} className="flex flex-col justify-center flex-1 text-left items-center bg-gray-300 rounded-2xl p-4 gap-4 cursor-pointer hover:bg-teal-300">
       <span className="material-symbols-outlined"
       style={{fontSize: '4rem'}}>group</span>
       <article className="text-center">
         <p className="text-lg font-bold">{name}</p>
         <p>{`${users.length} members`}</p>
         <p>{`Total: ${totalSpent}`}</p>
+        {!hasTransactions && <p className="font-bold text-gray-600">No Transactions</p>}
         {hasTransactions && !hasReimbursements && <p className="font-bold text-green-600">All Settled</p>}
         {hasTransactions && hasReimbursements && <p className="font-bold text-teal-600">Settle Up</p>}
 

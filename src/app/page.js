@@ -25,7 +25,7 @@ export default function Home() {
 
   return (
     <div className="flex justify-center items-center text-center">
-      <div className={`gap-4 max-w-6xl h-full w-full grid grid-rows-[auto_1fr_auto] items-center place-items-center`}>
+      <div className={`gap-4 max-w-6xl w-full grid grid-rows-[auto_1fr_auto] items-center place-items-center`}>
         <div>
           <Brand size={'text-6xl'}/>
           <h2>A Bill Splitting App by <strong className="font-bold">JMRTan</strong></h2>
@@ -35,7 +35,7 @@ export default function Home() {
         onClick={handleCreateNew}>
           Create a New Group</button>
         <p>{`Existing Groups [${groups ? groups.length : 0}]:`}</p>
-        <div className="flex gap-2 p-4 max-w-6xl w-fit overflow-auto rounded-lg bg-gray-200">
+        <div className="flex flex-col flex-wrap overflow-x-scroll h-[20rem] gap-2 p-4 rounded-lg bg-gray-200 snap-center">
           {groups?.length > 0 ? 
           <>
             {groups?.map(group => <GroupResult key={group.id} result={group}/>)}
