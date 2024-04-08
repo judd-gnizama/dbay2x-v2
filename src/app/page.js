@@ -35,7 +35,7 @@ export default function Home() {
         onClick={handleCreateNew}>
           Create a New Group</button>
         <p>{`Existing Groups [${groups ? groups.length : 0}]:`}</p>
-        <div className="flex flex-col flex-wrap overflow-x-scroll h-[20rem] gap-2 p-4 rounded-lg bg-gray-200 snap-center">
+        <div className="flex flex-cols overflow-x-scroll w-full gap-2 p-4 rounded-lg bg-gray-200 snap-center">
           {groups?.length > 0 ? 
           <>
             {groups?.map(group => <GroupResult key={group.id} result={group}/>)}
