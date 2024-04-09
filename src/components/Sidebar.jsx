@@ -1,6 +1,6 @@
 'use client'
 import Link from "next/link";
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import LocalStorageManager from "./LocalStorageManager";
 import { getCurrentGroup, getCurrentGroupId, getGroups, setCurrentGroupId } from "@/functions/LocalStorageFunc";
 import { usePathname, useRouter } from "next/navigation";
@@ -14,6 +14,8 @@ export default function Sidebar() {
   const [ groups, setGroups ] = useState([]);
   const [ _currentGroupId, _setCurrentGroupId ] = useState(0);
   const [ links, setLinks] = useState({});
+  const  sidebarRef = useRef(null);
+
   const router = useRouter();
   const pathname = usePathname();
   const showLinks = pathname.startsWith('/groups');
@@ -37,6 +39,12 @@ export default function Sidebar() {
     handleChangeGroup(id);
   }
 
+  const handleOutsideClick = (event) => {
+    if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+      setShowSidebar(false)
+    }
+  }
+
   useEffect(() => {
   const currentGroupIdFromDb = getCurrentGroupId();
   handleChangeGroup(currentGroupIdFromDb);
@@ -49,10 +57,19 @@ export default function Sidebar() {
     }
   }, [_currentGroupId, showSidebar])
 
+  useEffect(()=> {
+    const body = document.body;
+    if (showSidebar) {
+      body.addEventListener('click', handleOutsideClick)
+    } else {
+      body.removeEventListener('click', handleOutsideClick)
+    }
+    return () => body.removeEventListener('click', handleOutsideClick);
+  }, [showSidebar])
+
   return (
     <div className="z-10 top-0 right-0 absolute translate-x-2 -translate-y-2"
-    >
-      
+    ref={sidebarRef}> 
     <div className={`flex flex-col p-4 justify-start items-end gap-4 max-w-xs ${showSidebar ? 'bg-slate-200': ''}`}>
       
       <span className="material-symbols-outlined w-fit p-2 cursor-pointer hover:bg-slate-300 rounded-full" style={{fontSize: '2rem'}}

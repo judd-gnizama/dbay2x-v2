@@ -4,7 +4,6 @@ import TransactionResult from "./TransactionResult"
 import UserResult from "./UserResult"
 
 export default function Results({ type, search, results }) {
-  console.log(results)
   if (type === 'user') {
     results.sort((a, b) => a.name.localeCompare(b.name))
   } else if (type === 'transaction') {

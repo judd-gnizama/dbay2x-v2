@@ -19,8 +19,6 @@ export default function Home() {
   const [ groups, setGroups ] = useState(null);
   const router = useRouter();
   
-  
-  
   useEffect(()=> {
     setGroups(getGroups());
   }, [])
