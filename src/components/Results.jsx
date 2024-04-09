@@ -4,6 +4,14 @@ import TransactionResult from "./TransactionResult"
 import UserResult from "./UserResult"
 
 export default function Results({ type, search, results }) {
+  console.log(results)
+  if (type === 'user') {
+    results.sort((a, b) => a.name.localeCompare(b.name))
+  } else if (type === 'transaction') {
+    results.sort((a, b) => new Date(a.date).valueOf() - new Date(b.date).valueOf())
+  } else if (type === 'settlement') {
+    results.sort((a, b) => b.amount - a.amount)
+  }
 
   return (
     <div className="grid gap-4">

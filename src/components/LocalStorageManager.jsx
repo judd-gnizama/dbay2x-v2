@@ -547,7 +547,31 @@ export default function LocalStorageManager() {
   }
 
  const handleFunction = () => {
-  
+  const test = [
+    {
+      id: 123,
+      name: 'ijief',
+      date: "2029-04-12"
+    },
+    {
+      id: 43,
+      name: 'afwe',
+      date: "2032-12-12"
+    },
+    {
+      id: 52,
+      name: 'Fefe',
+      date: "2026-07-11"
+    },
+    {
+      id: 2,
+      name: 'pokj',
+      date: "3024-06-22"
+    },
+  ]
+  console.log('original', test)
+  test.sort((a, b) => new Date(a.date).valueOf() - new Date(b.date).valueOf())
+  console.log(test)
 }
 
   return (
