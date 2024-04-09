@@ -85,7 +85,7 @@ export default function UserPage( { params }) {
         </article>
 
         <div className="flex max-[350px]:flex-col place-items-center gap-2">
-          <button onClick={handleDeleteUser} className="bg-gray-600 text-nowrap text-white p-2 px-4 max-w-lg rounded-full hover:opacity-80 active:opacity-40 disabled:opacity-40" disabled={total_net === share ? true : false}>Delete User</button>
+          <button onClick={handleDeleteUser} className="bg-gray-600 text-nowrap text-white p-2 px-4 max-w-lg rounded-full hover:opacity-80 active:opacity-40 disabled:opacity-40" disabled={total_net === 0 && share === 0 ? false : true}>Delete User</button>
           <p className='text-[0.75rem] max-w-lg'>{"Note: User cannot be deleted unless share and total net are both zero. If you want to delete this profile, remove user from all transactions."}</p>
         </div>
       </div>
