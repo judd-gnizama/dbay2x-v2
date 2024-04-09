@@ -34,16 +34,20 @@ export default function Home() {
         className="bg-teal-400 p-2 px-4 text-white rounded-full hover:opacity-80 active:opacity-40 transition-opacity duration-300"
         onClick={handleCreateNew}>
           Create a New Group</button>
-        <p>{`Existing Groups [${groups ? groups.length : 0}]:`}</p>
-        <div className="flex flex-cols overflow-x-scroll w-full gap-2 p-4 rounded-lg bg-gray-200 snap-center">
-          {groups?.length > 0 ? 
+        {groups && groups?.length !== 0 &&
           <>
-            {groups?.map(group => <GroupResult key={group.id} result={group}/>)}
-          </>
-          :
-          <div>No groups found</div>
+            <p>{`Existing Groups [${groups ? groups.length : 0}]:`}</p>
+            <div className="flex flex-cols overflow-x-scroll w-full gap-2 p-4 rounded-lg bg-gray-200 snap-center">
+              {groups?.length > 0 ? 
+              <>
+                {groups?.map(group => <GroupResult key={group.id} result={group}/>)}
+              </>
+              :
+              <div>No groups found</div>
+              }
+            </div>
+          </> 
         }
-        </div>
       </div>
     </div>
   )

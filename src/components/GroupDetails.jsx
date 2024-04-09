@@ -14,14 +14,14 @@ export default function GroupDetails({group}) {
 
   return (
     <div className="flex gap-x-4 py-2 flex-wrap items-center">
-      <p className="">
+      {/* <p className="">
         {`Users: `}
         <strong className="font-bold">{noOfUsers}</strong>
       </p>
       <p className="">
         {`Transactions: `}
         <strong className="font-bold">{noOfTransactions}</strong>
-      </p>
+      </p> */}
       <p>
         {`Total Spent: `} 
         <strong className="font-bold">{totalSpent.toLocaleString()}</strong>

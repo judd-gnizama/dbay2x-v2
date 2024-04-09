@@ -5,7 +5,7 @@ export default function AboutPage() {
       <p className="text-lg">
       &#34;Dbay2x&#34; is a reference to the visayan kid&#39;s way of saying <strong className="font-bold">&#34;divided by&#34;</strong>. Well, at least it was when I was a kid in the late 90s. Hence, the name for a bill-splitting web app. 
         <br /><br />
-        Dbay2x is a web app that aims to simply the process of dividing expenses among friends and calculating the transactions needed for settling balances and debts. 
+        Dbay2x is a web app that aims to simplify the process of dividing expenses among friends and calculating the transactions needed for settling balances and debts. 
         <br /><br />
         This is also a mini-project that I wanted to create as a way of practicing my new skills in building web apps using NextJS, TailwindCSS and others. 
         <br /><br />
