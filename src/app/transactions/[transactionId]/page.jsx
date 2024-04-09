@@ -1,6 +1,7 @@
 'use client'
 
 import EditableDiv from "@/components/EditableDiv";
+import { sortItems } from "@/components/Results";
 import ToggleGroup from "@/components/formComponents/ToggleGroup";
 import { confirmCancelToast, getDateToday } from "@/functions/InterfaceFunc";
 import { addTransaction, getCurrentGroup, getTransactionFromGroup, removeTransaction, replaceTransaction } from "@/functions/LocalStorageFunc";
@@ -91,7 +92,7 @@ export default function TransactionPage({ params }) {
   }
 
   // For Payor
-  const payorOptions = currentGroup.users
+  const payorOptions = sortItems({type: 'user', itemList: currentGroup.users})
   const [ selectPayor, setSelectPayor ] = useState(initialValues.payer);
   const handleChangePayor = (event) => {
     setSelectPayor(parseInt(event.target.value))
@@ -121,7 +122,7 @@ export default function TransactionPage({ params }) {
     }))
   }
 
-  const memberOptions = initializeMembers(currentGroup.users)
+  const memberOptions = sortItems({type: 'user', itemList: initializeMembers(currentGroup.users)})
   const [ splitMembers, setSplitMembers ] = useState(mode === 'add'? memberOptions : initialValues.split_members);
   const computeInitialTotal = (newMembers) => {
     let total = 0;
@@ -138,7 +139,8 @@ export default function TransactionPage({ params }) {
         split: member.split ? false : true, 
         weight: member.split ? 0 : 1
       } : member)
-    setSplitMembers(newMembers)
+
+    setSplitMembers(sortItems({itemList: newMembers, type: 'user'}))
     computeTotal(newMembers)
   }
   const handleSelectAll = (event) => {

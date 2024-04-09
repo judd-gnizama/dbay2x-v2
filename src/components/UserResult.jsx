@@ -7,10 +7,11 @@ export default function UserResult({ result, mode }) {
   const visualAdj = total_balance === 0 ? -current_balance : 0;
   const isToReceive = total_balance < 0 || current_balance > 0 && total_balance === 0
   const isSettled = share === total_net;
+  const notZero = share !== 0 && total_net !== 0;
 
   return (
     <Link href={`/users/${id}`} className="flex  flex-col justify-start max-sm:justify-center items-center max-sm:flex-wrap border border-slate-200 rounded-2xl p-4 gap-4 hover:bg-teal-200 hover:shadow-md active:opacity-40 transition-opacity duration-300 relative">
-      {isSettled && <span className="material-symbols-outlined bg-green-500 rounded-full absolute top-[1rem] right-[1rem]">check_circle</span>}
+      {isSettled && notZero && <span className="material-symbols-outlined bg-green-500 rounded-full absolute top-[1rem] right-[1rem]">check_circle</span>}
       <span className="material-symbols-outlined"
       style={{fontSize: '6rem'}}>account_circle</span>
       <article className="w-full overflow-hidden grid grid-cols-2 gap-x-2 justify-center">

@@ -3,14 +3,22 @@ import SettlementResult from "./SettlementResult"
 import TransactionResult from "./TransactionResult"
 import UserResult from "./UserResult"
 
-export default function Results({ type, search, results }) {
+
+export function sortItems({type, itemList}) {
   if (type === 'user') {
-    results.sort((a, b) => a.name.localeCompare(b.name))
+    itemList.sort((a, b) => a.name.localeCompare(b.name))
   } else if (type === 'transaction') {
-    results.sort((a, b) => new Date(a.date).valueOf() - new Date(b.date).valueOf())
+    itemList.sort((a, b) => new Date(a.date).valueOf() - new Date(b.date).valueOf())
   } else if (type === 'settlement') {
-    results.sort((a, b) => b.amount - a.amount)
+    itemList.sort((a, b) => b.amount - a.amount)
   }
+  return itemList
+}
+
+
+export default function Results({ type, search, results }) {
+  
+  sortItems({type: type, itemList: results})
 
   return (
     <div className="grid gap-4">
