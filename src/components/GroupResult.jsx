@@ -21,7 +21,7 @@ export default function GroupResult({ result, mode }) {
       <span className="material-symbols-outlined"
       style={{fontSize: '4rem'}}>group</span>
       <article className="text-center">
-        <p className="text-lg font-bold">{name}</p>
+        <p className="w-48 text-lg font-bold overflow-ellipsis whitespace-nowrap overflow-hidden">{name}</p>
         <p>{`${users.length} members`}</p>
         <p>{`Total: ${totalSpent}`}</p>
         {!hasTransactions && <p className="font-bold text-gray-600">No Transactions</p>}
