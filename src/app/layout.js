@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Providers from "./Providers";
 import { Toaster } from "sonner";
+import BackToTop from "@/components/BackToTop";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -30,6 +31,7 @@ export default function RootLayout({ children }) {
                 <div className="subsubmain">
                   {children}
                   <Footer/>
+                  <BackToTop/>
                 </div>
             </main>
         {/* </Providers> */}

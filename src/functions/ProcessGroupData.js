@@ -11,9 +11,6 @@ export const computeReimbursements = (membersList) => {
     
     if (membersList.findIndex((member) => member._net > 0.009) === -1 || count === 100) {
       done = true;
-      console.log('Break! Count: ', count)
-      const filtered = membersList.map(member => member._net)
-      console.log(filtered)
       break;
     }
     
