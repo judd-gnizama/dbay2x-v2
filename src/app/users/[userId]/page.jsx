@@ -54,20 +54,39 @@ export default function UserPage( { params }) {
 
         <EditableDiv editableText={editableText} setEditableText={setEditableText} editing={editing} setEditing={setEditing} handleEditable={handleSubmit}/>
 
-        <article className="overflow-hidden grid grid-cols-2 gap-x-2 justify-center">
-          <p>Share: </p>
+        <article className="overflow-hidden grid grid-cols-2 gap-x-4 justify-center items-center">
+          <p className='flex flex-col max-w-64'>Share: 
+            <span className='text-gray-500 text-[0.85em]'>
+              {`(the amount a user is responsible for covering)`}
+            </span> 
+          </p>
           <p>{share.toLocaleString()}</p>
-          <p className="">Contributed: </p>
+          
+          <p className='flex flex-col'>Contributed: 
+            <span className='text-gray-500 text-[0.85em]'>
+              {`(the amount a user has shelled out for expenses)`}
+            </span> 
+          </p>
           <p>{paid.toLocaleString()}</p>
-          <p>{`${total_balance < 0 ? 'Received:':'Paid:'}`}</p>
+          <p className='flex flex-col'>
+            {`${total_balance < 0 ? 'Received:':'Paid:'}`}
+            <span className='text-gray-500 text-[0.85em]'>
+              {`(the adjustments to cover differences [ balance / total ])`}
+            </span> 
+          </p>
           <p>{`${Math.abs(current_balance).toLocaleString()} / ${Math.abs(total_balance).toLocaleString()}`}</p>
-          <p>Total Net: </p>
+          <p className='flex flex-col'>
+            Total Net: 
+          <span className='text-gray-500 text-[0.85em]'>
+              {`(total contributed amount less amounts received)`}
+            </span> 
+          </p>
           <p>{total_net.toLocaleString()}</p>
         </article>
 
-        <div className="flex flex-col gap-2">
-          <p className='text-sm max-w-lg'>{"Note: User cannot be deleted since share is non-zero. If you want to delete this profile, remove user from all transactions."}</p>
-          <button onClick={handleDeleteUser} className="bg-gray-600 text-white p-2 px-4 max-w-lg rounded-full hover:opacity-80 w-fit active:opacity-40 disabled:opacity-40" disabled={share > 0 ? true : false}>Delete User</button>
+        <div className="flex max-[350px]:flex-col place-items-center gap-2">
+          <button onClick={handleDeleteUser} className="bg-gray-600 text-nowrap text-white p-2 px-4 max-w-lg rounded-full hover:opacity-80 active:opacity-40 disabled:opacity-40" disabled={total_net === share ? true : false}>Delete User</button>
+          <p className='text-[0.75rem] max-w-lg'>{"Note: User cannot be deleted unless share and total net are both zero. If you want to delete this profile, remove user from all transactions."}</p>
         </div>
       </div>
     </div>
