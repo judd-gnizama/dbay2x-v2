@@ -87,6 +87,12 @@ export default function Sidebar() {
           <span className="material-symbols-outlined "
           style={{fontSize: '2rem'}}>group</span>
         </Link>
+        <Link href={'/about'} className="flex items-center gap-2 p-2 cursor-pointer hover:bg-slate-300 rounded-full z-10">
+          <p hidden={!showSidebar}>About</p>
+          <span className="material-symbols-outlined "
+          style={{fontSize: '2rem'}}>info</span>
+        </Link>
+
         {/* <Link href={links.usersLink || '/'} className="flex items-center gap-2 p-2 cursor-pointer hover:bg-slate-300 rounded-full z-10">
           <p hidden={!showSidebar}>Users</p>
           <span className="material-symbols-outlined "

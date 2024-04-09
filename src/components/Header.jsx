@@ -4,12 +4,14 @@ import Link from "next/link";
 import DarkModeSwitch from "./DarkModeSwitch";
 import Brand from "./Brand";
 import Sidebar from "./Sidebar";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { handleCreateNew } from "@/app/page";
+import { toast } from "sonner";
 
 
 export default function Header() {
-
   const pathname = usePathname();
+  const router = useRouter();
   const isHome = pathname === '/'
   return (
     <div className="grid place-items-center gap-4"
@@ -19,6 +21,7 @@ export default function Header() {
       <div className="flex items-center justify-between gap-4 w-full max-w-6xl  relative py-2">
         <Brand/>  
         <nav className="flex justify-center items-center gap-4 max-md:hidden">
+          <button className='hover:text-teal-400' onClick={()=>handleCreateNew({router: router, toast: toast})}>Create New Group</button>
           <Link className='hover:text-teal-400' href={'/'}>Groups</Link>
           {/* <Link className='hover:text-teal-400' href={'#users'}>Users</Link>
           <Link className='hover:text-teal-400' href={'#transactions'}>Transactions</Link>
