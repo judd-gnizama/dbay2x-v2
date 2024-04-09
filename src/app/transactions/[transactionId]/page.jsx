@@ -92,7 +92,7 @@ export default function TransactionPage({ params }) {
   }
 
   // For Payor
-  const payorOptions = sortItems({type: 'user', itemList: currentGroup.users})
+  const payorOptions = sortItems({type: 'name', itemList: currentGroup.users})
   const [ selectPayor, setSelectPayor ] = useState(initialValues.payer);
   const handleChangePayor = (event) => {
     setSelectPayor(parseInt(event.target.value))
@@ -122,7 +122,7 @@ export default function TransactionPage({ params }) {
     }))
   }
 
-  const memberOptions = sortItems({type: 'user', itemList: initializeMembers(currentGroup.users)})
+  const memberOptions = sortItems({type: 'name', itemList: initializeMembers(currentGroup.users)})
   const [ splitMembers, setSplitMembers ] = useState(mode === 'add'? memberOptions : initialValues.split_members);
   const computeInitialTotal = (newMembers) => {
     let total = 0;
@@ -140,7 +140,7 @@ export default function TransactionPage({ params }) {
         weight: member.split ? 0 : 1
       } : member)
 
-    setSplitMembers(sortItems({itemList: newMembers, type: 'user'}))
+    setSplitMembers(sortItems({itemList: newMembers, type: 'name'}))
     computeTotal(newMembers)
   }
   const handleSelectAll = (event) => {

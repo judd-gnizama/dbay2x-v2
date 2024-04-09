@@ -62,3 +62,21 @@ export function confirmCancelToast({message, confirmFn}) {
     <button className="bg-teal-400 p-1 px-4 rounded-full" onClick={()=> toast.dismiss()}>Cancel</button>  
   </div>)
 }
+
+export function getCurrencyCodes() {
+  const names = {
+    USD: 'US Dollar',
+    EUR: 'Euro',
+    GBP: 'British Pound',
+    JPY: 'Japanese Yen',
+    KRW: 'South Korean Won',
+    INR: 'Indian Rupee',
+    PHP: 'Philippine Peso',
+  };
+  return Object.keys(names).map(code => (
+    {
+      code: code, 
+      name: names[code]
+    }
+      ))
+}

@@ -26,7 +26,7 @@ export default function Home() {
   return (
     <div className="flex justify-center items-center text-center">
       <div className={`gap-4 max-w-6xl w-full grid grid-rows-[auto_1fr_auto] items-center place-items-center`}>
-        <div>
+        <div className="p-6">
           <Brand size={'text-6xl'}/>
           <h2>A Bill Splitting App by <strong className="font-bold">JMRTan</strong></h2>
         </div>

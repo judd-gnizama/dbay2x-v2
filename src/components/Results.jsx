@@ -5,20 +5,26 @@ import UserResult from "./UserResult"
 
 
 export function sortItems({type, itemList}) {
-  if (type === 'user') {
+  if (type === 'name') {
     itemList.sort((a, b) => a.name.localeCompare(b.name))
-  } else if (type === 'transaction') {
+  } else if (type === 'date') {
     itemList.sort((a, b) => new Date(a.date).valueOf() - new Date(b.date).valueOf())
-  } else if (type === 'settlement') {
+  } else if (type === 'amount') {
     itemList.sort((a, b) => b.amount - a.amount)
-  }
+  } 
   return itemList
 }
 
 
 export default function Results({ type, search, results }) {
   
-  sortItems({type: type, itemList: results})
+  if (type === 'user') {
+    sortItems({type: 'name', itemList: results})
+  } else if (type === 'transaction') {
+    sortItems({type: 'date', itemList: results})
+  } else if (type === 'settlement') {
+    sortItems({type: 'amount', itemList: results})
+  }
 
   return (
     <div className="grid gap-4">
