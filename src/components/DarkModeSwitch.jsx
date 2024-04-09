@@ -12,7 +12,7 @@ export default function DarkModeSwitch() {
   return (
     <div>
       {mounted ? 
-        <button className="flex justify-center items-center border p-2 rounded-full"
+        <button className="flex justify-center items-center rounded-full"
         onClick={() => {currentTheme && currentTheme === 'light' ? setTheme('dark') : setTheme('light')}}>
           {currentTheme && currentTheme === 'light' ? 
           <span className="material-symbols-outlined">dark_mode</span>

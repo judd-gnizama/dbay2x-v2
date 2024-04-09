@@ -7,8 +7,9 @@ export default function Navbar() {
       <Brand/>
       <div className="flex justify-center items-center gap-4">
         <Link className='p-3 bg-slate-300' href={'/users'}>Users</Link>
-        <Link className='p-3 bg-slate-300' href={'/groups'}>Groups</Link>
+        {/* <Link className='p-3 bg-slate-300' href={'/groups'}>Groups</Link> */}
         <Link className='p-3 bg-slate-300' href={'/transactions'}>Transactions</Link>
+        <Link className='p-3 bg-slate-300' href={'/settlements'}>Settlements</Link>
       </div>
     </div>
   )

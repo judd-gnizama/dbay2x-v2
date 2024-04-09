@@ -2,24 +2,58 @@
 @tailwind components;
 @tailwind utilities;
 
-
-main {
-  display: grid;
-  grid-template-rows: auto auto 1fr auto auto;
-  height: 100vh;
-  padding: 0 2rem;
+html {
+  scroll-behavior: smooth;
 }
 
-main > :nth-child(2) {
-  grid-row: 2;
+
+body {
 }
-main > :nth-child(3) {
-  grid-row: 3;
-}
+
 
 body * {
   font-family: 'Poppins', 'sans-serif';
 }
+
+
+main {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  padding: 2rem;
+  height: 100dvh;
+  gap: 1rem;
+  margin: auto;
+  max-width: 72rem;
+}
+
+.submain {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;  
+  max-width: 72rem;
+}
+
+
+.subsubmain {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  gap: 1rem;
+}
+
+
+@media (max-width:400px) {
+
+  /* html {
+    font-size: 10px;
+  } */
+}
+
+@media (max-width: 400px) {
+  html {
+    font-size: 12px;
+  }
+}
+
 
 @layer utilities {
   .text-balance {

@@ -1,63 +1,71 @@
 'use client'
 
-import GroupResult from "@/components/GroupResult";
-import TransactionSearch from "@/components/TransactionSearch";
-import { useEffect, useState } from "react";
+import GroupDesc from "@/components/GroupDesc";
+import GroupDetails from "@/components/GroupDetails";
+import GroupName from "@/components/GroupName";
+import Results from "@/components/Results";
+import SearchBox from "@/components/SearchBox";
+import { confirmCancelToast } from "@/functions/InterfaceFunc";
+import { getGroupById, removeGroup } from "@/functions/LocalStorageFunc";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function GroupPage({ params }) {
-
+  
   const groupId = parseInt(params.groupId);
-  const [ data, setData ] = useState([]);  
-  const [ result, setResult ] = useState();
-  const type = 'group'
-  const filterList = {groupId: groupId}
+  const group = getGroupById({groupId: groupId});
+  const router = useRouter();
 
-  const getGroup = () => {
-    if (data.groups && data.groups.length > 0) {
-      const groupResult = data.groups.filter(group => group.id === groupId)[0];
-      setResult(groupResult);
-    }
+
+
+  const handleDeleteGroup = () => {
+    confirmCancelToast({message: 'Delete Group?', 
+    confirmFn: onConfirmDelete})
   }
 
-  const getMember = (memberId) => {
-    if (data.users && data.users.length > 0) {
-      const member = data.users.filter(user => user.id === memberId)[0];
-      return member
+  const onConfirmDelete = () => {
+    removeGroup({groupId: groupId})
+    toast.dismiss()
+    toast.success('Group Deleted')
+    router.push('/')
   }
-  } 
-
-  useEffect(() => {
-    const storedData = localStorage.getItem('myDataKey');
-    if (storedData) {
-      setData(JSON.parse(storedData));
-    }
-  }, []);
-
-  useEffect(() => {
-    getGroup()
-  }, [data.groups])
-
-
+  const handleExportGroup = () => {
+    
+  }
+  
   return (
-    <div className="p-4">
-      {result && 
-        <div className="flex flex-col gap-4 items-center">
-          <GroupResult result={result} type={type}/>
-            <h2 className="text-center">Members: </h2>
-            <div className="flex justify-center flex-wrap gap-2">
-              {result.members.map(member => 
-                <ul className="border border-slate-300 rounded-lg p-4">
-                  <li className="text-lg font-bold">{getMember(member.id).name}</li>
-                  <li className="">{`Paid For: ${member.paid}`}</li>
-                  <li className="">{`Share: ${member.share}`}</li>
-                  <li className="">{`Net: ${member.net}`}</li>
-                </ul>
-              )}
-            </div>
-            <TransactionSearch filterList={filterList}/>
+    <div className="grid gap-4"
+    style={{gridTemplateRows: "auto 1fr"}}>
+      <div>
+        <GroupName group={group}/>
+        <GroupDesc group={group}/>
+        <GroupDetails group={group}/>
+      </div>
 
-        </div>
-      }
+      {group.reimbursements?.length > 0 && <section className="border-2 border-gray-300 rounded-md p-4 relative bg-inherit">
+        <h2 id="settlements" className="text-lg font-bold bg-white text-gray-400 absolute top-0 left-2 px-1"
+        style={{translate: '0 -50%'}}
+        >Recommended Settlements</h2>
+        <Results type='settlement' results={group?.reimbursements}/>
+      </section>}
+      <section className="border-2 border-gray-300 rounded-md p-4 relative bg-inherit">
+        <h2 id="users" className="text-lg font-bold bg-white text-gray-400 absolute top-0 left-2 px-1"
+        style={{translate: '0 -50%'}}
+        >Users</h2>
+        <SearchBox type='user' groupId={groupId}/>
+      </section>
+      <section className="border-2 border-gray-300 rounded-md p-4 relative bg-inherit">
+        <h2 id="transactions" className="text-lg font-bold bg-white text-gray-400 absolute top-0 left-2 px-1"
+        style={{translate: '0 -50%'}}
+        >Transactions</h2>
+        <SearchBox type='transaction' groupId={groupId}/>
+      </section>
+      
+      <div className="justify-self-end flex gap-2 max-sm:flex-col max-sm:w-full">
+        <button disabled={true} className="bg-gray-300 p-2 px-4 rounded-full disabled:bg-gray-400 disabled:opacity-40">Export Group Data</button>
+        <button onClick={handleDeleteGroup} className="bg-gray-600 text-white p-2 px-4 rounded-full hover:opacity-80 active:opacity-40">Delete Group</button>
+      </div>
+      
     </div>
   )
 }

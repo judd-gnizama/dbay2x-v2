@@ -1,7 +1,10 @@
-export default function Brand() {
+import Link from "next/link";
+
+export default function Brand({ size }) {
   return (
     <div className="flex justify-center items-center">
-      <h1 className="text-6xl py-2 font-bold text-teal-400">Dbay2x</h1>
+      <Link href='/' className={`font-bold text-teal-400 ${size ? size : 'text-5xl'}`}>Dbay2x</Link>
     </div>
   )
 }
+ 

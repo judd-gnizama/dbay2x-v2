@@ -3,9 +3,8 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Providers from "./Providers";
-import Navbar from "@/components/Navbar";
-import LocalStorageManager from "@/components/LocalStorageManager";
-
+import { Toaster } from "sonner";
+import BackToTop from "@/components/BackToTop";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -25,15 +24,17 @@ export default function RootLayout({ children }) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
       </head>
       <body className={inter.className}>
-        <Providers>
-          <main>
-            <Header/>
-            <Navbar/>
-            {children}
-            <Footer/>
-            <LocalStorageManager/>
-          </main>
-        </Providers>
+        <Toaster richColors={true} expand={true} position="top-center"/>
+        {/* <Providers> */}
+            <main>
+              <Header/>
+                <div className="subsubmain">
+                  {children}
+                  <Footer/>
+                  <BackToTop/>
+                </div>
+            </main>
+        {/* </Providers> */}
       </body>
     </html>
   );
